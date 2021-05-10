@@ -1,0 +1,14 @@
+from django.core.management.base import BaseCommand
+from apps.recipes.models import Ingredient
+import csv
+
+
+class Command(BaseCommand):
+    help = "Import data from ingredients.csv"
+
+    def handle(self, *args, **options):
+        with open('ingredients.csv', newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            for row in reader:
+                title, measure = row
+                Ingredient.objects.get_or_create(title=title, measure=measure)
