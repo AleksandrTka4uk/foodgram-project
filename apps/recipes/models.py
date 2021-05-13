@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class Ingredient(models.Model):
@@ -11,3 +15,34 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f'{self.title}, {self.measure}'
+
+
+class Recipe(models.Model):
+    author = models.ForeignKey(
+        User,
+        related_name="recipes",
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(
+        max_length=100
+    )
+    image = models.ImageField()
+    description = models.TextField(
+        max_length=2000
+    )
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        through='RecipeIngredient'
+    )
+    tag = models.CharField(max_length=10)
+    time = models.PositiveSmallIntegerField()
+    slug = models.SlugField()
+
+    def __str__(self):
+        return f'{self.title}'
+
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredients = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    count = models.PositiveIntegerField()
