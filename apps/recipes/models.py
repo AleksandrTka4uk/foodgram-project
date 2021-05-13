@@ -5,6 +5,13 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.title}'
+
+
 class Ingredient(models.Model):
     title = models.CharField(
         max_length=200
@@ -34,7 +41,7 @@ class Recipe(models.Model):
         Ingredient,
         through='RecipeIngredient'
     )
-    tag = models.CharField(max_length=10)
+    tag = models.ManyToManyField(Tag)
     time = models.PositiveSmallIntegerField()
     slug = models.SlugField()
 
