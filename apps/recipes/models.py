@@ -6,7 +6,18 @@ User = get_user_model()
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=50)
+    BREAKFAST = 'Breakfast'
+    LUNCH = 'Lunch'
+    SUPPER = 'Supper'
+    TAG_CHOICES = [
+        (BREAKFAST, 'Завтрак'),
+        (LUNCH, 'Обед'),
+        (SUPPER, 'Ужин'),
+    ]
+    title = models.CharField(
+        max_length=50,
+        choices=TAG_CHOICES
+    )
 
     def __str__(self):
         return f'{self.title}'
