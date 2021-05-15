@@ -6,9 +6,9 @@ User = get_user_model()
 
 
 class Tag(models.Model):
-    BREAKFAST = 'Breakfast'
-    LUNCH = 'Lunch'
-    SUPPER = 'Supper'
+    BREAKFAST = 'Завтрак'
+    LUNCH = 'Обед'
+    SUPPER = 'Ужин'
     TAG_CHOICES = [
         (BREAKFAST, 'Завтрак'),
         (LUNCH, 'Обед'),
