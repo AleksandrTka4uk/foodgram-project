@@ -132,3 +132,6 @@ dmypy.json
 # static and media
 static/
 media/
+
+# task file
+tasks.txt

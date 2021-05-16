@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from apps.recipes.models import Recipe
 
-# Create your views here.
+
+class RecipeList(ListView):
+    model = Recipe
+    template_name = 'indexNotAuth.html'

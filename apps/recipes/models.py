@@ -44,7 +44,7 @@ class Recipe(models.Model):
     title = models.CharField(
         max_length=100
     )
-    image = models.ImageField()
+    image = models.ImageField(upload_to='recipes/')
     description = models.TextField(
         max_length=2000
     )
