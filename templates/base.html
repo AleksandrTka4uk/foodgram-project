@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -14,7 +13,14 @@
 <body>
     {% include 'includes/nav.html' %}
     <main class="main container">
-        <h1>{% block header %}{% endblock %}</h1>
+        <div class="main__header">
+            {% block header %}
+            {% endblock %}
+
+            {% include 'includes/tags_block.html' %}
+
+        </div>
+
             {% block content %}
 
             {% endblock %}

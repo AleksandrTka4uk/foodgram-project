@@ -1,7 +1,7 @@
             <div class="card" data-id={{ recipe.id }}>
 
                 {% load thumbnail %}
-                {% thumbnail recipe.image "960x339" crop="center" upscale=True as image%}
+                {% thumbnail recipe.image "1500x1000" crop="center" upscale=True as image%}
                 <a href="{{ image.url }}" class="link" target="_blank"><img src="{{ image.url }}" alt="Изображение блюда" class="card__image"></a>
                 {% endthumbnail %}
 
@@ -12,7 +12,7 @@
                         {% for tag in recipe.tag.all %}
                             {% include "tag_item.html" with tag=tag %}
                         {% endfor %}
-                        
+
                     </ul>
                     <div class="card__items card__items_column">
                         <p class="card__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
