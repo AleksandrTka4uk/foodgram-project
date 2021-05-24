@@ -6,11 +6,11 @@
                 {% endthumbnail %}
 
                 <div class="card__body">
-                    <a class="card__title link" href="#" target="_blank">{{ recipe.title }}</a>
+                    <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.title }}</a>
                     <ul class="card__items">
 
                         {% for tag in recipe.tag.all %}
-                            {% include "tag_item.html" with tag=tag %}
+                            {% include "includes/tag_item.html" with tag=tag %}
                         {% endfor %}
 
                     </ul>

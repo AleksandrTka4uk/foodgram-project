@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Рецепты{% endblock %}
+{% block header %}
+    <div class="main__header">
+        <h1 class="main__title">Рецепты</h1>
+    {% include 'includes/nav_tags_block.html' %}
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="card-list">
+        {% for recipe in recipe_list %}
+            {% include "includes/recipe_item.html" with recipe=recipe %}
+        {% endfor %}
+    </div>
+        {% if is_paginated %}
+            {% include "includes/paginator.html" %}
+        {% endif %}
+    <script src="./js/components/MainCards.js"></script>
+    <script src="./js/components/Purchases.js"></script>
+    <script src="./js/config/config.js"></script>
+    <script src="./js/components/CardList.js"></script>
+    <script src="./js/components/Header.js"></script>
+    <script src="./js/api/Api.js"></script>
+    <script src="indexNotAuth.js"></script>
+    <script src="./js/components/Favorites.js"></script>
+{% endblock %}
+

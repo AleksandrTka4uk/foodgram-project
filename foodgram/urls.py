@@ -2,11 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from apps.recipes.views import RecipeList
 
 
 urlpatterns = [
-    path("auth/", include("apps.users.urls")),
+    path("auth/", include("apps.users.urls"),),
     path("auth/", include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
     path('', include('apps.recipes.urls')),
