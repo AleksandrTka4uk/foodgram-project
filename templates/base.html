@@ -6,20 +6,26 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
-    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
-    {% block additional_media1 %}{% endblock %}
+
+    {% block static_css %}
+    {% endblock %}
+
 </head>
 <body>
     {% include 'includes/nav.html' %}
+
     <main class="main container">
             {% block header %}
             {% endblock %}
+
             {% block content %}
             {% endblock %}
     </main>
-    {% include 'includes/footer.html' %}
-</body>
 
+    {% include 'includes/footer.html' %}
+
+    {% block static_js %}
+    {% endblock %}
+
+</body>
 </html>

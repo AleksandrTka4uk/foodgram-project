@@ -1,3 +1,19 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 class Api {
     constructor(apiUrl) {
@@ -6,7 +22,8 @@ class Api {
   getPurchases () {
     return fetch(`/purchases`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       }
     })
       .then( e => {
@@ -20,7 +37,8 @@ class Api {
     return fetch(`/purchases`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify({
         id: id
@@ -37,7 +55,8 @@ class Api {
     return fetch(`/purchases/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       }
     })
       .then( e => {
@@ -51,7 +70,8 @@ class Api {
     return fetch(`/subscriptions`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify({
         id: id
@@ -68,7 +88,8 @@ class Api {
     return fetch(`/subscriptions/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       }
     })
       .then( e => {
@@ -79,10 +100,11 @@ class Api {
       })
   }
   addFavorites (id)  {
-    return fetch(`/favorites`, {
+    return fetch(`api/favorites/`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       },
       body: JSON.stringify({
         id: id
@@ -96,10 +118,11 @@ class Api {
         })
   }
   removeFavorites (id) {
-    return fetch(`/favorites/${id}`, {
+    return fetch(`api/favorites/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'),
       }
     })
         .then( e => {
@@ -112,7 +135,8 @@ class Api {
     getIngredients  (text)  {
         return fetch(`/ingredients?query=${text}`, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
             }
         })
             .then( e => {

@@ -1,9 +1,15 @@
 {% extends "base.html" %}
+
+
 {% block title %}{{ recipe.title }}{% endblock %}
+
+
 {% load static %}
-{% block additional_media1 %}
+{% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
+
+
 {% block content %}
         <div class="single-card" data-id="371">
             {% load thumbnail %}
@@ -52,25 +58,27 @@
                 </div>
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Описание:</h3>
-                    <p class=" single-card__section-text">{{ recipe.description }}</p>
+                    <p class=" single-card__section-text">{{ recipe.description|linebreaksbr }}</p>
                 </div>
             </div>
         </div>
-{% if user.is_authenticated %}
-    <script src="{% static 'js/components/Favorites.js' %}"></script>
-    <script src="{% static 'js/components/Subscribe.js' %}"></script>
-{% endif %}
-    <script src="{% static 'js/components/Purchases.js' %}"></script>
-    <script src="{% static 'js/config/config.js' %}"></script>
+    {% block static_js %}
+        {% if user.is_authenticated %}
+            <script src="{% static 'js/components/Favorites.js' %}"></script>
+            <script src="{% static 'js/components/Subscribe.js' %}"></script>
+        {% endif %}
+            <script src="{% static 'js/components/Purchases.js' %}"></script>
+            <script src="{% static 'js/config/config.js' %}"></script>
 
-    <script src="{% static 'js/components/MainCards.js' %}"></script>
-    <script src="{% static 'js/components/SingleCard.js' %}"></script>
-    <script src="{% static 'js/components/Header.js' %}"></script>
+            <script src="{% static 'js/components/MainCards.js' %}"></script>
+            <script src="{% static 'js/components/SingleCard.js' %}"></script>
+            <script src="{% static 'js/components/Header.js' %}"></script>
 
-    <script src="{% static 'js/api/Api.js' %}"></script>
-{% if user.is_authenticated %}
-    <script src="{% static 'singlePage.js' %}"></script>
-{% else %}
-    <script src="{% static 'singlePageNotAuth.js' %}"></script>
-{% endif %}
+            <script src="{% static 'js/api/Api.js' %}"></script>
+        {% if user.is_authenticated %}
+            <script src="{% static 'singlePage.js' %}"></script>
+        {% else %}
+            <script src="{% static 'singlePageNotAuth.js' %}"></script>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

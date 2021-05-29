@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'apps.recipes',
     'apps.users',
     'sorl.thumbnail',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

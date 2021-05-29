@@ -25,6 +25,10 @@
 <!--</header>-->
 {% extends "base.html" %}
 {% block title %}Войти на сайт{% endblock %}
+{% load static %}
+{% block static_css %}
+<link rel="stylesheet" href="{% static 'pages/form.css' %}">
+{% endblock %}
 {% load user_filters %}
 <!--    <main class="main container">-->
         {% block header %}

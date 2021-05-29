@@ -64,3 +64,15 @@ class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredients = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     count = models.PositiveIntegerField()
+
+
+class Favorite(models.Model):
+    author = models.ForeignKey(
+        User,
+        related_name="favorites",
+        on_delete=models.CASCADE
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE
+    )
