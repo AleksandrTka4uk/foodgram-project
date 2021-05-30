@@ -53,12 +53,12 @@
 
 <!--        </div>-->
 <!--&lt;!&ndash;        <p style="padding: 0 0 2em 0;"><a class="button button_style_light-blue" href="#">Подписаться на автора</a></p>&ndash;&gt;-->
- {% block header %}
+{% block header %}
     <div class="main__header">
         <h1 class="main__title">{{ author_full_name }}</h1>
     {% include 'includes/nav_tags_block.html' %}
     </div>
-    <div class="author-subscribe" data-author="323">
+    <div class="author-subscribe" data-author="{{ author_id }}">
             <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
     </div>
 {% endblock %}
@@ -171,15 +171,6 @@
 <!--            </ul>-->
 <!--        </nav>-->
 <!--    </main>-->
-<!--    <footer class="footer">-->
-<!--        <div class="footer__container container">-->
-<!--            <a href="#" class="footer__brand link">Продуктовый помощник</a>-->
-<!--            <ul class="footer__items">-->
-<!--                <li class="footer__item"><a href="#" class="footer__link link">Об авторе </a></li>-->
-<!--                <li class="footer__item"><a href="#" class="footer__link link">Технологии</a></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </footer>-->
 {% block content %}
     <div class="card-list">
         {% for recipe in recipe_list %}

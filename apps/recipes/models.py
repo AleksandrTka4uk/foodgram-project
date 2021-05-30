@@ -39,21 +39,26 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         related_name="recipes",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Автор'
     )
     title = models.CharField(
-        max_length=100
+        max_length=100,
+        verbose_name='Название'
     )
     image = models.ImageField(upload_to='recipes/')
     description = models.TextField(
-        max_length=2000
+        max_length=2000,
+        verbose_name='Описание'
     )
     ingredients = models.ManyToManyField(
         Ingredient,
         through='RecipeIngredient'
     )
     tag = models.ManyToManyField(Tag)
-    time = models.PositiveSmallIntegerField()
+    time = models.PositiveSmallIntegerField(
+        verbose_name='Время'
+    )
     slug = models.SlugField()
 
     def __str__(self):
@@ -75,4 +80,19 @@ class Favorite(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE
+    )
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="subscriber",
+        verbose_name="Подписчик"
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="author",
+        verbose_name="Автор"
     )
