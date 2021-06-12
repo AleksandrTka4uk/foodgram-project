@@ -6,12 +6,14 @@ from apps.recipes.models import Recipe, Tag, Ingredient
 class CreateRecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'tag', 'time', 'description', 'image']
+        fields = ['title', 'time', 'description', 'image']
 
-    tag = ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
-        widget=CheckboxSelectMultiple(attrs={'class': 'tags__checkbox tags__checkbox_style_orange'}),
-    )
+        # fields = ['title', 'tag', 'time', 'description', 'image']
+
+    # tag = ModelMultipleChoiceField(
+    #     queryset=Tag.objects.all(),
+    #     widget=CheckboxSelectMultiple(attrs={'class': 'tags__checkbox tags__checkbox_style_orange'}),
+    # )
 
     # def clean_ingredients(self):
     #     # data = self.cleaned_data['ingredients']

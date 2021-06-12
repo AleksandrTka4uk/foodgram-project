@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, redirect, render
-from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient
+from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag
 from apps.recipes.forms import CreateRecipeForm
 
 
@@ -70,10 +70,20 @@ def create_recipe(request):
         recipe.save()
 
         ingredients = {}
+        tags = []
         for key, value in request.POST.items():
             if key.startswith('nameIngredient'):
                 num = key.split('_')[1]
                 ingredients[value] = request.POST[f'valueIngredient_{num}']
+            if key == 'breakfast':
+                tags.append('Завтрак')
+            if key == 'lunch':
+                tags.append('Обед')
+            if key == 'dinner':
+                tags.append('Ужин')
+
+        tags = Tag.objects.filter(title__in=tags)
+        recipe.tag.add(*tags)
 
         objs = []
 
