@@ -61,17 +61,27 @@ class AuthorRecipeList(ListView):
         context['author_id'] = author.id
         return context
 
+
 def get_tags(data):
     tags = []
-    for key, value in data:
-        if key == 'breakfast':
-            tags.append('Завтрак')
-        if key == 'lunch':
-            tags.append('Обед')
-        if key == 'dinner':
-            tags.append('Ужин')
+    if data.get('breakfast'):
+        tags.append('Завтрак')
+    if data.get('lunch'):
+        tags.append('Обед')
+    if data.get('dinner'):
+        tags.append('Ужин')
     tags = Tag.objects.filter(title__in=tags)
     return tags
+
+
+def get_ingredients(data):
+    ingredients = {}
+    for key, value in data.items():
+        if key.startswith('nameIngredient'):
+            num = key.split('_')[1]
+            ingredients[value] = data[f'valueIngredient_{num}']
+    return ingredients
+
 
 def create_recipe(request):
     form = CreateRecipeForm(request.POST or None, files=request.FILES or None)
@@ -79,22 +89,14 @@ def create_recipe(request):
         recipe = form.save(commit=False)
         recipe.author = request.user
         recipe.save()
-
-        ingredients = {}
-        tags = get_tags(request.POST.items())
-        for key, value in request.POST.items():
-            if key.startswith('nameIngredient'):
-                num = key.split('_')[1]
-                ingredients[value] = request.POST[f'valueIngredient_{num}']
-
+        data = request.POST.dict()
+        tags = get_tags(data)
         recipe.tag.add(*tags)
-
+        ingredients = get_ingredients(data)
         objs = []
-
         for title, count in ingredients.items():
             ingredient = get_object_or_404(Ingredient, title=title)
             objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
         RecipeIngredient.objects.bulk_create(objs)
-
         return redirect('index')
     return render(request, 'formRecipe.html', {'form': form})
