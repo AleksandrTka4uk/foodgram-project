@@ -36,7 +36,7 @@
                     {% if user == recipe.author %}
                         <ul class="single-card__items">
                             <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span>{% firstof recipe.author.get_full_name recipe.author.get_username %}</p></li>
-                            <li class="single-card__item">  <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
+                            <li class="single-card__item">  <a style="margin-left: 2.5em" href="{% url 'change_recipe' recipe.id %}" class="single-card__text">Редактировать рецепт</a></li>
                         </ul>
                     {% else %}
                         <p class="single-card__text"><span class="icon-user"></span>{% firstof recipe.author.get_full_name recipe.author.get_username %}</p>

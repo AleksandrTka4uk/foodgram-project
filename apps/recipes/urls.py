@@ -1,5 +1,5 @@
 from django.urls import path, include
-from apps.recipes.views import RecipeList, RecipeDetailView, AuthorRecipeList, FavoriteRecipeList, SubscriptionList, create_recipe
+from apps.recipes.views import RecipeList, RecipeDetailView, AuthorRecipeList, FavoriteRecipeList, SubscriptionList, create_recipe, change_recipe
 from apps.recipes.api.views import AddFavorite, RemoveFavorite, AddSubscription, RemoveSubscription, GetIngredients
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -8,6 +8,7 @@ view_patterns = [
     path('', RecipeList.as_view(), name="index"),
     path('recipe/<int:pk>/', RecipeDetailView.as_view(), name="recipe"),
     path('recipe/new/', create_recipe, name="create_recipe"),
+    path('recipe/change/<int:recipe_id>', change_recipe, name="change_recipe"),
     path('author/<int:pk>/', AuthorRecipeList.as_view(), name="author"),
     path('favorites/', FavoriteRecipeList.as_view(), name="favorites"),
     path('subscriptions/', SubscriptionList.as_view(), name="subscription"),

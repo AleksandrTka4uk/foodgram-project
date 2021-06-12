@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from apps.recipes.models import Recipe, Tag, Ingredient
 
 
-class CreateRecipeForm(ModelForm):
+class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
         fields = ['title', 'time', 'description', 'image']

@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, redirect, render
 from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag
-from apps.recipes.forms import CreateRecipeForm
+from apps.recipes.forms import RecipeForm
 
 
 class RecipeList(ListView):
@@ -84,7 +84,7 @@ def get_ingredients(data):
 
 
 def create_recipe(request):
-    form = CreateRecipeForm(request.POST or None, files=request.FILES or None)
+    form = RecipeForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
         recipe = form.save(commit=False)
         recipe.author = request.user
@@ -99,4 +99,10 @@ def create_recipe(request):
             objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('index')
-    return render(request, 'formRecipe.html', {'form': form})
+    return render(request, 'create_new_recipe.html', {'form': form})
+
+
+def change_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    form = RecipeForm(instance=recipe)
+    return render(request, 'change_recipe.html', {'form': form, 'recipe': recipe})
