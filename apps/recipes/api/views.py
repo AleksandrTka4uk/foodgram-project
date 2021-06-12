@@ -2,7 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from apps.recipes.models import Recipe, User, Favorite, Subscription
+from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient
+from apps.recipes.api.serializers import IngredientSerializer
+from django.http import JsonResponse
 
 
 class AddFavorite(APIView):
@@ -35,6 +37,7 @@ class AddSubscription(APIView):
         )
         return Response({"success": created}, status=status.HTTP_200_OK)
 
+
 class RemoveSubscription(APIView):
     def delete(self, request, pk, format=None):
         author = get_object_or_404(User, pk=pk)
@@ -45,3 +48,14 @@ class RemoveSubscription(APIView):
         )
         obj.delete()
         return Response({"success": True}, status=status.HTTP_200_OK)
+
+
+class GetIngredients(APIView):
+    def get(self, request, format=None):
+        text = request.GET.get('query')
+        if text:
+            ingredients = Ingredient.objects.filter(title__startswith=text)
+        else:
+            ingredients = Ingredient.objects.all()
+        serializer = IngredientSerializer(ingredients, many=True)
+        return Response(serializer.data)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 
@@ -27,12 +28,12 @@ class Ingredient(models.Model):
     title = models.CharField(
         max_length=200
     )
-    measure = models.CharField(
+    dimension = models.CharField(
         max_length=100
     )
 
     def __str__(self):
-        return f'{self.title}, {self.measure}'
+        return f'{self.title}, {self.dimension}'
 
 
 class Recipe(models.Model):
@@ -44,7 +45,7 @@ class Recipe(models.Model):
     )
     title = models.CharField(
         max_length=100,
-        verbose_name='Название'
+        verbose_name='Название рецепта'
     )
     image = models.ImageField(upload_to='recipes/')
     description = models.TextField(
@@ -53,16 +54,23 @@ class Recipe(models.Model):
     )
     ingredients = models.ManyToManyField(
         Ingredient,
-        through='RecipeIngredient'
+        through='RecipeIngredient',
+        verbose_name='Ингредиенты',
     )
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(
+        Tag,
+        verbose_name='Теги'
+    )
     time = models.PositiveSmallIntegerField(
-        verbose_name='Время'
+        verbose_name='Время приготовления'
     )
     slug = models.SlugField()
 
     def __str__(self):
         return f'{self.title}'
+
+    def get_absolute_url(self):
+        return reverse('recipe', args=[self.id])
 
 
 class RecipeIngredient(models.Model):

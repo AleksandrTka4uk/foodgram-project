@@ -13,6 +13,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'apps.recipes',
     'apps.users',
+    'apps.about',
     'sorl.thumbnail',
     'rest_framework',
     'django.contrib.admin',

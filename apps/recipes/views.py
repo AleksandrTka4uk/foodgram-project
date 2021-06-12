@@ -1,13 +1,21 @@
-from django.views.generic import ListView, DetailView
-from django.shortcuts import get_object_or_404
-from apps.recipes.models import Recipe, User, Favorite, Subscription
-from django.db.models import Exists, OuterRef
+from django.views.generic import ListView, DetailView, CreateView
+from django.shortcuts import get_object_or_404, redirect, render
+from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient
+from apps.recipes.forms import CreateRecipeForm
 
 
 class RecipeList(ListView):
     model = Recipe
+    queryset = Recipe.objects.all()
     template_name = 'index.html'
     paginate_by = 6
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        tags_off = self.request.GET.getlist('tags_off', '')
+        if tags_off:
+            return qs.exclude(tag__id__in=tags_off)
+        return qs
 
 
 class FavoriteRecipeList(ListView):
@@ -16,7 +24,11 @@ class FavoriteRecipeList(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Recipe.objects.filter(favorite__author=self.request.user)
+        qs = super().get_queryset()
+        tags_off = self.request.GET.getlist('tags_off', '')
+        if tags_off:
+            return qs.filter(favorite__author=self.request.user).exclude(tag__id__in=tags_off)
+        return qs.filter(favorite__author=self.request.user)
 
 
 class SubscriptionList(ListView):
@@ -48,3 +60,31 @@ class AuthorRecipeList(ListView):
         context['author_full_name'] = author.get_full_name
         context['author_id'] = author.id
         return context
+
+
+def create_recipe(request):
+    form = CreateRecipeForm(request.POST or None, files=request.FILES or None)
+    if form.is_valid():
+        recipe = form.save(commit=False)
+        recipe.author = request.user
+        recipe.save()
+
+        ingredients = {}
+        for key, value in request.POST.items():
+            if key.startswith('nameIngredient'):
+                num = key.split('_')[1]
+                ingredients[value] = request.POST[f'valueIngredient_{num}']
+
+        objs = []
+
+        for title, count in ingredients.items():
+            ingredient = get_object_or_404(Ingredient, title=title)
+            objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
+        RecipeIngredient.objects.bulk_create(objs)
+        form.save_m2m
+        return redirect('index')
+    return render(request, 'formRecipe.html', {'form': form})
+
+
+
+

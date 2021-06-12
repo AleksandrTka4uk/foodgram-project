@@ -32,14 +32,14 @@
                     {% endfor %}
                 </ul>
                 <div class="single-card__items single-card__items_column">
-                    <p class="single-card__text"><span class="icon-time"></span>{{ recipe.time }}</p>
+                    <p class="single-card__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
                     {% if user == recipe.author %}
                         <ul class="single-card__items">
-                            <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span>{{ recipe.author.get_full_name }}</p></li>
+                            <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span>{% firstof recipe.author.get_full_name recipe.author.get_username %}</p></li>
                             <li class="single-card__item">  <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
                         </ul>
                     {% else %}
-                        <p class="single-card__text"><span class="icon-user"></span>{{ recipe.author.get_full_name }}</p>
+                        <p class="single-card__text"><span class="icon-user"></span>{% firstof recipe.author.get_full_name recipe.author.get_username %}</p>
                     {% endif %}
                 </div>
                 <ul class="single-card__items">
@@ -52,7 +52,7 @@
                     <h3 class="single-card__section-title">Ингридиенты:</h3>
                     <div class="single-card__items single-card__items_column">
                         {% for recipeIngredient in recipe.recipeingredient_set.all %}
-                            <p class=" single-card__section-item">{{ recipeIngredient.ingredients.title }} - {{ recipeIngredient.count }} {{ recipeIngredient.ingredients.measure }}</p>
+                            <p class=" single-card__section-item">{{ recipeIngredient.ingredients.title }} - {{ recipeIngredient.count }} {{ recipeIngredient.ingredients.dimension }}</p>
                         {% endfor %}
                     </div>
                 </div>

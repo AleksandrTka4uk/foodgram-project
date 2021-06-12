@@ -16,19 +16,19 @@
 {% block content %}
     <div class="card-list">
         {% for subscription in object_list %}
+
         <div class="card-user" data-author="{{ subscription.author.id }}">
         <div class="card-user__header">
             <h2 class="card-user__title">{{ subscription.author.get_full_name }}</h2>
         </div>
         <div class="card-user__body">
             <ul class="card-user__items">
-                {% for recipe in subscription.author.recipes.all %}
 
+                {% for recipe in subscription.author.recipes.all %}
                     {% if forloop.counter <= 3 %}
 
                     <li class="card-user__item">
                         <div class="recipe">
-
                             {% load thumbnail %}
                             {% thumbnail recipe.image "1500x1000" crop="center" upscale=True as image%}
                             <img src="{{ image.url }}" alt="какой-то-текст" class="recipe__image">
@@ -36,12 +36,10 @@
 
                             <h3 class="recipe__title">{{ recipe.title }}</h3>
                             <p class="recipe__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
-
                         </div>
                     </li>
 
                     {% endif %}
-
                 {% endfor %}
 
                 {% if subscription.author.recipes.count > 3 %}
