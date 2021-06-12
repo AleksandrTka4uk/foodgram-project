@@ -61,6 +61,17 @@ class AuthorRecipeList(ListView):
         context['author_id'] = author.id
         return context
 
+def get_tags(data):
+    tags = []
+    for key, value in data:
+        if key == 'breakfast':
+            tags.append('Завтрак')
+        if key == 'lunch':
+            tags.append('Обед')
+        if key == 'dinner':
+            tags.append('Ужин')
+    tags = Tag.objects.filter(title__in=tags)
+    return tags
 
 def create_recipe(request):
     form = CreateRecipeForm(request.POST or None, files=request.FILES or None)
@@ -70,19 +81,12 @@ def create_recipe(request):
         recipe.save()
 
         ingredients = {}
-        tags = []
+        tags = get_tags(request.POST.items())
         for key, value in request.POST.items():
             if key.startswith('nameIngredient'):
                 num = key.split('_')[1]
                 ingredients[value] = request.POST[f'valueIngredient_{num}']
-            if key == 'breakfast':
-                tags.append('Завтрак')
-            if key == 'lunch':
-                tags.append('Обед')
-            if key == 'dinner':
-                tags.append('Ужин')
 
-        tags = Tag.objects.filter(title__in=tags)
         recipe.tag.add(*tags)
 
         objs = []
@@ -91,10 +95,6 @@ def create_recipe(request):
             ingredient = get_object_or_404(Ingredient, title=title)
             objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
         RecipeIngredient.objects.bulk_create(objs)
-        form.save_m2m
+
         return redirect('index')
     return render(request, 'formRecipe.html', {'form': form})
-
-
-
-
