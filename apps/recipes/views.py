@@ -91,7 +91,7 @@ def create_recipe(request):
         recipe.save()
         data = request.POST.dict()
         tags = get_tags(data)
-        recipe.tag.add(*tags)
+        recipe.tag.add(tags)
         ingredients = get_ingredients(data)
         objs = []
         for title, count in ingredients.items():
@@ -104,5 +104,25 @@ def create_recipe(request):
 
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    if recipe.author != request.user:
+        return redirect('change_recipe', recipe_id=recipe_id)
+    form = RecipeForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=recipe
+    )
+    if form.is_valid():
+        recipe = form.save()
+        data = request.POST.dict()
+        tags = get_tags(data)
+        recipe.tag.set(tags)
+        ingredients = get_ingredients(data)
+        RecipeIngredient.objects.filter(recipe=recipe).delete()
+        objs = []
+        for title, count in ingredients.items():
+            ingredient = get_object_or_404(Ingredient, title=title)
+            objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
+        RecipeIngredient.objects.bulk_create(objs)
+        return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
     return render(request, 'change_recipe.html', {'form': form, 'recipe': recipe})

@@ -1,4 +1,5 @@
 from django import template
+from apps.recipes.models import Tag
 
 
 register = template.Library()
@@ -46,3 +47,8 @@ def tags_off_params(request):
     if request_copy.getlist('page'):
         request_copy.pop('page')
     return request_copy.urlencode()
+
+
+@register.simple_tag
+def tag_in_recipe(recipe, tag_title):
+    return recipe.tag.filter(title=tag_title).exists()

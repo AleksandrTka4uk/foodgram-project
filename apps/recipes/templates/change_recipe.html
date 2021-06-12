@@ -30,20 +30,21 @@
                 <p class="form__label">Теги</p>
                 <div class="form__field-group">
                     <div class="tags">
-                        {% for tag in recipe.tag.all %}
+                        {% tag_in_recipe recipe 'Завтрак' as tag_included %}
                         <div class="tags__item">
-                            <input type="checkbox" name="breakfast" id="id_breakfast" class="tags__checkbox tags__checkbox_style_orange" {% if tag.title == "Завтрак" %}checked{% endif%}>
+                            <input type="checkbox" name="breakfast" id="id_breakfast" class="tags__checkbox tags__checkbox_style_orange" {% if tag_included %}checked{% endif%}>
                             <label for="id_breakfast" class="tags__label">Завтрак</label>
                         </div>
+                        {% tag_in_recipe recipe 'Обед' as tag_included %}
                         <div class="tags__item">
-                            <input type="checkbox" name="lunch" id="id_lunch" class="tags__checkbox tags__checkbox_style_green" {% if tag.title == "Обед" %}checked{% endif%}>
+                            <input type="checkbox" name="lunch" id="id_lunch" class="tags__checkbox tags__checkbox_style_green" {% if tag_included %}checked{% endif%}>
                             <label for="id_lunch" class="tags__label">Обед</label>
                         </div>
+                        {% tag_in_recipe recipe 'Ужин' as tag_included %}
                         <div class="tags__item">
-                            <input type="checkbox" name="dinner" id="id_dinner" class="tags__checkbox tags__checkbox_style_purple" {% if tag.title == "Ужин" %}checked{% endif%}>
+                            <input type="checkbox" name="dinner" id="id_dinner" class="tags__checkbox tags__checkbox_style_purple" {% if tag_included %}checked{% endif%}>
                             <label for="id_dinner" class="tags__label">Ужин</label>
                         </div>
-                        {% endfor %}
                     </div>
                     <span class="form__error">{{ form.tag.errors }}</span>
                 </div>
