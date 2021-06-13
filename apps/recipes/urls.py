@@ -1,6 +1,6 @@
 from django.urls import path, include
 from apps.recipes.views import RecipeList, RecipeDetailView, AuthorRecipeList, FavoriteRecipeList, SubscriptionList, create_recipe, change_recipe, PurchasesView
-from apps.recipes.api.views import AddFavorite, RemoveFavorite, AddSubscription, RemoveSubscription, GetIngredients
+from apps.recipes.api.views import AddFavorite, RemoveFavorite, AddSubscription, RemoveSubscription, GetIngredients, AddPurchases, RemovePurchases
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
@@ -21,6 +21,8 @@ api_patterns = [
     path('subscriptions/', AddSubscription.as_view()),
     path('subscriptions/<int:pk>', RemoveSubscription.as_view()),
     path('ingredients', GetIngredients.as_view()),
+    path('purchases/', AddPurchases.as_view()),
+    path('purchases/<int:recipe_id>', RemovePurchases.as_view()),
 ]
 
 urlpatterns = [

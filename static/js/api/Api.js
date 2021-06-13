@@ -4,7 +4,7 @@ class Api {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    return fetch(`/purchases`, {
+    return fetch(`api/purchases/`, {
       headers: {
         'Content-Type': 'application/json'
       }

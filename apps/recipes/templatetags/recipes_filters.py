@@ -11,8 +11,13 @@ def addclass(field, css):
 
 
 @register.simple_tag
-def is_favorite_tag(recipe, user):
+def is_tag_favorite(recipe, user):
     return user.favorites.filter(recipe=recipe).exists()
+
+
+@register.simple_tag
+def is_recipe_purchased(recipe, user):
+    return user.purchases.filter(recipe=recipe).exists()
 
 
 @register.simple_tag
