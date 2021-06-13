@@ -109,11 +109,10 @@ class Subscription(models.Model):
 class Purchase(models.Model):
     user = models.ForeignKey(
         User,
-        related_name="buyer",
+        related_name="purchases",
         on_delete=models.CASCADE
     )
     recipe = models.ForeignKey(
         Recipe,
-        related_name="purchase",
         on_delete=models.CASCADE
     )
