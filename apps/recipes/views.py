@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, redirect, render
-from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag
+from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag, Purchase
 from apps.recipes.forms import RecipeForm
 
 
@@ -29,6 +29,15 @@ class FavoriteRecipeList(ListView):
         if tags_off:
             return qs.filter(favorite__author=self.request.user).exclude(tag__id__in=tags_off)
         return qs.filter(favorite__author=self.request.user)
+
+
+class PurchasesView(ListView):
+    model = Recipe
+    template_name = 'purchases.html'
+    paginate_by = 6
+
+    # def get_queryset(self):
+    #     return Purchase.objects.all()
 
 
 class SubscriptionList(ListView):
