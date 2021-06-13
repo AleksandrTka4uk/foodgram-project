@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 
-
 {% block title %}Рецепты{% endblock %}
 {% load static %}
-
 
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
-
 
 {% block header %}
     <div class="main__header">
@@ -16,7 +13,6 @@
     {% include 'includes/nav_tags_block.html' %}
     </div>
 {% endblock %}
-
 
 {% block content %}
     <div class="card-list">

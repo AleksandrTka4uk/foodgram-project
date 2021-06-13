@@ -51,7 +51,7 @@ class SubscriptionList(ListView):
 
 class RecipeDetailView(DetailView):
     model = Recipe
-    template_name = 'singlePage.html'
+    template_name = 'ricepe_page.html'
 
 
 class AuthorRecipeList(ListView):
@@ -135,3 +135,9 @@ def change_recipe(request, recipe_id):
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
     return render(request, 'change_recipe.html', {'form': form, 'recipe': recipe})
+
+
+def remove_purchase(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    request.user.purchases.filter(recipe=recipe).delete()
+    return redirect('purchases')

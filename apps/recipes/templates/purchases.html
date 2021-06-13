@@ -26,11 +26,13 @@
                     <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
                     <p class="recipe__text"><span class="icon-time"></span> {{ purchase.recipe.time }} мин.</p>
                 </div>
-                <a href="#" class="shopping-list__button link">Удалить</a>
+                <a href="{% url 'remove_purchases' purchase.recipe.id  %}" class="shopping-list__button link">Удалить</a>
             </li>
             {% endfor %}
         </ul>
+        {% if user.purchases.all.count > 0 %}
         <a href="#"><button class="button button_style_blue">Скачать список</button></a>
+        {% endif %}
     </div>
 
     {% block static_js %}
