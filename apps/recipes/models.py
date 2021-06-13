@@ -104,3 +104,15 @@ class Subscription(models.Model):
         related_name="author",
         verbose_name="Автор"
     )
+
+
+class Purchase(models.Model):
+    user = models.ForeignKey(
+        User,
+        related_name="purchases",
+        on_delete=models.CASCADE
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE
+    )
