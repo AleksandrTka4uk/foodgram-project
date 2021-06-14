@@ -1,17 +1,12 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.template.loader import render_to_string
 from django.db.models import Sum
-from django.http import FileResponse
-import pdfkit
-from io import BytesIO
 
 
-from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag, Purchase
+from apps.recipes.models import Recipe, User, Subscription, Ingredient, RecipeIngredient, Tag
 from apps.recipes.forms import RecipeForm
-
 
 
 class RecipeList(ListView):
@@ -37,7 +32,8 @@ class FavoriteRecipeList(LoginRequiredMixin, ListView):
         qs = super().get_queryset()
         tags_off = self.request.GET.getlist('tags_off', '')
         if tags_off:
-            return qs.filter(favorite__author=self.request.user).exclude(tag__id__in=tags_off)
+            return qs.filter(favorite__author=self.request.user).exclude(
+                tag__id__in=tags_off)
         return qs.filter(favorite__author=self.request.user)
 
 
@@ -116,7 +112,8 @@ def create_recipe(request):
         objs = []
         for title, count in ingredients.items():
             ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
+            objs.append(RecipeIngredient(
+                recipe=recipe, ingredients=ingredient, count=count))
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('index')
     return render(request, 'create_new_recipe.html', {'form': form})
@@ -142,11 +139,14 @@ def change_recipe(request, recipe_id):
         objs = []
         for title, count in ingredients.items():
             ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(recipe=recipe, ingredients=ingredient, count=count))
+            objs.append(RecipeIngredient(
+                recipe=recipe, ingredients=ingredient, count=count))
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
-    return render(request, 'change_recipe.html', {'form': form, 'recipe': recipe})
+    return render(request,
+                  'change_recipe.html',
+                  {'form': form, 'recipe': recipe})
 
 
 @login_required
