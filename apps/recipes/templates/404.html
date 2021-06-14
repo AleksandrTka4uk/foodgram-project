@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Об авторе{% endblock %}
+{% block title %}Ошибка 404{% endblock %}
 {% load static %}
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
 {% block content %}
     <div class="custom-center-block">
-            <p class="custom-text-block">Сообщение пользователю</p>
+            <h1>Ошибка 404</h1>
+            <p class="custom-text-block">Страница &ensp;<code>{{ path }}</code>&ensp; не найдена</p>
         <div class="custom-button-block">
             <button class="button button_style_blue" onclick="window.location.href = '{% url 'index' %}';">Перейти на главную</button>
         </div>

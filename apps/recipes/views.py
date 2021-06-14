@@ -155,3 +155,12 @@ def download_purchases(request):
                             content_type='application/text charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="foo.txt"'
     return response
+
+
+def page_not_found(request, exception):
+    return render(
+        request,
+        "404.html",
+        {"path": request.path},
+        status=404
+    )

@@ -66,6 +66,9 @@ class Recipe(models.Model):
     )
     slug = models.SlugField()
 
+    class Meta:
+        ordering = ["-pk"]
+
     def __str__(self):
         return f'{self.title}'
 
