@@ -31,7 +31,7 @@
             {% endfor %}
         </ul>
         {% if user.purchases.all.count > 0 %}
-        <a href="#"><button class="button button_style_blue">Скачать список</button></a>
+        <a href="{% url 'download_purchases' %}"><button class="button button_style_blue">Скачать список</button></a>
         {% endif %}
     </div>
 

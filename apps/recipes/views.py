@@ -1,5 +1,7 @@
 from django.views.generic import ListView, DetailView, CreateView
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag, Purchase
 from apps.recipes.forms import RecipeForm
 
@@ -18,7 +20,7 @@ class RecipeList(ListView):
         return qs
 
 
-class FavoriteRecipeList(ListView):
+class FavoriteRecipeList(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'favorite.html'
     paginate_by = 6
@@ -31,7 +33,7 @@ class FavoriteRecipeList(ListView):
         return qs.filter(favorite__author=self.request.user)
 
 
-class PurchasesView(ListView):
+class PurchasesView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'purchases.html'
     paginate_by = 6
@@ -40,7 +42,7 @@ class PurchasesView(ListView):
     #     return Purchase.objects.all()
 
 
-class SubscriptionList(ListView):
+class SubscriptionList(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = 'myFollow.html'
     paginate_by = 6
@@ -92,6 +94,7 @@ def get_ingredients(data):
     return ingredients
 
 
+@login_required
 def create_recipe(request):
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
@@ -100,7 +103,7 @@ def create_recipe(request):
         recipe.save()
         data = request.POST.dict()
         tags = get_tags(data)
-        recipe.tag.add(tags)
+        recipe.tag.add(*tags)
         ingredients = get_ingredients(data)
         objs = []
         for title, count in ingredients.items():
@@ -111,6 +114,7 @@ def create_recipe(request):
     return render(request, 'create_new_recipe.html', {'form': form})
 
 
+@login_required
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if recipe.author != request.user:
@@ -137,7 +141,17 @@ def change_recipe(request, recipe_id):
     return render(request, 'change_recipe.html', {'form': form, 'recipe': recipe})
 
 
+@login_required
 def remove_purchase(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     request.user.purchases.filter(recipe=recipe).delete()
     return redirect('purchases')
+
+
+@login_required
+def download_purchases(request):
+    file_data = "some text"
+    response = HttpResponse(file_data,
+                            content_type='application/text charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="foo.txt"'
+    return response
