@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 
-
 {% block title %}{{ recipe.title }}{% endblock %}
-
 
 {% load static %}
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
 
-
 {% block content %}
-        <div class="single-card" data-id="371">
+        <div class="single-card" data-id={{ recipe.id }} data-author={{ recipe.author.id }}>
             {% load thumbnail %}
             {% thumbnail recipe.image "1500x1000" crop="center" upscale=True as image%}
-            <img src="{{ image.url }}" alt="какой-то текст" class="single-card__image">
+            <img src="{{ image.url }}" alt="Изображение рецепта" class="single-card__image">
             {% endthumbnail %}
             <div class="single-card__info">
                 <div class="single-card__header-info">
@@ -45,6 +42,7 @@
                 <ul class="single-card__items">
                     {% load recipes_filters %}
                     {% if user.is_authenticated %}
+
                         {% is_recipe_purchased recipe user as purchased %}
                         {% if purchased %}
                             <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>
