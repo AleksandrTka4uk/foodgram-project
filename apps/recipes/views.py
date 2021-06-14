@@ -2,8 +2,16 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.db.models import Sum
+from django.http import FileResponse
+import pdfkit
+from io import BytesIO
+
+
 from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, RecipeIngredient, Tag, Purchase
 from apps.recipes.forms import RecipeForm
+
 
 
 class RecipeList(ListView):
@@ -150,10 +158,22 @@ def remove_purchase(request, recipe_id):
 
 @login_required
 def download_purchases(request):
-    file_data = "some text"
+    recipes_in_purchases = Recipe.objects.filter(
+        in_purchases__user=request.user
+    )
+    ingredients = Ingredient.objects.filter(
+        in_recipes__recipe__in=recipes_in_purchases).annotate(
+        Sum('in_recipes__count')
+    )
+    file_data = ''
+    for ingredient in ingredients:
+        file_data += (f'{ingredient.title} '
+                      f'({ingredient.dimension}) - '
+                      f'{ingredient.in_recipes__count__sum} \n'
+                      )
     response = HttpResponse(file_data,
                             content_type='application/text charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="foo.txt"'
+    response['Content-Disposition'] = 'attachment; filename="cart.txt"'
     return response
 
 
