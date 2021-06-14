@@ -58,7 +58,7 @@ class RecipeDetailView(DetailView):
 
 class AuthorRecipeList(ListView):
     model = Recipe
-    template_name = 'authorRecipe.html'
+    template_name = 'authors_recipes.html'
     paginate_by = 6
 
     def get_queryset(self):

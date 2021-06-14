@@ -30,6 +30,7 @@
 <!--    <main class="main container">-->
 {% extends "base.html" %}
 {% load static %}
+{% load recipes_filters %}
 {% block title %}Рецепты{% endblock %}
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
@@ -60,9 +61,16 @@
     </div>
 
     {% if user.is_authenticated %}
-    <div class="author-subscribe" data-author="{{ author_id }}">
-        <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
-    </div>
+        {% is_signed_to_author author_id user as signed %}
+        {% if signed %}
+        <div class="author-subscribe" data-author="{{ author_id }}">
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button></p>
+        </div>
+        {% else %}
+        <div class="author-subscribe" data-author="{{ author_id }}">
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
 <!--        <div class="card-list" >-->
