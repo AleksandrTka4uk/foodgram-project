@@ -4,7 +4,6 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, Purchase
 from apps.recipes.api.serializers import IngredientSerializer
-from django.http import JsonResponse
 
 
 class AddFavorite(APIView):
@@ -13,7 +12,12 @@ class AddFavorite(APIView):
             author=request.user,
             recipe_id=request.data['id']
         )
-        return Response({"success": created}, status=status.HTTP_200_OK)
+        if created:
+            return Response({"success": created},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({"success": created},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class RemoveFavorite(APIView):
@@ -35,7 +39,12 @@ class AddSubscription(APIView):
             user=request.user,
             author=author
         )
-        return Response({"success": created}, status=status.HTTP_200_OK)
+        if created:
+            return Response({"success": created},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({"success": created},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class RemoveSubscription(APIView):
@@ -68,7 +77,12 @@ class AddPurchases(APIView):
             user=request.user,
             recipe=recipe
         )
-        return Response({"success": created}, status=status.HTTP_200_OK)
+        if created:
+            return Response({"success": created},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({"success": created},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class RemovePurchases(APIView):
