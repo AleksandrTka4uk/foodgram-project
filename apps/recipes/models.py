@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models import UniqueConstraint
 from django.contrib.auth import get_user_model
 
 
@@ -114,6 +115,12 @@ class Subscription(models.Model):
         # related_name="author",
         verbose_name="Автор"
     )
+
+    class Meta:
+        UniqueConstraint(
+            name='unique_subscription',
+            fields=['user', 'author']
+        )
 
 
 class Purchase(models.Model):

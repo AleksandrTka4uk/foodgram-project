@@ -50,13 +50,14 @@
                             <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
                         {% endif %}
 
-                        {% is_signed_to_author recipe.author.id user as signed %}
-                        {% if signed %}
-                            <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button></li>
-                        {% else %}
-                            <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
-                        {% endif %}
-
+                        {% if user.id != recipe.author.id %}
+                            {% is_signed_to_author recipe.author.id user as signed %}
+                            {% if signed %}
+                                <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button></li>
+                            {% else %}
+                                <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
+                            {% endif %}
+                            {% endif %}
                     {% endif %}
                 </ul>
                 <div class="single-card__section">
