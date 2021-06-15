@@ -150,6 +150,13 @@ def change_recipe(request, recipe_id):
 
 
 @login_required
+def delete_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    recipe.delete()
+    return redirect('index')
+
+
+@login_required
 def remove_purchase(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     request.user.purchases.filter(recipe=recipe).delete()
