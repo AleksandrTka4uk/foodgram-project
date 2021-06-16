@@ -104,16 +104,29 @@ def create_recipe(request):
     if form.is_valid():
         recipe = form.save(commit=False)
         recipe.author = request.user
-        recipe.save()
         data = request.POST.dict()
         tags = get_tags(data)
-        recipe.tag.add(*tags)
+        if len(tags) == 0:
+            return render(
+                request,
+                'create_new_recipe.html',
+                {'form': form, 'tags_error': 'Укажите теги для рецепта'})
         ingredients = get_ingredients(data)
-        objs = []
-        for title, count in ingredients.items():
-            ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(
-                recipe=recipe, ingredients=ingredient, count=count))
+        if len(ingredients) == 0:
+            return render(
+                request,
+                'create_new_recipe.html',
+                {'form': form,
+                 'ingredients_error': 'Укажите ингредиенты для рецепта'})
+        else:
+            objs = []
+            for title, count in ingredients.items():
+                ingredient = get_object_or_404(Ingredient, title=title)
+                objs.append(RecipeIngredient(recipe=recipe,
+                                             ingredients=ingredient,
+                                             count=count))
+        recipe.save()
+        recipe.tag.add(*tags)
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('index')
     return render(request, 'create_new_recipe.html', {'form': form})
@@ -130,17 +143,31 @@ def change_recipe(request, recipe_id):
         instance=recipe
     )
     if form.is_valid():
-        recipe = form.save()
+        recipe = form.save(commit=False)
         data = request.POST.dict()
         tags = get_tags(data)
-        recipe.tag.set(tags)
+        if len(tags) == 0:
+            return render(
+                request,
+                'create_new_recipe.html',
+                {'form': form, 'tags_error': 'Укажите теги для рецепта'})
         ingredients = get_ingredients(data)
+        if len(ingredients) == 0:
+            return render(
+                request,
+                'create_new_recipe.html',
+                {'form': form,
+                 'ingredients_error': 'Укажите ингредиенты для рецепта'})
+        else:
+            objs = []
+            for title, count in ingredients.items():
+                ingredient = get_object_or_404(Ingredient, title=title)
+                objs.append(RecipeIngredient(recipe=recipe,
+                                             ingredients=ingredient,
+                                             count=count))
         RecipeIngredient.objects.filter(recipe=recipe).delete()
-        objs = []
-        for title, count in ingredients.items():
-            ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(
-                recipe=recipe, ingredients=ingredient, count=count))
+        recipe.save()
+        recipe.tag.set(tags)
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
