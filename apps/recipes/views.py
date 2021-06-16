@@ -1,12 +1,12 @@
-from django.views.generic import ListView, DetailView
-from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
+from django.views.generic import DetailView, ListView
 
-
-from apps.recipes.models import Recipe, User, Subscription, Ingredient, RecipeIngredient, Tag
 from apps.recipes.forms import RecipeForm
+from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
+                                 Subscription, Tag, User)
 
 
 class RecipeList(ListView):

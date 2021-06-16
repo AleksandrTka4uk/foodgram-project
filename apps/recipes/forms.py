@@ -1,6 +1,8 @@
-from django.forms import ModelForm, ModelMultipleChoiceField, CheckboxSelectMultiple
+from django.forms import (CheckboxSelectMultiple, ModelForm,
+                          ModelMultipleChoiceField)
 from django.shortcuts import get_object_or_404
-from apps.recipes.models import Recipe, Tag, Ingredient
+
+from apps.recipes.models import Ingredient, Recipe, Tag
 
 
 class RecipeForm(ModelForm):

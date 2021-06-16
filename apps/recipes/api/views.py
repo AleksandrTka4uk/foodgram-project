@@ -1,9 +1,11 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from django.shortcuts import get_object_or_404
-from apps.recipes.models import Recipe, User, Favorite, Subscription, Ingredient, Purchase
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from apps.recipes.api.serializers import IngredientSerializer
+from apps.recipes.models import (Favorite, Ingredient, Purchase, Recipe,
+                                 Subscription, User)
 
 
 class AddFavorite(APIView):

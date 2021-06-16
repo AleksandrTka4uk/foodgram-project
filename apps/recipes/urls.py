@@ -1,8 +1,14 @@
-from django.urls import path, include
-from apps.recipes.views import RecipeList, RecipeDetailView, AuthorRecipeList, FavoriteRecipeList, SubscriptionList, create_recipe, change_recipe, PurchasesView, remove_purchase, download_purchases, delete_recipe
-from apps.recipes.api.views import AddFavorite, RemoveFavorite, AddSubscription, RemoveSubscription, GetIngredients, AddPurchases, RemovePurchases
+from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from apps.recipes.api.views import (AddFavorite, AddPurchases, AddSubscription,
+                                    GetIngredients, RemoveFavorite,
+                                    RemovePurchases, RemoveSubscription)
+from apps.recipes.views import (AuthorRecipeList, FavoriteRecipeList,
+                                PurchasesView, RecipeDetailView, RecipeList,
+                                SubscriptionList, change_recipe, create_recipe,
+                                delete_recipe, download_purchases,
+                                remove_purchase)
 
 view_patterns = [
     path('', RecipeList.as_view(), name="index"),

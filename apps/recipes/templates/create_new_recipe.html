@@ -1,32 +1,3 @@
-<!--<!doctype html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport"-->
-<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
-<!--    <title>Создание рецепта</title>-->
-<!--    <link rel="stylesheet" href="./pages/form.css">-->
-<!--</head>-->
-<!--<body class="body">-->
-<!--<header class="header">-->
-<!--    <nav class="nav">-->
-<!--        <div class="nav__container container">-->
-<!--            <ul class="nav__items list">-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Рецепты</a></li>-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Мои подписки</a></li>-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Создать рецепт</a></li>-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Избранное</a></li>-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter"></span></li>-->
-
-<!--            </ul>-->
-<!--            <ul class="nav__items list">-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Изменить пароль</a></li>-->
-<!--                <li class="nav__item"><a href="#" class="nav__link link">Выход</a></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</header>-->
 {% extends "base.html" %}
 {% block title %}Создание рецепта{% endblock %}
 {% load static %}
@@ -39,7 +10,6 @@
     </div>
 {% endblock %}
 
-<!--<main class="main container">-->
 {% block content %}
     {% load recipes_filters %}
     <div class="form-container">
@@ -50,7 +20,6 @@
                 <label for="{{ form.title.id_for_label }}" class="form__label">{{ form.title.label }}</label>
                 <div class="form__field-group">
                     {{ form.title|addclass:"form__input" }}
-<!--                    <input type="text" id="id_name" name="name" class="form__input">-->
                     <span class="form__error">{{ form.title.errors }}</span>
                 </div>
             </div>
@@ -108,7 +77,6 @@
                 <label for="{{ form.time.id_for_label }}" class="form__label">{{ form.time.label }}</label>
                 <div class="form__field-group form__field-group_time">
                     {{ form.time|addclass:"form__input"}}
-<!--                    <input type="text" id="id_time" name="name" class="form__input">-->
                     <label for="id_time" class="form__label">минут</label>
                     <span class="form__error">{{ form.time.errors }}</span>
                 </div>
@@ -118,7 +86,6 @@
                 <label for="{{ form.description.id_for_label }}" class="form__label">{{ form.description.label }}</label>
                 <div class="form__field-group">
                     {{ form.description|addclass:"form__textarea" }}
-<!--                    <textarea name="description" id="id_description" rows="8" class="form__textarea"></textarea>-->
                     <span class="form__error">{{ form.description.errors }}</span>
                 </div>
             </div>
@@ -127,7 +94,6 @@
                 <span class="form__label">Загрузить фото</span>
                 <div class="form__field-group">
                     {{ form.image }}
-<!--                    <input type="file" name="file" id="id_file">-->
                     <span class="form__error">{{ form.image.errors }}</span>
                 </div>
             </div>
@@ -141,15 +107,6 @@
 
 
 </main>
-<!--<footer class="footer">-->
-<!--    <div class="footer__container container">-->
-<!--        <a href="#" class="footer__brand link">Продуктовый помощник</a>-->
-<!--        <ul class="footer__items">-->
-<!--            <li class="footer__item"><a href="#" class="footer__link link">Об авторе </a></li>-->
-<!--            <li class="footer__item"><a href="#" class="footer__link link">Технологии</a></li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</footer>-->
 
 {% block static_js %}
 <script src="{% static 'js/components/Header.js' %}"></script>
@@ -160,5 +117,3 @@
 {% endblock %}
 
 {% endblock %}
-<!--</body>-->
-<!--</html>-->
