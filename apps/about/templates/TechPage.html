@@ -6,7 +6,14 @@
 {% endblock %}
 {% block content %}
     <div class="custom-center-block">
-            <p class="custom-text-block">wkhtmltopdf</p>
+        <p class="custom-text-block">
+            Используемые технологии:<br/>
+            Django==3.2.2 <br/>
+            djangorestframework==3.12.4<br/>
+            Markdown==3.3.4 <br/>
+            sorl-thumbnail==12.7.0 <br/>
+            Pillow==8.2.0 <br/>
+        </p>
         <div class="custom-button-block">
             <button class="button button_style_blue" onclick="window.location.href = '{% url 'index' %}';">Перейти на главную</button>
         </div>
