@@ -9,11 +9,14 @@ from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
                                  Subscription, Tag, User)
 
 
-class RecipeList(ListView):
+class BaseRecipeList(ListView):
     model = Recipe
     queryset = Recipe.objects.all()
-    template_name = 'index.html'
     paginate_by = 6
+
+
+class RecipeList(BaseRecipeList):
+    template_name = 'index.html'
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -23,10 +26,8 @@ class RecipeList(ListView):
         return qs
 
 
-class FavoriteRecipeList(LoginRequiredMixin, ListView):
-    model = Recipe
+class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'favorite.html'
-    paginate_by = 6
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -37,19 +38,12 @@ class FavoriteRecipeList(LoginRequiredMixin, ListView):
         return qs.filter(favorite__author=self.request.user)
 
 
-class PurchasesView(LoginRequiredMixin, ListView):
-    model = Recipe
+class PurchasesView(LoginRequiredMixin, BaseRecipeList):
     template_name = 'purchases.html'
-    paginate_by = 6
-
-    # def get_queryset(self):
-    #     return Purchase.objects.all()
 
 
-class SubscriptionList(LoginRequiredMixin, ListView):
-    model = Recipe
+class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'myFollow.html'
-    paginate_by = 6
 
     def get_queryset(self):
         return Subscription.objects.filter(user=self.request.user)
@@ -60,10 +54,8 @@ class RecipeDetailView(DetailView):
     template_name = 'ricepe_page.html'
 
 
-class AuthorRecipeList(ListView):
-    model = Recipe
+class AuthorRecipeList(BaseRecipeList):
     template_name = 'authors_recipes.html'
-    paginate_by = 6
 
     def get_queryset(self):
         author = get_object_or_404(User, pk=self.kwargs['pk'])
