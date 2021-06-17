@@ -11,7 +11,7 @@ from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
 
 class BaseRecipeList(ListView):
     model = Recipe
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.select_related('author').all()
     paginate_by = 6
 
 
