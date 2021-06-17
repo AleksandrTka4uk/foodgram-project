@@ -21,7 +21,8 @@ view_patterns = [
     path('subscriptions/', SubscriptionList.as_view(), name="subscription"),
     path('purchases/', PurchasesView.as_view(), name="purchases"),
     path('purchases/download', download_purchases, name="download_purchases"),
-    path('purchases/<int:recipe_id>', remove_purchase, name="remove_purchases"),
+    path('purchases/<int:recipe_id>',
+         remove_purchase, name="remove_purchases"),
 ]
 
 api_patterns = [
@@ -31,7 +32,8 @@ api_patterns = [
     path('subscriptions/<int:pk>', RemoveSubscription.as_view()),
     path('ingredients', GetIngredients.as_view()),
     path('purchases/', AddPurchases.as_view()),
-    path('purchases/<int:recipe_id>', RemovePurchases.as_view(), name='remove_purchase'),
+    path('purchases/<int:recipe_id>',
+         RemovePurchases.as_view(), name='remove_purchase'),
 ]
 
 urlpatterns = [

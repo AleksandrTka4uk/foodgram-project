@@ -4,8 +4,6 @@ from django.contrib.auth import get_user_model
 from apps.recipes.models import (Favorite, Ingredient, Purchase, Recipe,
                                  RecipeIngredient, Subscription, Tag)
 
-User = get_user_model()
-
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
