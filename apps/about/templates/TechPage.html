@@ -6,13 +6,19 @@
 {% endblock %}
 {% block content %}
     <div class="custom-center-block">
-        <p class="custom-text-block">
-            Используемые технологии:<br/>
-            Django==3.2.2 <br/>
-            djangorestframework==3.12.4<br/>
-            Markdown==3.3.4 <br/>
-            sorl-thumbnail==12.7.0 <br/>
-            Pillow==8.2.0 <br/>
+        <p >
+            <br>Используемые технологии:<br/>
+            <br/>
+            <a href='https://www.djangoproject.com/' target='_blank'>Django==3.2.2</a><br/>
+            <a href='https://www.django-rest-framework.org/' target='_blank'>djangorestframework==3.12.4</a><br/>
+            <a href='https://pypi.org/project/Markdown/' target='_blank'>Markdown==3.3.4</a><br/>
+            <a href='https://sorl-thumbnail.readthedocs.io/en/latest/' target='_blank'>sorl-thumbnail==12.7.0</a><br/>
+            <a href='https://pypi.org/project/Pillow/' target='_blank'>Pillow==8.2.0</a><br/>
+            <a href='https://docs.python-requests.org/en/master/' target='_blank'>requests==2.23.0</a><br/>
+            <a href='https://gunicorn.org/' target='_blank'>gunicorn==20.0.4</a><br/>
+            <a href='https://www.psycopg.org/' target='_blank'>psycopg2-binary==2.8.5</a><br/>
+            <a href='https://nginx.org/ru/' target='_blank'>nginx==1.19.3</a><br/>
+            <a href='https://www.postgresql.org/' target='_blank'>postgres:12.4</a><br/>
         </p>
         <div class="custom-button-block">
             <button class="button button_style_blue" onclick="window.location.href = '{% url 'index' %}';">Перейти на главную</button>

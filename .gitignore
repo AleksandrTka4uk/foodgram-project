@@ -140,3 +140,10 @@ tasks.txt
 .DS_Store
 .AppleDouble
 .LSOverride
+
+
+# Archives
+*.zip
+
+# html
+customPage.html

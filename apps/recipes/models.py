@@ -39,7 +39,7 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(
         User,
-        related_name="recipes",
+        related_name='recipes',
         on_delete=models.CASCADE,
         verbose_name='Автор'
     )
@@ -67,7 +67,7 @@ class Recipe(models.Model):
     slug = models.SlugField()
 
     class Meta:
-        ordering = ["-pk"]
+        ordering = ['-pk']
 
     def __str__(self):
         return f'{self.title}'
@@ -92,7 +92,7 @@ class RecipeIngredient(models.Model):
 class Favorite(models.Model):
     author = models.ForeignKey(
         User,
-        related_name="favorites",
+        related_name='favorites',
         on_delete=models.CASCADE
     )
     recipe = models.ForeignKey(
@@ -105,14 +105,14 @@ class Subscription(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="subscriptions",
-        verbose_name="Подписчик"
+        related_name='subscriptions',
+        verbose_name='Подписчик'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         # related_name="author",
-        verbose_name="Автор"
+        verbose_name='Автор'
     )
 
     class Meta:
@@ -125,11 +125,11 @@ class Subscription(models.Model):
 class Purchase(models.Model):
     user = models.ForeignKey(
         User,
-        related_name="purchases",
+        related_name='purchases',
         on_delete=models.CASCADE
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="in_purchases",
+        related_name='in_purchases',
     )
