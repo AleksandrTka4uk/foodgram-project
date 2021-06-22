@@ -1,11 +1,13 @@
 from django.conf import settings
-from django.conf.urls import handler404
+from django.conf.urls import handler404, handler500
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
 
 handler404 = "apps.recipes.views.page_not_found"  # noqa
+handler500 = "apps.recipes.views.server_error" # noqa
+
 
 urlpatterns = [
     path("auth/", include("apps.users.urls"),),
