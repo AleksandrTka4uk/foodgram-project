@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.views import APIView
 
 from rest_framework import mixins, viewsets
@@ -29,7 +30,7 @@ class CreateAndDeleteViewSet(
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response({'success': True}, status=status.HTTP_200_OK)
+        return JsonResponse({'success': True}, status=status.HTTP_200_OK)
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -44,7 +45,6 @@ class FavoritesViewSet(CreateAndDeleteViewSet):
     def get_object(self):
         return get_object_or_404(self.get_queryset(),
                                  recipe__pk=self.kwargs['pk'])
-
 
 # class AddFavorite(APIView):
 #     def post(self, request, format=None):
@@ -69,10 +69,6 @@ class FavoritesViewSet(CreateAndDeleteViewSet):
 #         )
 #         obj.delete()
 #         return Response({'success': True}, status=status.HTTP_200_OK)
-
-
-
-
 
 
 class AddSubscription(APIView):
@@ -126,7 +122,7 @@ class GetIngredients(APIView):
     def get(self, request, format=None):
         text = request.GET.get('query')
         if text:
-            ingredients = Ingredient.objects.filter(title__startswith=text)
+            ingredients = Ingredient.objects.filter(title__contains=text)
         else:
             ingredients = Ingredient.objects.all()
         serializer = IngredientSerializer(ingredients, many=True)
