@@ -17,6 +17,7 @@ urlpatterns = [
     path('', include('apps.recipes.urls')),
 ]
 
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += static(settings.MEDIA_URL,

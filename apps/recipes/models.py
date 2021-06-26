@@ -90,7 +90,7 @@ class RecipeIngredient(models.Model):
 
 
 class Favorite(models.Model):
-    author = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         related_name='favorites',
         on_delete=models.CASCADE

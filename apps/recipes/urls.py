@@ -1,14 +1,20 @@
 from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
-from apps.recipes.api.views import (AddFavorite, AddPurchases, AddSubscription,
-                                    GetIngredients, RemoveFavorite,
-                                    RemovePurchases, RemoveSubscription)
+
+from apps.recipes.api.views import (AddPurchases, AddSubscription,
+                                    GetIngredients,
+                                    RemovePurchases, RemoveSubscription, FavoritesViewSet)
 from apps.recipes.views import (AuthorRecipeList, FavoriteRecipeList,
                                 PurchasesView, RecipeDetailView, RecipeList,
                                 SubscriptionList, change_recipe, create_recipe,
                                 delete_recipe, download_purchases,
                                 remove_purchase)
+
+api_v1_router = DefaultRouter()
+api_v1_router.register('favorites', FavoritesViewSet, basename='favorites')
+
 
 view_patterns = [
     path('', RecipeList.as_view(), name='index'),
@@ -26,8 +32,8 @@ view_patterns = [
 ]
 
 api_patterns = [
-    path('favorites/', AddFavorite.as_view()),
-    path('favorites/<int:pk>/', RemoveFavorite.as_view()),
+    # path('favorites/', AddFavorite.as_view()),
+    # path('favorites/<int:pk>/', RemoveFavorite.as_view()),
     path('subscriptions/', AddSubscription.as_view()),
     path('subscriptions/<int:pk>', RemoveSubscription.as_view()),
     path('ingredients', GetIngredients.as_view()),
@@ -38,5 +44,6 @@ api_patterns = [
 
 urlpatterns = [
     path('', include(view_patterns)),
-    path('api/', include(format_suffix_patterns(api_patterns)))
+    # path('api/', include(format_suffix_patterns(api_patterns)))
+    path('api/', include(api_v1_router.urls))
 ]

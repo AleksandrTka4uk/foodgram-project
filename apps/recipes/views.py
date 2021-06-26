@@ -33,9 +33,9 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
         qs = super().get_queryset()
         tags_off = self.request.GET.getlist('tags_off', '')
         if tags_off:
-            return qs.filter(favorite__author=self.request.user).exclude(
+            return qs.filter(favorite__user=self.request.user).exclude(
                 tag__id__in=tags_off)
-        return qs.filter(favorite__author=self.request.user)
+        return qs.filter(favorite__user=self.request.user)
 
 
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
