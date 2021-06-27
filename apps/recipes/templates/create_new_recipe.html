@@ -109,13 +109,12 @@
 
 
 </main>
-
-{% block static_js %}
-<script src="{% static 'js/components/Header.js' %}"></script>
-<script src="{% static 'js/config/config.js' %}"></script>
-<script src="{% static 'js/utils/debouncing.js' %}"></script>
-<script src="{% static 'js/api/Api.js' %}"></script>
-<script src="{% static 'formRecipe.js' %}"></script>
 {% endblock %}
 
+{% block static_js %}
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/utils/debouncing.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'formRecipe.js' %}"></script>
 {% endblock %}

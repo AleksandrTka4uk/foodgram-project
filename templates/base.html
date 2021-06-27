@@ -20,12 +20,15 @@
 
             {% block content %}
             {% endblock %}
-    </main>
 
+
+            {% if is_paginated %}
+                {% include "includes/paginator.html" %}
+            {% endif %}
+    </main>
     {% include 'includes/footer.html' %}
 
     {% block static_js %}
     {% endblock %}
-
 </body>
 </html>
