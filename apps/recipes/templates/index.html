@@ -8,10 +8,7 @@
 {% endblock %}
 
 {% block header %}
-    <div class="main__header">
-        <h1 class="main__title">Рецепты</h1>
-    {% include 'includes/nav_tags_block.html' %}
-    </div>
+    {% include 'includes/header.html' with header_title="Рецепты" add_filter_block=True %}
 {% endblock %}
 
 {% block content %}

@@ -5,9 +5,7 @@
     <link rel="stylesheet" href="{% static 'pages/form.css' %}"
 {% endblock %}
 {% block header %}
-              <div class="main__header">
-        <h1 class="main__title">Редактирование рецепта</h1>
-    </div>
+    {% include 'includes/header.html' with header_title="Редактирование рецепта" add_filter_block=False %}
 {% endblock %}
 
 {% block content %}

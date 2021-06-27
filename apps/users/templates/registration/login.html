@@ -7,15 +7,12 @@
 {% endblock %}
 
 {% block header %}
-    <div class="main__header">
-        <h1 class="main__title">Войти на сайт</h1>
-    </div>
+    {% include 'includes/header.html' with header_title="Войти на сайт" add_filter_block=False %}
 {% endblock %}
 
 {% block content %}
     <div class="form-container">
         <form class="form" method="post" action="{% url 'login' %}">
-
             {% csrf_token %}
 
             {% for field in form %}

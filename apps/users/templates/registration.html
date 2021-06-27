@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block header %}
-    <div class="main__header">
-        <h1 class="main__title">Регистрация</h1>
-    </div>
+    {% include 'includes/header.html' with header_title="Регистрация" add_filter_block=False %}
 {% endblock %}
 
 {% block content %}
@@ -20,9 +18,11 @@
             {% for field in form %}
                 {% include "includes/form_field_item.html" with field=field %}
             {% endfor %}
+
             <div class="form__footer">
                 <button class="button button_style_blue">Создать аккаунт</button>
             </div>
+
         </form>
     </div>
 {% endblock %}

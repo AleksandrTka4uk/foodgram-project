@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block header %}
-    <div class="main__header">
-        <h1 class="main__title">Мои подписки</h1>
-    </div>
+    {% include 'includes/header.html' with header_title="Мои подписки" add_filter_block=False %}
 {% endblock %}
 
 {% block content %}
