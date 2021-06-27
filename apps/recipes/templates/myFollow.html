@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-
 {% block title %}Мои подписки{% endblock %}
 {% load static %}
-
 
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
 {% endblock %}
+
 {% block header %}
     <div class="main__header">
         <h1 class="main__title">Мои подписки</h1>
     </div>
 {% endblock %}
+
 {% block content %}
     <div class="card-list">
         {% for subscription in object_list %}

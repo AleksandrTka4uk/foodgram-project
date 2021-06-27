@@ -25,7 +25,7 @@
                 </div>
                 <ul class="single-card__items">
                     {% for tag in recipe.tag.all %}
-                        {% include "includes/tag_item.html" with tag=tag %}
+                        {% include "includes/tag_item.html" %}
                     {% endfor %}
                 </ul>
                 <div class="single-card__items single-card__items_column">
