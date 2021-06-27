@@ -14,11 +14,13 @@
 {% block content %}
     <div class="card-list">
         {% for subscription in object_list %}
-
+        {% firstof recipe.author.get_full_name recipe.author.get_username %}
         <div class="card-user" data-author="{{ subscription.author.id }}">
+
         <div class="card-user__header">
-            <h2 class="card-user__title">{{ subscription.author.get_full_name }}</h2>
+            <h2 class="card-user__title">{% firstof subscription.author.get_full_name subscription.author.get_username %}</h2>
         </div>
+
         <div class="card-user__body">
             <ul class="card-user__items">
 
@@ -27,9 +29,10 @@
 
                     <li class="card-user__item">
                         <div class="recipe">
+
                             {% load thumbnail %}
                             {% thumbnail recipe.image "1500x1000" crop="center" upscale=True as image%}
-                            <img src="{{ image.url }}" alt="какой-то-текст" class="recipe__image">
+                            <img src="{{ image.url }}" alt="{{ recipe.title }}" class="recipe__image">
                             {% endthumbnail %}
 
                             <h3 class="recipe__title">{{ recipe.title }}</h3>
@@ -41,22 +44,25 @@
                 {% endfor %}
 
                 {% if subscription.author.recipes.count > 3 %}
-                <li class="card-user__item">
-                    <a href="{% url 'author' subscription.author.id %}" class="card-user__link link">Еще рецептов {{ subscription.author.recipes.count|add:"-3" }}</a>
-                </li>
+                    <li class="card-user__item">
+                        <a href="{% url 'author' subscription.author.id %}" class="card-user__link link">Еще рецептов {{ subscription.author.recipes.count|add:"-3" }}</a>
+                    </li>
                 {% endif %}
 
             </ul>
         </div>
-        <div class="card-user__footer">
-            <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
-        </div>
-        </div>
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            </div>
+
+            </div>
         {% endfor %}
     </div>
-    {% if is_paginated %}
-        {% include "includes/paginator.html" %}
-    {% endif %}
+
+<!--    {% if is_paginated %}-->
+<!--        {% include "includes/paginator.html" %}-->
+<!--    {% endif %}-->
+
 {% endblock %}
 
 {% block static_js %}

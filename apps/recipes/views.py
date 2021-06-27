@@ -65,6 +65,7 @@ class AuthorRecipeList(BaseRecipeList):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, pk=self.kwargs['pk'])
         context['author_full_name'] = author.get_full_name
+        context['author_username'] = author.username
         context['author_id'] = author.id
         return context
 
