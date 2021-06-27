@@ -24,21 +24,24 @@
                         <img src="{{ image.url }}" alt="{{ recipe.title }}" class="recipe__image recipe__image_big">
                         {% endthumbnail %}
 
-                        <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
+                        <a class="card__title link" href="{% url 'recipe' purchase.recipe.id %}" target="_blank">
+                            <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
+                        </a>
                         <p class="recipe__text"><span class="icon-time"></span> {{ purchase.recipe.time }} мин.</p>
 
                     </div>
                     <a href="{% url 'remove_purchases' purchase.recipe.id  %}" class="shopping-list__button link">Удалить</a>
                 </li>
             {% endfor %}
-
+            {% if user.purchases.count > 0 %}
+                <a href="{% url 'download_purchases' %}"><button class="button button_style_blue">Скачать список</button></a>
+            {% else %}
+                <p class="recipe__text">Добавьте рецепты в покупки</p>
+                <a href="{% url 'index' %}"><button class="button button_style_blue">На главную</button></a>
+            {% endif %}
         </ul>
-
-        {% if user.purchases.count > 0 %}
-            <a href="{% url 'download_purchases' %}"><button class="button button_style_blue">Скачать список</button></a>
-        {% endif %}
-
     </div>
+
 {% endblock %}
 
 {% block static_js %}
