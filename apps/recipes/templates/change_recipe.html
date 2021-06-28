@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Редактирование рецепта{% endblock %}
 {% load static %}
+
 {% block static_css %}
     <link rel="stylesheet" href="{% static 'pages/form.css' %}"
 {% endblock %}
+
 {% block header %}
     {% include 'includes/header.html' with header_title="Редактирование рецепта" add_filter_block=False %}
 {% endblock %}

@@ -51,7 +51,7 @@ class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
 
 class RecipeDetailView(DetailView):
     model = Recipe
-    template_name = 'ricepe_page.html'
+    template_name = 'recipe_page.html'
 
 
 class AuthorRecipeList(BaseRecipeList):
