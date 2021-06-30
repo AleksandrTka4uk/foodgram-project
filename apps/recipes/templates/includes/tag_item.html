@@ -1,7 +1,1 @@
-{% if tag.title == 'Обед' %}
-    <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
-{% elif tag.title == "Завтрак" %}
-    <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
-{% elif tag.title == "Ужин" %}
-    <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
-{% endif %}
+<li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span></li>

@@ -21,6 +21,12 @@ class Tag(models.Model):
         verbose_name='Название'
     )
 
+    color = models.CharField(
+        max_length=30,
+        default='green',
+        verbose_name='Цвет'
+    )
+
     def __str__(self):
         return f'{self.title}'
 
