@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.db.models import UniqueConstraint
 from django.urls import reverse
 
@@ -82,7 +83,12 @@ class Recipe(models.Model):
         verbose_name='Теги'
     )
     time = models.PositiveSmallIntegerField(
-        verbose_name='Время приготовления'
+        verbose_name='Время приготовления',
+        validators=[
+            MinValueValidator(
+                1,
+                message='Время приготовления не может быть нулевым')
+        ]
     )
     slug = models.SlugField()
 
@@ -149,17 +155,17 @@ class Subscription(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        # related_name="author",
         verbose_name='Автор'
     )
 
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
-        UniqueConstraint(
-            name='unique_subscription',
-            fields=['user', 'author']
-        )
+        constraints = [
+            UniqueConstraint(
+                name='unique_subscription',
+                fields=['user', 'author']
+            )]
 
 
 class Purchase(models.Model):
