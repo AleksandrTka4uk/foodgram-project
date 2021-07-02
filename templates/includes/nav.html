@@ -35,8 +35,9 @@
         {% else %}
 
             <div class="nav__container container">
+
             <ul class="nav__items list">
-                <li class="nav__item nav__item_disabled">
+                <li class="nav__item {% if url_name == 'index' %}nav__item_active{% else %}nav__item_disabled{% endif %}">
                     <a href="{% url 'index' %}" class="nav__link link">Рецепты</a>
                 </li>
 <!--                <li class="nav__item nav__item_disabled">-->
@@ -44,7 +45,7 @@
 <!--                </li>-->
             </ul>
             <ul class="nav__items list">
-                <li class="nav__item">
+                <li class="nav__item {% if url_name == 'login' %}nav__item_active{% else %}nav__item_disabled{% endif %}">
                     <a href="{% url 'login' %}" class="nav__link link">Войти</a>
                 </li>
                 <li class="nav__item">
