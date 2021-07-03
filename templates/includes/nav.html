@@ -1,60 +1,26 @@
 <header class="header">
-    <nav class="nav">
-        {% with url_name=request.resolver_match.url_name %}
+  <nav class="nav">
+    <div class="nav__container container">
+      <ul class="nav__items list">
         {% if user.is_authenticated %}
-            <div class="nav__container container">
-              <ul class="nav__items list">
-                  <li class="nav__item {% if url_name == 'index' or url_name == 'recipe' or url_name == 'author' %}nav__item_active{% endif %}">
-                      <a href="{% url 'index' %}" class="nav__link link">Рецепты</a>
-                  </li>
-                  <li class="nav__item {% if url_name == 'subscription' %}nav__item_active{% endif %}">
-                      <a href="{% url 'subscription' %}" class="nav__link link">Мои подписки</a>
-                  </li>
-                  <li class="nav__item {% if .url_name == 'create_recipe' %}nav__item_active{% endif %}">
-                      <a href="{% url 'create_recipe' %}" class="nav__link link">Создать рецепт</a>
-                  </li>
-                  <li class="nav__item {% if .url_name == 'favorites' %}nav__item_active{% endif %}">
-                      <a href="{% url 'favorites' %}" class="nav__link link">Избранное</a>
-                  </li>
-                    <li class="nav__item {% if .url_name == 'purchases' %}nav__item_active{% endif %}">
-                      <a href="{% url 'purchases' %}" class="nav__link link">Список покупок</a>
-                      <span class="badge badge_style_blue nav__badge" id="counter">{{ user.purchases.all.count }}</span>
-                  </li>
-              </ul>
-
-              <ul class="nav__items list">
-                  <li class="nav__item">
-                      <a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a>
-                  </li>
-                  <li class="nav__item">
-                      <a href="{% url 'logout' %}" class="nav__link link">Выход</a>
-                  </li>
-              </ul>
-
-            </div>
-        {% else %}
-
-            <div class="nav__container container">
-
-            <ul class="nav__items list">
-                <li class="nav__item {% if url_name == 'index' %}nav__item_active{% else %}nav__item_disabled{% endif %}">
-                    <a href="{% url 'index' %}" class="nav__link link">Рецепты</a>
-                </li>
-<!--                <li class="nav__item nav__item_disabled">-->
-<!--                    <a href="#" class="nav__link link">Список покупок</a>-->
-<!--                </li>-->
-            </ul>
-            <ul class="nav__items list">
-                <li class="nav__item {% if url_name == 'login' %}nav__item_active{% else %}nav__item_disabled{% endif %}">
-                    <a href="{% url 'login' %}" class="nav__link link">Войти</a>
-                </li>
-                <li class="nav__item">
-                    <a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a>
-                </li>
-            </ul>
-            </div>
-
-        {% endif %}
-        {% endwith %}
-    </nav>
+          {% include 'includes/nav_item.html' with url='index' title='Рецепты' %}
+            {% include 'includes/nav_item.html' with url='subscription' title='Мои подписки' %}
+              {% include 'includes/nav_item.html' with url='create_recipe' title='Создать рецепт' %}
+              {% include 'includes/nav_item.html' with url='favorites' title='Избранное' %}
+              {% include 'includes/nav_item.html' with url='purchases' title='Список покупок' counter=True value=user.purchases.all.count %}
+            {% else %}
+              {% include 'includes/nav_item.html' with url='index' title='Рецепты' %}
+            {% endif %}
+      </ul>
+        <ul class="nav__items list">
+          {% if user.is_authenticated %}
+            {% include 'includes/nav_item.html' with url='password_change' title='Изменить пароль' %}
+            {% include 'includes/nav_item.html' with url='logout' title='Выход' %}
+          {% else %}
+            {% include 'includes/nav_item.html' with url='login' title='Войти' %}
+            {% include 'includes/nav_item_button.html' with url='signup' title='Создать аккаунт' %}
+          {% endif %}
+        </ul>
+    </div>
+  </nav>
 </header>
