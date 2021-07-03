@@ -10,9 +10,33 @@ from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
 from foodgram.settings import PAGINATE_BY
 
 
-class BaseRecipeList(ListView):
+class IsFavoriteMixin:
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = (
+            qs
+            .select_related('author')
+            .with_is_favorite(user_id=self.request.user.id)
+        )
+
+        return qs
+
+
+class IsPurchaseMixin:
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = (
+            qs
+            .select_related('author')
+            .with_is_purchase(user_id=self.request.user.id)
+        )
+
+        return qs
+
+
+class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
     model = Recipe
-    queryset = Recipe.objects.select_related('author').all()
+    queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
 
 

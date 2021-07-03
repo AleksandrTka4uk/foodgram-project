@@ -1,5 +1,8 @@
+from typing import Optional
+
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Exists, OuterRef
 from django.core.validators import MinValueValidator
 from django.db.models import UniqueConstraint, CheckConstraint, Q, F
 from django.urls import reverse
@@ -53,6 +56,24 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингредиенты'
 
 
+class RecipeQuerySet(models.QuerySet):
+    def with_is_favorite(self, user_id: Optional[int]):
+        return self.annotate(is_favorite=Exists(
+            Favorite.objects.filter(
+                user_id=user_id,
+                recipe_id=OuterRef('pk'),
+            ),
+        ))
+
+    def with_is_purchase(self, user_id: Optional[int]):
+        return self.annotate(is_purchase=Exists(
+            Purchase.objects.filter(
+                user_id=user_id,
+                recipe_id=OuterRef('pk'),
+            ),
+        ))
+
+
 class Recipe(models.Model):
     author = models.ForeignKey(
         User,
@@ -90,6 +111,8 @@ class Recipe(models.Model):
         ]
     )
     slug = models.SlugField()
+
+    objects = RecipeQuerySet.as_manager()
 
     class Meta:
         ordering = ['-pk']
