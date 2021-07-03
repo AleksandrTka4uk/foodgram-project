@@ -7,12 +7,13 @@ from django.views.generic import DetailView, ListView
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
                                  Subscription, Tag, User)
+from foodgram.settings import PAGINATE_BY
 
 
 class BaseRecipeList(ListView):
     model = Recipe
     queryset = Recipe.objects.select_related('author').all()
-    paginate_by = 6
+    paginate_by = PAGINATE_BY
 
 
 class RecipeList(BaseRecipeList):

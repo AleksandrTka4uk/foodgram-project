@@ -13,7 +13,7 @@ class RecipeIngredientInline(admin.TabularInline):
 
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (RecipeIngredientInline,)
-    list_filter = ('title',)
+    list_filter = ('title','tag')
     search_fields = ['title']
 
 
