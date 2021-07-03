@@ -7,6 +7,7 @@ from apps.recipes.models import (Favorite, Ingredient, Purchase, Recipe,
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
+    min_num = 1
     extra = 1
 
 

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.validators import MinValueValidator
-from django.db.models import UniqueConstraint
+from django.db.models import UniqueConstraint, CheckConstraint, Q, F
 from django.urls import reverse
 
 User = get_user_model()
@@ -140,6 +140,11 @@ class Favorite(models.Model):
     class Meta:
         verbose_name = 'Избранный рецепт'
         verbose_name_plural = 'Избранные рецепты'
+        constraints = [
+            UniqueConstraint(
+                name='unique_favorite',
+                fields=['user', 'recipe']
+            )]
 
 
 class Subscription(models.Model):
@@ -162,7 +167,12 @@ class Subscription(models.Model):
             UniqueConstraint(
                 name='unique_subscription',
                 fields=['user', 'author']
-            )]
+            ),
+            CheckConstraint(
+                check=~Q(author=F('user')),
+                name='user_and_author_not_equal'
+            )
+        ]
 
 
 class Purchase(models.Model):
@@ -182,3 +192,8 @@ class Purchase(models.Model):
     class Meta:
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
+        constraints = [
+            UniqueConstraint(
+                name='unique_purchase',
+                fields=['user', 'recipe']
+            )]
