@@ -8,17 +8,16 @@ User = get_user_model()
 
 
 class Tag(models.Model):
-    BREAKFAST = 'Завтрак'
-    LUNCH = 'Обед'
-    SUPPER = 'Ужин'
-    TAG_CHOICES = [
-        (BREAKFAST, 'Завтрак'),
-        (LUNCH, 'Обед'),
-        (SUPPER, 'Ужин'),
-    ]
+
+    class TagTitle(models.TextChoices):
+        BREAKFAST = 'B', 'Завтрак'
+        LUNCH = 'L', 'Обед'
+        SUPPER = 'S', 'Ужин'
+
     title = models.CharField(
         max_length=50,
-        choices=TAG_CHOICES,
+        choices=TagTitle.choices,
+        default=TagTitle.BREAKFAST,
         verbose_name='Название'
     )
 
@@ -94,16 +93,14 @@ class Recipe(models.Model):
 
     class Meta:
         ordering = ['-pk']
+        verbose_name = 'Рецепт'
+        verbose_name_plural = 'Рецепты'
 
     def __str__(self):
         return f'{self.title}'
 
     def get_absolute_url(self):
         return reverse('recipe', args=[self.id])
-
-    class Meta:
-        verbose_name = 'Рецепт'
-        verbose_name_plural = 'Рецепты'
 
 
 class RecipeIngredient(models.Model):
