@@ -111,7 +111,6 @@ class Recipe(models.Model):
         ]
     )
     slug = models.SlugField()
-
     objects = RecipeQuerySet.as_manager()
 
     class Meta:

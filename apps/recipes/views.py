@@ -43,24 +43,24 @@ class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
 class RecipeList(BaseRecipeList):
     template_name = 'index.html'
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        tags_off = self.request.GET.getlist('tags_off', '')
-        if tags_off:
-            return qs.exclude(tag__id__in=tags_off)
-        return qs
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #     tags_off = self.request.GET.getlist('tags_off', '')
+    #     if tags_off:
+    #         return qs.exclude(tag__id__in=tags_off)
+    #     return qs
 
 
 class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'favorite.html'
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        tags_off = self.request.GET.getlist('tags_off', '')
-        if tags_off:
-            return qs.filter(favorite__user=self.request.user).exclude(
-                tag__id__in=tags_off)
-        return qs.filter(favorite__user=self.request.user)
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #     tags_off = self.request.GET.getlist('tags_off', '')
+    #     if tags_off:
+    #         return qs.filter(favorite__user=self.request.user).exclude(
+    #             tag__id__in=tags_off)
+    #     return qs.filter(favorite__user=self.request.user)
 
 
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
@@ -74,7 +74,7 @@ class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
         return Subscription.objects.filter(user=self.request.user)
 
 
-class RecipeDetailView(DetailView):
+class RecipeDetailView(IsFavoriteMixin, IsPurchaseMixin, DetailView):
     model = Recipe
     template_name = 'recipe_page.html'
 
