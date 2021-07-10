@@ -30,6 +30,11 @@ class Tag(models.Model):
         verbose_name='Цвет'
     )
 
+    slug = models.SlugField(
+        max_length=50,
+        default='breakfast'
+    )
+
     def __str__(self):
         return f'{self.title}'
 
