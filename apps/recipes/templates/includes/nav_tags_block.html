@@ -3,12 +3,12 @@
     {% for tag in tag_list %}
       {% if tag.title in tags_off %}
         <li class="tags__item">
-          <a id="breakfast" class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox" href="{{ request.path }}?{{ query }}&tags_on={{ tag.title }}"></a>
+          <a id="{{ tag.slug }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox" href="{{ request.path }}?{{ query }}&tags_on={{ tag.title }}"></a>
           <span class="tags__label">{{ tag.title }}</span>
         </li>
       {% else %}
         <li class="tags__item">
-          <a id="breakfast" class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox_active" href="{{ request.path }}?{{ query }}&tags_off={{ tag.title }}"></a>
+          <a id="{{ tag.slug }}" class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox_active" href="{{ request.path }}?{{ query }}&tags_off={{ tag.title }}"></a>
           <span class="tags__label">{{ tag.title }}</span>
         </li>
       {% endif %}
