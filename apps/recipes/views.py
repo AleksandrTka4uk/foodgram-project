@@ -95,25 +95,25 @@ class AuthorRecipeList(BaseRecipeList):
         return context
 
 
-def get_tags(data):
-    tags = []
-    if data.get('breakfast'):
-        tags.append('Завтрак')
-    if data.get('lunch'):
-        tags.append('Обед')
-    if data.get('dinner'):
-        tags.append('Ужин')
-    tags = Tag.objects.filter(title__in=tags)
-    return tags
-
-
-def get_ingredients(data):
-    ingredients = {}
-    for key, value in data.items():
-        if key.startswith('nameIngredient'):
-            num = key.split('_')[1]
-            ingredients[value] = data[f'valueIngredient_{num}']
-    return ingredients
+# def get_tags(data):
+#     tags = []
+#     if data.get('breakfast'):
+#         tags.append('Завтрак')
+#     if data.get('lunch'):
+#         tags.append('Обед')
+#     if data.get('dinner'):
+#         tags.append('Ужин')
+#     tags = Tag.objects.filter(title__in=tags)
+#     return tags
+#
+#
+# def get_ingredients(data):
+#     ingredients = {}
+#     for key, value in data.items():
+#         if key.startswith('nameIngredient'):
+#             num = key.split('_')[1]
+#             ingredients[value] = data[f'valueIngredient_{num}']
+#     return ingredients
 
 
 @login_required
@@ -122,29 +122,14 @@ def create_recipe(request):
     if form.is_valid():
         recipe = form.save(commit=False)
         recipe.author = request.user
-        data = request.POST.dict()
-        tags = get_tags(data)
-        if len(tags) == 0:
-            return render(
-                request,
-                'create_new_recipe.html',
-                {'form': form, 'tags_error': 'Укажите теги для рецепта'})
-        ingredients = get_ingredients(data)
-        if len(ingredients) == 0:
-            return render(
-                request,
-                'create_new_recipe.html',
-                {'form': form,
-                 'ingredients_error': 'Укажите ингредиенты для рецепта'})
-        else:
-            objs = []
-            for title, count in ingredients.items():
-                ingredient = get_object_or_404(Ingredient, title=title)
-                objs.append(RecipeIngredient(recipe=recipe,
-                                             ingredients=ingredient,
-                                             count=count))
+        objs = []
+        for title, count in ingredients.items():
+            ingredient = get_object_or_404(Ingredient, title=title)
+            objs.append(RecipeIngredient(recipe=recipe,
+                                        ingredients=ingredient,
+                                        count=count))
         recipe.save()
-        recipe.tag.add(*tags)
+        # recipe.tag.add(*tags)
         RecipeIngredient.objects.bulk_create(objs)
         return redirect('index')
     return render(request, 'create_new_recipe.html', {'form': form})

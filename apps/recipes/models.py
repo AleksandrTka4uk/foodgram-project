@@ -13,9 +13,9 @@ User = get_user_model()
 class Tag(models.Model):
 
     class TagTitle(models.TextChoices):
-        BREAKFAST = 'B', 'Завтрак'
-        LUNCH = 'L', 'Обед'
-        SUPPER = 'S', 'Ужин'
+        BREAKFAST = 'breakfast', 'Завтрак'
+        LUNCH = 'lunch', 'Обед'
+        SUPPER = 'dinner', 'Ужин'
 
     title = models.CharField(
         max_length=50,
