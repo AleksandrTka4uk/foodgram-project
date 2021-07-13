@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
@@ -118,19 +118,13 @@ class AuthorRecipeList(BaseRecipeList):
 
 @login_required
 def create_recipe(request):
-    form = RecipeForm(request.POST or None, files=request.FILES or None)
+    form = RecipeForm(
+        request.POST or None,
+        request=request,
+        files=request.FILES or None
+    )
     if form.is_valid():
-        recipe = form.save(commit=False)
-        recipe.author = request.user
-        objs = []
-        for title, count in ingredients.items():
-            ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(recipe=recipe,
-                                        ingredients=ingredient,
-                                        count=count))
-        recipe.save()
-        # recipe.tag.add(*tags)
-        RecipeIngredient.objects.bulk_create(objs)
+        form.save()
         return redirect('index')
     return render(request, 'create_new_recipe.html', {'form': form})
 

@@ -1,8 +1,6 @@
-from django.forms import (CheckboxSelectMultiple, ModelForm,
-                          ModelMultipleChoiceField, ValidationError)
+from django.forms import ModelForm, ValidationError
 from django.shortcuts import get_object_or_404
-
-from apps.recipes.models import Ingredient, Recipe, Tag
+from apps.recipes.models import Ingredient, Recipe, Tag, RecipeIngredient
 
 
 class RecipeForm(ModelForm):
@@ -11,6 +9,7 @@ class RecipeForm(ModelForm):
         fields = ['title', 'time', 'description', 'image', 'ingredients', 'tag']
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
         super(RecipeForm, self).__init__(*args, **kwargs)
         self.fields['ingredients'].required = False
         self.fields['tag'].required = False
@@ -24,7 +23,6 @@ class RecipeForm(ModelForm):
                 ingredients[value] = data[f'valueIngredient_{num}']
         if len(ingredients) == 0:
             raise ValidationError('Укажите ингредиенты для рецепта')
-        print(ingredients)
         return ingredients
 
     def clean_tag(self):
@@ -33,3 +31,17 @@ class RecipeForm(ModelForm):
         if not tags:
             raise ValidationError('Укажите теги для рецепта')
         return tags
+
+    def save(self, force_insert=False, force_update=False, commit=True):
+        recipe = super(RecipeForm, self).save(commit=False)
+        recipe.author = self.request.user
+        recipe.save()
+        ingredients = self.cleaned_data['ingredients']
+        objs = []
+        for title, count in ingredients.items():
+            ingredient = get_object_or_404(Ingredient, title=title)
+            objs.append(RecipeIngredient(recipe=recipe,
+                                         ingredients=ingredient,
+                                         count=count))
+        RecipeIngredient.objects.bulk_create(objs)
+        return recipe
