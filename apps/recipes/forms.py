@@ -47,7 +47,6 @@ class RecipeForm(ModelForm):
             recipe.tag.add(*tags)
         else:
             recipe.tag.set(tags)
-        RecipeIngredient.objects.filter(recipe=recipe).delete()
         ingredients = self.cleaned_data['ingredients']
         objs = []
         for title, count in ingredients.items():
@@ -55,5 +54,8 @@ class RecipeForm(ModelForm):
             objs.append(RecipeIngredient(recipe=recipe,
                                          ingredients=ingredient,
                                          count=count))
+        print(recipe.recipeingredient_set.all())
+        if recipe.recipeingredient_set is not None:
+            recipe.recipeingredient_set.all().delete()
         RecipeIngredient.objects.bulk_create(objs)
         return recipe
