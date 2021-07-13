@@ -105,14 +105,14 @@ def create_recipe(request):
     if form.is_valid():
         form.save()
         return redirect('index')
-    return render(request, 'create_new_recipe.html', {'form': form})
+    return render(request, 'recipe_form.html', {'form': form, 'edit': False})
 
 
 @login_required
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if recipe.author != request.user:
-        return redirect('change_recipe', recipe_id=recipe_id)
+        return redirect('create_new_recipe', recipe_id=recipe_id)
     form = RecipeForm(
         request.POST or None,
         request=request,
@@ -123,9 +123,9 @@ def change_recipe(request, recipe_id):
         form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
-    return render(request,
-                  'change_recipe.html',
-                  {'form': form, 'recipe': recipe})
+    return render(request, 'recipe_form.html', {'form': form,
+                                                'recipe': recipe,
+                                                'edit': True})
 
 
 @login_required
