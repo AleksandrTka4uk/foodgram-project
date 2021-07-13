@@ -95,27 +95,6 @@ class AuthorRecipeList(BaseRecipeList):
         return context
 
 
-# def get_tags(data):
-#     tags = []
-#     if data.get('breakfast'):
-#         tags.append('Завтрак')
-#     if data.get('lunch'):
-#         tags.append('Обед')
-#     if data.get('dinner'):
-#         tags.append('Ужин')
-#     tags = Tag.objects.filter(title__in=tags)
-#     return tags
-#
-#
-# def get_ingredients(data):
-#     ingredients = {}
-#     for key, value in data.items():
-#         if key.startswith('nameIngredient'):
-#             num = key.split('_')[1]
-#             ingredients[value] = data[f'valueIngredient_{num}']
-#     return ingredients
-
-
 @login_required
 def create_recipe(request):
     form = RecipeForm(
@@ -136,36 +115,12 @@ def change_recipe(request, recipe_id):
         return redirect('change_recipe', recipe_id=recipe_id)
     form = RecipeForm(
         request.POST or None,
+        request=request,
         files=request.FILES or None,
         instance=recipe
     )
     if form.is_valid():
-        recipe = form.save(commit=False)
-        data = request.POST.dict()
-        tags = get_tags(data)
-        if len(tags) == 0:
-            return render(
-                request,
-                'create_new_recipe.html',
-                {'form': form, 'tags_error': 'Укажите теги для рецепта'})
-        ingredients = get_ingredients(data)
-        if len(ingredients) == 0:
-            return render(
-                request,
-                'create_new_recipe.html',
-                {'form': form,
-                 'ingredients_error': 'Укажите ингредиенты для рецепта'})
-        else:
-            objs = []
-            for title, count in ingredients.items():
-                ingredient = get_object_or_404(Ingredient, title=title)
-                objs.append(RecipeIngredient(recipe=recipe,
-                                             ingredients=ingredient,
-                                             count=count))
-        RecipeIngredient.objects.filter(recipe=recipe).delete()
-        recipe.save()
-        recipe.tag.set(tags)
-        RecipeIngredient.objects.bulk_create(objs)
+        form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
     return render(request,

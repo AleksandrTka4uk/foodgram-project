@@ -6,7 +6,13 @@ from apps.recipes.models import Ingredient, Recipe, Tag, RecipeIngredient
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'time', 'description', 'image', 'ingredients', 'tag']
+        fields = ['title',
+                  'time',
+                  'description',
+                  'image',
+                  'ingredients',
+                  'tag'
+                  ]
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -32,10 +38,16 @@ class RecipeForm(ModelForm):
             raise ValidationError('Укажите теги для рецепта')
         return tags
 
-    def save(self, force_insert=False, force_update=False, commit=True):
+    def save(self, *args, **kwargs):
         recipe = super(RecipeForm, self).save(commit=False)
         recipe.author = self.request.user
         recipe.save()
+        tags = self.cleaned_data['tag']
+        if recipe.tag is None:
+            recipe.tag.add(*tags)
+        else:
+            recipe.tag.set(tags)
+        RecipeIngredient.objects.filter(recipe=recipe).delete()
         ingredients = self.cleaned_data['ingredients']
         objs = []
         for title, count in ingredients.items():
