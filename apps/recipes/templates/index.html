@@ -4,33 +4,33 @@
 {% load static %}
 
 {% block static_css %}
-    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
 
 {% block header %}
-    {% include 'includes/header.html' with header_title="Рецепты" add_filter_block=True %}
+  {% include 'includes/header.html' with header_title="Рецепты" add_filter_block=True %}
 {% endblock %}
 
 {% block content %}
-    <div class="card-list">
-        {% for recipe in recipe_list %}
-            {% include "includes/recipe_item.html" %}
-        {% endfor %}
-    </div>
+  <div class="card-list">
+    {% for recipe in recipe_list %}
+      {% include "includes/recipe_item.html" %}
+    {% endfor %}
+  </div>
 {% endblock %}
 
 {% block static_js %}
-    <script src="{% static 'js/components/MainCards.js' %}"></script>
-    <script src="{% static 'js/components/Purchases.js' %}"></script>
-    <script src="{% static 'js/config/config.js' %}"></script>
-    <script src="{% static 'js/components/CardList.js' %}"></script>
-    <script src="{% static 'js/components/Header.js' %}"></script>
-    <script src="{% static 'js/api/Api.js' %}"></script>
-    <script src="{% static 'js/components/Favorites.js' %}"></script>
+  <script src="{% static 'js/components/MainCards.js' %}"></script>
+  <script src="{% static 'js/components/Purchases.js' %}"></script>
+  <script src="{% static 'js/config/config.js' %}"></script>
+  <script src="{% static 'js/components/CardList.js' %}"></script>
+  <script src="{% static 'js/components/Header.js' %}"></script>
+  <script src="{% static 'js/api/Api.js' %}"></script>
+  <script src="{% static 'js/components/Favorites.js' %}"></script>
 
-    {% if user.is_authenticated %}
-        <script src="{% static 'indexAuth.js' %}"></script>
-    {% else %}
-        <script src="{% static 'indexNotAuth.js' %}"></script>
-    {% endif %}
+  {% if user.is_authenticated %}
+    <script src="{% static 'indexAuth.js' %}"></script>
+  {% else %}
+    <script src="{% static 'indexNotAuth.js' %}"></script>
+  {% endif %}
 {% endblock %}
