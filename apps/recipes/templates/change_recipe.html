@@ -32,6 +32,8 @@
                 <div class="form__field-group">
                     <div class="tags">
                         {% tag_in_recipe recipe 'Завтрак' as tag_included %}
+
+
                         <div class="tags__item">
                             <input type="checkbox" name="breakfast" id="id_breakfast" class="tags__checkbox tags__checkbox_style_orange" {% if tag_included %}checked{% endif%}>
                             <label for="id_breakfast" class="tags__label">Завтрак</label>
