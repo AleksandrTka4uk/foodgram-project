@@ -1,0 +1,10 @@
+<button
+  class="button button_style_{{ style }}"
+  name="{{ name }}"
+  {% if data_out%} data-out {% endif %}
+  >
+  {% if icon %}
+    {% include icon_path %}
+  {% endif %}
+  {{ title }}
+</button>
