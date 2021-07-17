@@ -6,7 +6,7 @@ from django.views.generic import DetailView, ListView, CreateView
 
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
-                                 Subscription, Tag, User)
+                                 Subscription, Purchase, User)
 from foodgram.settings import PAGINATE_BY
 
 
@@ -65,6 +65,9 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
 
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
     template_name = 'purchases.html'
+
+    def get_queryset(self):
+        return Purchase.objects.filter(user=self.request.user)
 
 
 class SubscriptionList(LoginRequiredMixin, BaseRecipeList):

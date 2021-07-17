@@ -15,25 +15,19 @@
   <div class="card-list card-list_column">
     <ul class="shopping-list">
       {% for purchase in user.purchases.all %}
-        <li class="shopping-list__item" data-id="{{ recipe.id }}">
-          <div class="recipe recipe_reverse">
-            {% load thumbnail %}
-            {% thumbnail purchase.recipe.image "1500x1000" crop="center" upscale=True as image%}
-            <img src="{{ image.url }}" alt="{{ recipe.title }}" class="recipe__image recipe__image_big">
-            {% endthumbnail %}
-            <a class="card__title link" href="{% url 'recipe' purchase.recipe.id %}" target="_blank">
-              <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
-            </a>
-            <p class="recipe__text"><span class="icon-time"></span> {{ purchase.recipe.time }} мин.</p>
-          </div>
-            <a href="{% url 'remove_purchases' purchase.recipe.id  %}" class="shopping-list__button link">Удалить</a>
-        </li>
+        {% with purchase.recipe as recipe %}
+          {% include 'includes/blocks/purchase_block.html' with header_title="Список покупок" %}
+        {% endwith %}
       {% endfor %}
       {% if user.purchases.count > 0 %}
-        <a href="{% url 'download_purchases' %}"><button class="button button_style_blue">Скачать список</button></a>
+        <a href="{% url 'download_purchases' %}">
+          {% include 'includes/buttons/button_item.html' with style="blue" title="Скачать список" %}
+        </a>
       {% else %}
         <p class="recipe__text">Добавьте рецепты в покупки</p>
-        <a href="{% url 'index' %}"><button class="button button_style_blue">На главную</button></a>
+        <a href="{% url 'index' %}">
+          {% include 'includes/buttons/button_item.html' with style="blue" title="На главную" %}
+        </a>
       {% endif %}
     </ul>
   </div>
