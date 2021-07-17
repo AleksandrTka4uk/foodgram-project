@@ -66,9 +66,6 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
     template_name = 'purchases.html'
 
-    def get_queryset(self):
-        return Purchase.objects.filter(user=self.request.user)
-
 
 class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'subscriptions.html'
