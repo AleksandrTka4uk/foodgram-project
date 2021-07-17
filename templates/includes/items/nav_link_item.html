@@ -2,7 +2,7 @@
 <li class="nav__item {% if url_name == url %}nav__item_active{% endif %}">
   <a href="{% url url %}" class="nav__link link">{{ title }}</a>
   {% if counter %}
-    {% include 'includes/nav_item_counter.html' with value=value %}
+    {% include 'includes/items/nav_counter_item.html' with value=value %}
   {% endif %}
 </li>
 {% endwith %}

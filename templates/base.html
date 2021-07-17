@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    {% include 'includes/nav.html' %}
+    {% include 'includes/blocks/navigation_panel.html' %}
 
     <main class="main container">
             {% block header %}
@@ -23,10 +23,10 @@
 
 
             {% if is_paginated %}
-                {% include "includes/paginator.html" %}
+                {% include "includes/blocks/paginator.html" %}
             {% endif %}
     </main>
-    {% include 'includes/footer.html' %}
+    {% include 'includes/blocks/footer.html' %}
 
     {% block static_js %}
     {% endblock %}

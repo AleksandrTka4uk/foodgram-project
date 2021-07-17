@@ -3,28 +3,25 @@
 {% load static %}
 
 {% block static_css %}
-    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/form.css' %}">
 {% endblock %}
 
 {% block header %}
-    {% include 'includes/header.html' with header_title="Войти на сайт" add_filter_block=False %}
+  {% include 'includes/blocks/header.html' with header_title="Войти на сайт" add_filter_block=False %}
 {% endblock %}
 
 {% block content %}
-    <div class="form-container">
-        <form class="form" method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-
-            {% for field in form %}
-                {% include "includes/form_field_item.html" with field=field %}
-            {% endfor %}
-
-            <div class="form__footer">
-                <button class="button button_style_blue">Войти</button>
-                <a href="{% url 'password_reset' %}" class="form__forgot-link">Забыли пароль?</a>
-            </div>
-
-        </form>
+  <div class="form-container">
+    <form class="form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% for field in form %}
+      {% include "includes/form_field_item.html" with field=field %}
+    {% endfor %}
+    <div class="form__footer">
+    <button class="button button_style_blue">Войти</button>
+    <a href="{% url 'password_reset' %}" class="form__forgot-link">Забыли пароль?</a>
     </div>
+    </form>
+  </div>
 {% endblock %}
 

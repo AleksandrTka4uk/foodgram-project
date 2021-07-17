@@ -8,9 +8,9 @@
 
 {% block header %}
   {% if not edit %}
-    {% include 'includes/header.html' with header_title="Создание рецепта" %}
+    {% include 'includes/blocks/header.html' with header_title="Создание рецепта" %}
   {% else %}
-    {% include 'includes/header.html' with header_title="Редактирование рецепта" %}
+    {% include 'includes/blocks/header.html' with header_title="Редактирование рецепта" %}
   {% endif %}
 {% endblock %}
 
