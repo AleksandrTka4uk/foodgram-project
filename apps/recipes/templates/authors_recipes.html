@@ -15,11 +15,17 @@
     {% is_signed_to_author author_id user as signed %}
     {% if signed %}
       <div class="author-subscribe" data-author="{{ author_id }}">
-        <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button></p>
+        <p style="padding: 0 0 2em 0;">
+          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" title="Отписаться от автора" %}
+<!--          <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>-->
+        </p>
       </div>
     {% else %}
       <div class="author-subscribe" data-author="{{ author_id }}">
-        <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
+        <p style="padding: 0 0 2em 0;">
+          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" data_out=True title="Подписаться на автора" %}
+<!--          <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>-->
+        </p>
       </div>
     {% endif %}
   {% endif %}
@@ -28,7 +34,7 @@
 {% block content %}
   <div class="card-list">
     {% for recipe in recipe_list %}
-      {% include "includes/recipe_item.html" %}
+      {% include "includes/blocks/recipe_block.html" %}
     {% endfor %}
   </div>
 {% endblock %}

@@ -41,39 +41,19 @@
           <div class="form__field-group">
             <div class="tags">
               {% for tag in tag_list %}
-
-              <div class="tags__item">
-                <input
-                  type="checkbox"
-                  name="{{ tag.title }}"
-                  id="id_{{ tag.title }}"
-                  class="tags__checkbox tags__checkbox_style_{{ tag.color }}"
-                  {% if tag in recipe.tag.all or not edit %}
+                <div class="tags__item">
+                  <input
+                    type="checkbox"
+                    name="{{ tag.title }}"
+                    id="id_{{ tag.title }}"
+                    class="tags__checkbox tags__checkbox_style_{{ tag.color }}"
+                    {% if tag in recipe.tag.all or not edit %}
                        checked
-                  {% endif %}
-                >
-                <label for="id_{{ tag.title }}" class="tags__label">{{ tag.title }}</label>
-              </div>
+                    {% endif %}
+                  >
+                  <label for="id_{{ tag.title }}" class="tags__label">{{ tag.title }}</label>
+                </div>
               {% endfor %}
-
-<!--              <div class="tags__item">-->
-<!--                <input type="checkbox"-->
-<!--                       name="lunch"-->
-<!--                       id="id_lunch"-->
-<!--                       class="tags__checkbox tags__checkbox_style_green"-->
-<!--                       checked>-->
-<!--                <label for="id_lunch" class="tags__label">Обед</label>-->
-<!--              </div>-->
-<!--              -->
-<!--              <div class="tags__item">-->
-<!--                <input type="checkbox"-->
-<!--                       name="dinner"-->
-<!--                       id="id_dinner"-->
-<!--                       class="tags__checkbox tags__checkbox_style_purple"-->
-<!--                       checked>-->
-<!--                <label for="id_dinner" class="tags__label">Ужин</label>-->
-
-<!--              </div>-->
             </div>
             <span class="form__error">{{ form.tag.errors }}</span>
           </div>
@@ -123,7 +103,8 @@
         <div class="form__group">
           <label
             for="{{ form.time.id_for_label }}"
-            class="form__label">{{ form.time.label }}</label>
+            class="form__label">{{ form.time.label }}
+          </label>
           <div class="form__field-group form__field-group_time">
             {{ form.time|addclass:"form__input"}}
             <label for="id_time" class="form__label">минут</label>
@@ -131,8 +112,10 @@
           </div>
         </div>
         <div class="form__group">
-          <label for="{{ form.description.id_for_label }}"
-                 class="form__label">{{ form.description.label }}</label>
+          <label
+            for="{{ form.description.id_for_label }}"
+            class="form__label">{{ form.description.label }}
+          </label>
           <div class="form__field-group">
             {{ form.description|addclass:"form__textarea" }}
             <span class="form__error">{{ form.description.errors }}</span>
@@ -147,9 +130,9 @@
         </div>
         <div class="form__footer">
           {% if not edit %}
-            <button class="button button_style_blue">Создать рецепт</button>
+            {% include "includes/buttons/button_item.html" with style="blue" title="Создать рецепт" %}
           {% else %}
-            <button class="button button_style_blue">Сохранить</button>
+            {% include "includes/buttons/button_item.html" with style="blue" title="Сохранить" %}
             <a
               style="margin-left: 2.5em"
               href="{% url 'delete_recipe' recipe.id %}"
