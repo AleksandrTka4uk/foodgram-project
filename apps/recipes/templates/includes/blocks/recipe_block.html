@@ -1,6 +1,6 @@
 {% load recipes_filters %}
 <div class="card" data-id={{ recipe.id }}>
-    {% include "includes/items/recipe_image_item.html" %}
+    {% include "includes/items/recipe_image_item.html" with img_class="card__image" %}
     <div class="card__body">
       {% include "includes/items/recipe_title_item.html" %}
       <ul class="card__items">
@@ -9,7 +9,7 @@
           {% endfor %}
       </ul>
       <div class="card__items card__items_column">
-        {% include "includes/items/recipe_time_item.html" %}
+        {% include "includes/items/recipe_time_item.html" with class="card__text" %}
         {% include "includes/items/recipe_author_item.html" %}
       </div>
     </div>

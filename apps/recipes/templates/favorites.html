@@ -14,21 +14,18 @@
 {% block content %}
   <div class="card-list">
     {% for recipe in recipe_list %}
-      {% include "includes/recipe_item.html" %}
+      {% include "includes/blocks/recipe_block.html" %}
     {% endfor %}
   </div>
 {% endblock %}
 
 {% block static_js %}
   <script src="{% static 'js/components/MainCards.js'  %}"></script>
-
   <script src="{% static 'js/components/Purchases.js' %}"></script>
   <script src="{% static 'js/components/Favorites.js' %}"></script>
-
   <script src="{% static 'js/config/config.js' %}"></script>
   <script src="{% static 'js/components/CardList.js' %}"></script>
   <script src="{% static 'js/components/Header.js' %}"></script>
-
   <script src="{% static 'js/api/Api.js' %}"></script>
   <script src="{% static 'favorite.js' %}"></script>
 {% endblock %}

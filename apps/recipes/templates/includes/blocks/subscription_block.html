@@ -1,0 +1,38 @@
+{% load recipes_filters %}
+
+<div class="card-user" data-author="{{ subscription.author.id }}">
+  <div class="card-user__header">
+    <h2 class="card-user__title">
+        {% firstof subscription.author.get_full_name subscription.author.get_username %}
+    </h2>
+  </div>
+  <div class="card-user__body">
+    <ul class="card-user__items">
+      {% for recipe in subscription.author.recipes.all %}
+        {% if forloop.counter <= 3 %}
+          <li class="card-user__item">
+            <div class="recipe">
+              {% include "includes/items/recipe_image_item.html" with img_class="recipe__image" %}
+              <h3 class="recipe__title">{{ recipe.title }}</h3>
+              {% include "includes/items/recipe_time_item.html" with class="recipe__text" %}
+            </div>
+          </li>
+        {% endif %}
+      {% endfor %}
+      {% with subscription.author.recipes.count as recipes_count %}
+        {% if recipes_count > 3 %}
+          <li class="card-user__item">
+            <a
+              href="{% url 'author' subscription.author.id %}"
+              class="card-user__link link">
+              Еще {% recipes_format_text recipes_count|add:"-3" %}
+            </a>
+          </li>
+        {% endif %}
+      {% endwith %}
+    </ul>
+  </div>
+  <div class="card-user__footer">
+    {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_auto" name="subscribe" title="Отписаться" %}
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Мои подписки{% endblock %}
+{% load static %}
+
+{% block static_css %}
+  <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+{% endblock %}
+
+{% block header %}
+  {% include 'includes/header.html' with header_title="Мои подписки" %}
+{% endblock %}
+
+{% block content %}
+<div class="card-list">
+  {% for subscription in object_list %}
+    {% include 'includes/blocks/subscription_block.html' %}
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block static_js %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/MyFollow.js' %}"></script>
+    <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'myFollow.js' %}"></script>
+{% endblock %}
