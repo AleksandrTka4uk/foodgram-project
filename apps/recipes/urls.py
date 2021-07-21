@@ -1,19 +1,25 @@
 from django.urls import include, path
-from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.routers import DefaultRouter
 
 
-from apps.recipes.api.views import (AddPurchases, AddSubscription,
-                                    GetIngredients,
-                                    RemovePurchases, RemoveSubscription, FavoritesViewSet)
+from apps.recipes.api.views import (FavoritesViewSet, SubscriptionViewSet,
+                                    PurchaseViewSet, IngredientsViewSet
+                                    )
+
 from apps.recipes.views import (AuthorRecipeList, FavoriteRecipeList,
                                 PurchasesView, RecipeDetailView, RecipeList,
                                 SubscriptionList, change_recipe, create_recipe,
                                 delete_recipe, download_purchases,
                                 remove_purchase)
 
+
 api_v1_router = DefaultRouter()
 api_v1_router.register('favorites', FavoritesViewSet, basename='favorites')
+api_v1_router.register('subscriptions', SubscriptionViewSet,
+                       basename='subscriptions')
+api_v1_router.register('purchases', PurchaseViewSet, basename='purchases')
+api_v1_router.register('ingredients', IngredientsViewSet,
+                       basename='ingredients')
 
 
 view_patterns = [
@@ -31,19 +37,8 @@ view_patterns = [
          remove_purchase, name='remove_purchases'),
 ]
 
-api_patterns = [
-    # path('favorites/', AddFavorite.as_view()),
-    # path('favorites/<int:pk>/', RemoveFavorite.as_view()),
-    path('subscriptions/', AddSubscription.as_view()),
-    path('subscriptions/<int:pk>', RemoveSubscription.as_view()),
-    path('ingredients', GetIngredients.as_view()),
-    path('purchases/', AddPurchases.as_view()),
-    path('purchases/<int:recipe_id>',
-         RemovePurchases.as_view(), name='remove_purchase'),
-]
 
 urlpatterns = [
     path('', include(view_patterns)),
-    # path('api/', include(format_suffix_patterns(api_patterns)))
     path('api/', include(api_v1_router.urls))
 ]

@@ -43,6 +43,7 @@ class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
 class RecipeList(BaseRecipeList):
     template_name = 'index.html'
 
+
     # def get_queryset(self):
     #     qs = super().get_queryset()
     #     tags_off = self.request.GET.getlist('tags_off', '')
@@ -53,6 +54,9 @@ class RecipeList(BaseRecipeList):
 
 class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'favorites.html'
+
+    def get_queryset(self):
+        return self.request.user.favorites.all()
 
     # def get_queryset(self):
     #     qs = super().get_queryset()
