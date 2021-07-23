@@ -133,7 +133,7 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        return fetch(`/api/ingredients?query=${text}`, {
+        return fetch(`/api/ingredients?title=${text}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken'),

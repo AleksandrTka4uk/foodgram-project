@@ -9,6 +9,7 @@ from apps.recipes.api.serializers import (IngredientSerializer,
                                           PurchaseSerializer,
                                           SubscriptionSerializer)
 from apps.recipes.models import Ingredient
+from apps.recipes.api.filters import IngredientFilter
 
 
 SUCCESS = JsonResponse({'success': True}, status=status.HTTP_200_OK)
@@ -69,12 +70,6 @@ class PurchaseViewSet(CreateAndDeleteViewSet):
 
 
 class IngredientsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-
-    def get_queryset(self):
-        text = self.request.GET.get('query')
-        if text:
-            ingredients = Ingredient.objects.filter(title__contains=text)
-        else:
-            ingredients = Ingredient.objects.all()
-        return ingredients
+    filterset_class = IngredientFilter
