@@ -148,13 +148,8 @@ def remove_purchase(request, recipe_id):
 
 @login_required
 def download_purchases(request):
-    # request.user.
-
-    recipes_in_purchases = Recipe.objects.filter(
-        in_purchases__user=request.user
-    )
     ingredients = Ingredient.objects.filter(
-        in_recipes__recipe__in=recipes_in_purchases).annotate(
+        in_recipes__recipe__in_purchases__user=request.user).annotate(
         Sum('in_recipes__count')
     )
     file_data = ''
