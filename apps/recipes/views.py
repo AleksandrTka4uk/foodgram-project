@@ -60,7 +60,8 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'favorites.html'
 
     def get_queryset(self):
-        return self.request.user.favorites.all()
+        qs = super().get_queryset()
+        return qs.filter(in_favorites__user=self.request.user)
 
     # def get_queryset(self):
     #     qs = super().get_queryset()
