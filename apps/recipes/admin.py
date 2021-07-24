@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 
 from apps.recipes.models import (Favorite, Ingredient, Purchase, Recipe,
                                  RecipeIngredient, Subscription, Tag)
@@ -13,8 +14,23 @@ class RecipeIngredientInline(admin.TabularInline):
 
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (RecipeIngredientInline,)
-    list_filter = ('title','tag', 'author')
+    list_display = ('title', 'in_favorite_count',)
+    list_filter = ('tag', 'author')
     search_fields = ['title']
+    readonly_fields = ('in_favorite_count',)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.annotate(
+            _in_favorites_count=Count("in_favorites", distinct=True),
+        )
+        return queryset
+
+    @admin.display(description='Количество в избранном')
+    def in_favorite_count(self, obj):
+        return obj._in_favorites_count
+
+    in_favorite_count.admin_order_field = '_in_favorites_count'
 
 
 class IngredientAdmin(admin.ModelAdmin):

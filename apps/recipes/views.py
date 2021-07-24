@@ -2,11 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
-from django.views.generic import DetailView, ListView, CreateView
+from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import (Ingredient, Recipe, RecipeIngredient,
-                                 Subscription, Purchase, User)
+from apps.recipes.models import Ingredient, Recipe, User
 from foodgram.settings import PAGINATE_BY
 
 
@@ -39,16 +38,16 @@ class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
     queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        tags_off = self.request.GET.getlist('tags_off', '')
+        if tags_off:
+            return qs.exclude(tag__title__in=tags_off)
+        return qs
+
 
 class RecipeList(BaseRecipeList):
     template_name = 'index.html'
-
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #     tags_off = self.request.GET.getlist('tags_off', '')
-    #     if tags_off:
-    #         return qs.exclude(tag__id__in=tags_off)
-    #     return qs
 
 
 class RecipeDetailView(IsFavoriteMixin, IsPurchaseMixin, DetailView):
@@ -90,8 +89,8 @@ class AuthorRecipeList(BaseRecipeList):
     template_name = 'authors_recipes.html'
 
     def get_queryset(self):
-        qs = super().get_queryset()
         author = get_object_or_404(User, pk=self.kwargs['pk'])
+        qs = super().get_queryset()
         return qs.filter(author=author)
 
     def get_context_data(self, **kwargs):
