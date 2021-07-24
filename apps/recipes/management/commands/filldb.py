@@ -1,11 +1,10 @@
-from random import randint, choices
+from random import choices, randint
 
 from django.core.management.base import BaseCommand
 
-from apps.users.factories import UserFactory
-
 from apps.recipes.factories import RecipeFactory
-from apps.recipes.models import Favorite, Recipe, User , Tag
+from apps.recipes.models import Tag
+from apps.users.factories import UserFactory
 
 USERS = 10
 MAX_RECIPES = 10

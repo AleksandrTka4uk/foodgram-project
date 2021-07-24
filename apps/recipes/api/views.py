@@ -1,16 +1,13 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import status
 from django.http import JsonResponse
-from rest_framework import mixins, viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import mixins, status, viewsets
 
-
-from apps.recipes.api.serializers import (IngredientSerializer,
-                                          FavoriteSerializer,
+from apps.recipes.api.filters import IngredientFilter
+from apps.recipes.api.serializers import (FavoriteSerializer,
+                                          IngredientSerializer,
                                           PurchaseSerializer,
                                           SubscriptionSerializer)
 from apps.recipes.models import Ingredient
-from apps.recipes.api.filters import IngredientFilter
-
 
 SUCCESS = JsonResponse({'success': True}, status=status.HTTP_200_OK)
 FAIL = JsonResponse({'success': False}, status=status.HTTP_200_OK)

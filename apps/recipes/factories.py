@@ -19,7 +19,7 @@ class BaseRecipeFactory(factory.django.DjangoModelFactory):
         model = models.Recipe
 
     @factory.post_generation
-    def tag(self, create, extracted, **kwargs):
+    def tag(self, create, extracted):
         if not create or not extracted:
             return
         self.tag.add(*extracted)
@@ -55,4 +55,3 @@ class RecipeFactory(BaseRecipeFactory):
         RecipeIngredientFactory,
         factory_related_name='recipe',
     )
-

@@ -1,17 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-
-from apps.recipes.api.views import (FavoritesViewSet, SubscriptionViewSet,
-                                    PurchaseViewSet, IngredientsViewSet
-                                    )
-
+from apps.recipes.api.views import (FavoritesViewSet, IngredientsViewSet,
+                                    PurchaseViewSet, SubscriptionViewSet)
 from apps.recipes.views import (AuthorRecipeList, FavoriteRecipeList,
                                 PurchasesView, RecipeDetailView, RecipeList,
                                 SubscriptionList, change_recipe, create_recipe,
                                 delete_recipe, download_purchases,
                                 remove_purchase)
-
 
 api_v1_router = DefaultRouter()
 api_v1_router.register('favorites', FavoritesViewSet, basename='favorites')

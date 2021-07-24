@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from apps.recipes.models import Ingredient, Favorite, Subscription, Purchase
+from apps.recipes.models import Favorite, Ingredient, Purchase, Subscription
 
 
 class IngredientSerializer(ModelSerializer):

@@ -1,6 +1,7 @@
 from django.forms import ModelForm, ValidationError
 from django.shortcuts import get_object_or_404
-from apps.recipes.models import Ingredient, Recipe, Tag, RecipeIngredient
+
+from apps.recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 class RecipeForm(ModelForm):
