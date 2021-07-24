@@ -13,6 +13,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tag',
             name='title',
-            field=models.CharField(choices=[('Breakfast', 'Завтрак'), ('Lunch', 'Обед'), ('Supper', 'Ужин')], max_length=50),
+            field=models.CharField(
+                choices=[
+                    ('Breakfast', 'Завтрак'),
+                    ('Lunch', 'Обед'),
+                    ('Supper', 'Ужин')],
+                max_length=50),
         ),
     ]

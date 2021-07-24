@@ -15,51 +15,68 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='favorite',
-            options={'verbose_name': 'Избранный рецепт', 'verbose_name_plural': 'Избранные рецепты'},
+            options={'verbose_name': 'Избранный рецепт',
+                     'verbose_name_plural': 'Избранные рецепты'},
         ),
         migrations.AlterModelOptions(
             name='ingredient',
-            options={'verbose_name': 'Ингредиент', 'verbose_name_plural': 'Ингредиенты'},
+            options={'verbose_name': 'Ингредиент',
+                     'verbose_name_plural': 'Ингредиенты'},
         ),
         migrations.AlterModelOptions(
             name='purchase',
-            options={'verbose_name': 'Покупка', 'verbose_name_plural': 'Покупки'},
+            options={'verbose_name': 'Покупка',
+                     'verbose_name_plural': 'Покупки'},
         ),
         migrations.AlterModelOptions(
             name='recipe',
-            options={'verbose_name': 'Рецепт', 'verbose_name_plural': 'Рецепты'},
+            options={'verbose_name': 'Рецепт',
+                     'verbose_name_plural': 'Рецепты'},
         ),
         migrations.AlterModelOptions(
             name='recipeingredient',
-            options={'verbose_name': 'Ингредиент в рецепте', 'verbose_name_plural': 'Ингредиенты в рецептах'},
+            options={'verbose_name': 'Ингредиент в рецепте',
+                     'verbose_name_plural': 'Ингредиенты в рецептах'},
         ),
         migrations.AlterModelOptions(
             name='subscription',
-            options={'verbose_name': 'Подписка', 'verbose_name_plural': 'Подписки'},
+            options={'verbose_name': 'Подписка',
+                     'verbose_name_plural': 'Подписки'},
         ),
         migrations.AlterModelOptions(
             name='tag',
-            options={'verbose_name': 'Тег', 'verbose_name_plural': 'Теги'},
+            options={'verbose_name': 'Тег',
+                     'verbose_name_plural': 'Теги'},
         ),
         migrations.AddField(
             model_name='tag',
             name='color',
-            field=models.CharField(default='green', max_length=30, verbose_name='Цвет'),
+            field=models.CharField(default='green',
+                                   max_length=30,
+                                   verbose_name='Цвет'),
         ),
         migrations.AlterField(
             model_name='favorite',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.recipe', verbose_name='Рецепт'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='recipes.recipe',
+                verbose_name='Рецепт'),
         ),
         migrations.AlterField(
             model_name='favorite',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorites', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='favorites',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='ingredient',
             name='dimension',
-            field=models.CharField(max_length=100, verbose_name='Мера измерения'),
+            field=models.CharField(max_length=100,
+                                   verbose_name='Мера измерения'),
         ),
         migrations.AlterField(
             model_name='ingredient',
@@ -69,46 +86,75 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='purchase',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='in_purchases', to='recipes.recipe', verbose_name='Рецепт'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='in_purchases',
+                to='recipes.recipe',
+                verbose_name='Рецепт'),
         ),
         migrations.AlterField(
             model_name='purchase',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='purchases', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='purchases',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='recipe',
             name='image',
-            field=models.ImageField(upload_to='recipes/', verbose_name='Файл с изображением'),
+            field=models.ImageField(
+                upload_to='recipes/',
+                verbose_name='Файл с изображением'),
         ),
         migrations.AlterField(
             model_name='recipe',
             name='title',
-            field=models.CharField(max_length=100, verbose_name='Название'),
+            field=models.CharField(
+                max_length=100,
+                verbose_name='Название'),
         ),
         migrations.AlterField(
             model_name='recipeingredient',
             name='count',
-            field=models.PositiveIntegerField(verbose_name='Количество'),
+            field=models.PositiveIntegerField(
+                verbose_name='Количество'),
         ),
         migrations.AlterField(
             model_name='recipeingredient',
             name='ingredients',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='in_recipes', to='recipes.ingredient', verbose_name='Ингредиент'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='in_recipes',
+                to='recipes.ingredient',
+                verbose_name='Ингредиент'),
         ),
         migrations.AlterField(
             model_name='recipeingredient',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.recipe', verbose_name='Рецепт'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='recipes.recipe',
+                verbose_name='Рецепт'),
         ),
         migrations.AlterField(
             model_name='subscription',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subscriptions', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='subscriptions',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='tag',
             name='title',
-            field=models.CharField(choices=[('Завтрак', 'Завтрак'), ('Обед', 'Обед'), ('Ужин', 'Ужин')], max_length=50, verbose_name='Название'),
+            field=models.CharField(
+                choices=[('Завтрак', 'Завтрак'),
+                         ('Обед', 'Обед'),
+                         ('Ужин', 'Ужин')],
+                max_length=50,
+                verbose_name='Название'),
         ),
     ]

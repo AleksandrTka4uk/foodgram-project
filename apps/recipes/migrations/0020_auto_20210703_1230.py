@@ -13,14 +13,23 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='favorite',
-            constraint=models.UniqueConstraint(fields=('user', 'recipe'), name='unique_favorite'),
+            constraint=models.UniqueConstraint(
+                fields=('user', 'recipe'),
+                name='unique_favorite'),
         ),
         migrations.AddConstraint(
             model_name='purchase',
-            constraint=models.UniqueConstraint(fields=('user', 'recipe'), name='unique_purchase'),
+            constraint=models.UniqueConstraint(
+                fields=('user', 'recipe'),
+                name='unique_purchase'),
         ),
         migrations.AddConstraint(
             model_name='subscription',
-            constraint=models.CheckConstraint(check=models.Q(('author', django.db.models.expressions.F('user')), _negated=True), name='user_and_author_not_equal'),
+            constraint=models.CheckConstraint(
+                check=models.Q(
+                    ('author',
+                     django.db.models.expressions.F('user')),
+                    _negated=True),
+                name='user_and_author_not_equal'),
         ),
     ]

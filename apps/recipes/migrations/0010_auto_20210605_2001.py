@@ -18,21 +18,27 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='ingredients',
-            field=models.ManyToManyField(through='recipes.RecipeIngredient', to='recipes.Ingredient', verbose_name='Ингредиенты'),
+            field=models.ManyToManyField(
+                through='recipes.RecipeIngredient',
+                to='recipes.Ingredient',
+                verbose_name='Ингредиенты'),
         ),
         migrations.AlterField(
             model_name='recipe',
             name='tag',
-            field=models.ManyToManyField(to='recipes.Tag', verbose_name='Теги'),
+            field=models.ManyToManyField(to='recipes.Tag',
+                                         verbose_name='Теги'),
         ),
         migrations.AlterField(
             model_name='recipe',
             name='time',
-            field=models.PositiveSmallIntegerField(verbose_name='Время приготовления'),
+            field=models.PositiveSmallIntegerField(
+                verbose_name='Время приготовления'),
         ),
         migrations.AlterField(
             model_name='recipe',
             name='title',
-            field=models.CharField(max_length=100, verbose_name='Название рецепта'),
+            field=models.CharField(max_length=100,
+                                   verbose_name='Название рецепта'),
         ),
     ]

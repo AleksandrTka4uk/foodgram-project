@@ -13,20 +13,34 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='recipe',
-            options={'ordering': ['-pk'], 'verbose_name': 'Рецепт', 'verbose_name_plural': 'Рецепты'},
+            options={'ordering': ['-pk'],
+                     'verbose_name': 'Рецепт',
+                     'verbose_name_plural': 'Рецепты'},
         ),
         migrations.AlterField(
             model_name='recipe',
             name='time',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1, message='Время приготовления не может быть нулевым')], verbose_name='Время приготовления'),
+            field=models.PositiveSmallIntegerField(
+                validators=[django.core.validators.MinValueValidator(
+                    1,
+                    message='Время приготовления не может быть нулевым')],
+                verbose_name='Время приготовления'),
         ),
         migrations.AlterField(
             model_name='tag',
             name='title',
-            field=models.CharField(choices=[('B', 'Завтрак'), ('L', 'Обед'), ('S', 'Ужин')], default='B', max_length=50, verbose_name='Название'),
+            field=models.CharField(choices=[
+                ('B', 'Завтрак'),
+                ('L', 'Обед'),
+                ('S', 'Ужин')],
+                default='B',
+                max_length=50,
+                verbose_name='Название'),
         ),
         migrations.AddConstraint(
             model_name='subscription',
-            constraint=models.UniqueConstraint(fields=('user', 'author'), name='unique_subscription'),
+            constraint=models.UniqueConstraint(
+                fields=('user', 'author'),
+                name='unique_subscription'),
         ),
     ]

@@ -14,11 +14,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='favorite',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='in_favorites', to='recipes.recipe', verbose_name='Рецепт'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='in_favorites',
+                to='recipes.recipe',
+                verbose_name='Рецепт'),
         ),
         migrations.AlterField(
             model_name='tag',
             name='title',
-            field=models.CharField(choices=[('Завтрак', 'Breakfast'), ('Обед', 'Lunch'), ('Ужин', 'Dinner')], default='Завтрак', max_length=50, verbose_name='Название'),
+            field=models.CharField(
+                choices=[
+                    ('Завтрак', 'Breakfast'),
+                    ('Обед', 'Lunch'),
+                    ('Ужин', 'Dinner')],
+                default='Завтрак',
+                max_length=50,
+                verbose_name='Название'),
         ),
     ]
