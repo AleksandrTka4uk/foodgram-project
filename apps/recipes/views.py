@@ -90,8 +90,9 @@ class AuthorRecipeList(BaseRecipeList):
     template_name = 'authors_recipes.html'
 
     def get_queryset(self):
+        qs = super().get_queryset()
         author = get_object_or_404(User, pk=self.kwargs['pk'])
-        return author.recipes.all()
+        return qs.filter(author=author)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

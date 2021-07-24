@@ -13,6 +13,6 @@ def tags_filter(request):
         request_copy.pop('tags_on')
     query = request_copy.urlencode()
     return {'tag_list': tag_list,
-            'tags_off' : tags_off,
-            'query' : query
+            'tags_off': tags_off,
+            'query': query
             }
