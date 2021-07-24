@@ -74,6 +74,9 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
     template_name = 'purchases.html'
 
+    def get_queryset(self):
+        return self.request.user.purchases.all()
+
 
 class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'subscriptions.html'
@@ -145,6 +148,8 @@ def remove_purchase(request, recipe_id):
 
 @login_required
 def download_purchases(request):
+    # request.user.
+
     recipes_in_purchases = Recipe.objects.filter(
         in_purchases__user=request.user
     )

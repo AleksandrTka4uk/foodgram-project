@@ -14,7 +14,7 @@
 {% block content %}
   <div class="card-list card-list_column">
     <ul class="shopping-list">
-      {% for purchase in user.purchases.all %}
+      {% for purchase in object_list %}
         {% with purchase.recipe as recipe %}
           {% include 'includes/blocks/purchase_block.html' with header_title="Список покупок" %}
         {% endwith %}
