@@ -47,22 +47,18 @@
         {% if user.is_authenticated %}
           {% if recipe.is_purchase %}
             {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon=True icon_path="includes\icons\icon_check.html" title="Рецепт добавлен" %}
-<!--            <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>-->
           {% else %}
             {% include "includes/buttons/button_item.html" with style="light-blue" name="purchases" data_out=True icon=True icon_path="includes\icons\icon_plus.html" title="Добавить в покупки" %}
-<!--            <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>-->
           {% endif %}
           {% if user != recipe.author %}
             {% is_signed_to_author recipe.author.id user as signed %}
             {% if signed %}
               <li class="single-card__item">
                 {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_subscribe" name="subscribe" title="Отписаться от автора" %}
-<!--                <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>-->
               </li>
             {% else %}
               <li class="single-card__item">
                 {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_subscribe" name="subscribe" data_out=True title="Подписаться на автора" %}
-<!--                <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>-->
               </li>
             {% endif %}
           {% endif %}

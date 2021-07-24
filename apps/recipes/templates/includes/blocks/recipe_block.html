@@ -17,17 +17,13 @@
       {% if user.is_authenticated %}
         {% if recipe.is_purchase %}
           {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" data_out=False title="Рецепт добавлен" icon=True icon_path="includes/icons/icon_check.html" %}
-<!--          <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>-->
         {% else %}
           {% include "includes/buttons/button_item.html" with style="light-blue" name="purchases" data_out=True title="Добавить в покупки" icon=True icon_path="includes/icons/icon_plus.html" %}
-<!--          <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>-->
         {% endif %}
         {% if recipe.is_favorite %}
           {% include "includes/buttons/button_item.html" with style="none" name="favorites" icon=True icon_path="includes/icons/icon_favorite.html" active=True %}
-<!--          <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>-->
         {% else %}
           {% include "includes/buttons/button_item.html" with style="none" name="favorites" data_out=True icon=True icon_path="includes/icons/icon_favorite.html" active=False %}
-<!--          <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>-->
         {% endif %}
       {% endif %}
     </div>

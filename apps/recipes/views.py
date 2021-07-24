@@ -43,13 +43,17 @@ class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
 class RecipeList(BaseRecipeList):
     template_name = 'index.html'
 
-
     # def get_queryset(self):
     #     qs = super().get_queryset()
     #     tags_off = self.request.GET.getlist('tags_off', '')
     #     if tags_off:
     #         return qs.exclude(tag__id__in=tags_off)
     #     return qs
+
+
+class RecipeDetailView(IsFavoriteMixin, IsPurchaseMixin, DetailView):
+    model = Recipe
+    template_name = 'recipe_page.html'
 
 
 class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
@@ -75,12 +79,7 @@ class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'subscriptions.html'
 
     def get_queryset(self):
-        return Subscription.objects.filter(user=self.request.user)
-
-
-class RecipeDetailView(IsFavoriteMixin, IsPurchaseMixin, DetailView):
-    model = Recipe
-    template_name = 'recipe_page.html'
+        return self.request.user.subscriptions.all()
 
 
 class AuthorRecipeList(BaseRecipeList):
@@ -88,14 +87,12 @@ class AuthorRecipeList(BaseRecipeList):
 
     def get_queryset(self):
         author = get_object_or_404(User, pk=self.kwargs['pk'])
-        return Recipe.objects.filter(author=author)
+        return author.recipes.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, pk=self.kwargs['pk'])
-        context['author_full_name'] = author.get_full_name
-        context['author_username'] = author.username
-        context['author_id'] = author.id
+        context['author'] = author
         return context
 
 

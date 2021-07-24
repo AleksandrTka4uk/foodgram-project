@@ -9,22 +9,20 @@
 {% endblock %}
 
 {% block header %}
-  {% firstof author_full_name author_username as author_name %}
+  {% firstof author.get_full_name author.username as author_name %}
   {% include 'includes/blocks/header.html' with header_title=author_name add_filter_block=True %}
-  {% if user.is_authenticated and user.id != author_id %}
-    {% is_signed_to_author author_id user as signed %}
+  {% if user.is_authenticated and user != author %}
+    {% is_signed_to_author author.id user as signed %}
     {% if signed %}
       <div class="author-subscribe" data-author="{{ author_id }}">
         <p style="padding: 0 0 2em 0;">
           {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" title="Отписаться от автора" %}
-<!--          <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>-->
         </p>
       </div>
     {% else %}
       <div class="author-subscribe" data-author="{{ author_id }}">
         <p style="padding: 0 0 2em 0;">
           {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" data_out=True title="Подписаться на автора" %}
-<!--          <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>-->
         </p>
       </div>
     {% endif %}
