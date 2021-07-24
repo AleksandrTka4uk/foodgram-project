@@ -1,6 +1,5 @@
 from django import template
 
-from apps.recipes.models import Tag
 
 register = template.Library()
 
@@ -13,11 +12,6 @@ def addclass(field, css):
 @register.simple_tag
 def is_signed_to_author(author, user):
     return user.subscriptions.filter(author=author).exists()
-
-
-@register.simple_tag
-def tag_in_recipe(recipe, tag_title):
-    return recipe.tag.filter(title=tag_title).exists()
 
 
 @register.simple_tag
