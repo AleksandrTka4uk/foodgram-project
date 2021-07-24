@@ -1,8 +1,8 @@
 <button
   class="button button_style_{{ style }} {{ size }}"
   name="{{ name }}"
-  {% if data_out%} data-out {% endif %}
-  >
+  {% if data_out %} data-out {% endif %}
+  {% if onclick %} onclick="window.location.href = '{% url url_name %}';" {% endif %}>
   {% if icon %}
     {% include icon_path %}
   {% endif %}

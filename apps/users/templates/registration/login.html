@@ -18,7 +18,7 @@
       {% include "includes/form_field_item.html" with field=field %}
     {% endfor %}
     <div class="form__footer">
-    <button class="button button_style_blue">Войти</button>
+    {% include 'includes/buttons/button_item.html' with style="blue" title="Войти" %}
     <a href="{% url 'password_reset' %}" class="form__forgot-link">Забыли пароль?</a>
     </div>
     </form>
