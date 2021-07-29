@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from envs import env
 
 from dotenv import load_dotenv
 
@@ -11,8 +12,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
-
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', var_type='list')
 # ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
