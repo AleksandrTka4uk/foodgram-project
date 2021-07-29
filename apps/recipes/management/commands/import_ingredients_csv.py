@@ -12,5 +12,5 @@ class Command(BaseCommand):
         with open('ingredients.csv', newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             for row in reader:
-                title, measure = row
-                Ingredient.objects.get_or_create(title=title, measure=measure)
+                title, dimension = row
+                Ingredient.objects.get_or_create(title=title, dimension=measure)
