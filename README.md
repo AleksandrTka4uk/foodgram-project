@@ -1,3 +1,5 @@
+![foodgram_workflow](https://github.com/AleksandrTka4uk/foodgram-project/actions/workflows/foodgram_workflow.yml.yml/badge.svg)
+
 # foodgram-project
 Проект foodgram-project собирает позволяет пользователям публиковать рецепты.
 Пользователь может выбрать рецепты и скачать список ингредиентов, которые не обходимы
@@ -34,8 +36,10 @@ python manage.py createsuperuser
 
 Для наполнения базы данными ингредиентов распакуйте файл ingredients.csv` 
 в директорию проекта. Выполните команду:
+
 ```
 python manage.py import_ingredients_csv
+python manage.py import_tags_csv
 ```
 
 ## Технологии
