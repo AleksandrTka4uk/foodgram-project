@@ -1,4 +1,4 @@
-![foodgram_workflow](https://github.com/AleksandrTka4uk/foodgram-project/actions/workflows/foodgram_workflow.yml.yml/badge.svg)
+![foodgram_workflow](https://github.com/AleksandrTka4uk/foodgram-project/actions/workflows/foodgram_workflow.yml/badge.svg)
 
 # foodgram-project
 Проект foodgram-project собирает позволяет пользователям публиковать рецепты.
