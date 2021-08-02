@@ -3,6 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
+from django.core.paginator import InvalidPage
+from django.http import Http404
+from django.utils.translation import gettext as _
 
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import Ingredient, Recipe, User
@@ -44,6 +47,32 @@ class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
         if tags_off:
             return qs.exclude(tag__title__in=tags_off)
         return qs
+
+    def paginate_queryset(self, queryset, page_size):
+        """Paginate the queryset, if needed."""
+        paginator = self.get_paginator(
+            queryset, page_size, orphans=self.get_paginate_orphans(),
+            allow_empty_first_page=self.get_allow_empty())
+        page_kwarg = self.page_kwarg
+        page = self.kwargs.get(page_kwarg) or self.request.GET.get(
+            page_kwarg) or 1
+        try:
+            page_number = int(page)
+        except ValueError:
+            if page == 'last':
+                page_number = paginator.num_pages
+            else:
+                raise Http404(_(
+                    "Page is not 'last', nor can it be converted to an int."))
+        try:
+            page = paginator.page(page_number)
+            return (paginator, page, page.object_list, page.has_other_pages())
+        except InvalidPage:
+            """Redirect to last page, if page exceeds the number of pages."""
+            page_number = paginator.num_pages
+            page = paginator.page(page_number)
+            return (paginator, page, page.object_list,
+                    page.has_other_pages())
 
 
 class RecipeList(BaseRecipeList):
