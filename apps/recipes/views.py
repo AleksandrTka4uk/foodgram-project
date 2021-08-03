@@ -41,6 +41,9 @@ class TagsFilterMixin:
         qs = super().get_queryset()
         tags_off = self.request.GET.getlist('tags_off', '')
         tags_on = self.request.GET.getlist('tags_on', '')
+        tags_off_count = len(tags_off)
+        if tags_off_count == 3:
+            tags_off = tags_off[:2]
         for item in tags_on:
             tags_off.remove(item)
         if tags_off:

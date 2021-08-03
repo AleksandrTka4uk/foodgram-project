@@ -8,10 +8,14 @@
                href="{{ request.path }}?{{ query_params }}&tags_on={{ tag.title }}"
              {% else %}
                class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox_active"
-               href="{{ request.path }}?{{ query_params }}&tags_off={{ tag.title }}"
+               {% if tags_off_count >= 2 %}
+                 href="{{ request.path }}?{{ query_params }}"
+               {% else %}
+                 href="{{ request.path }}?{{ query_params }}&tags_off={{ tag.title }}"
+               {% endif %}
              {% endif %}
           ></a>
-          <span class="tags__label">{{ tag.title }}</span>
+          <span class="tags__label">{{ tag.title }} </span>
         </li>
     {% endfor %}
   </ul>
