@@ -5,7 +5,7 @@
       <li class="pagination__item">
         <a
           class="pagination__link link"
-          href="{{ request.path }}?page={{ page_obj.previous_page_number }}&{{ tags_off }}">
+          href="{{ request.path }}?page={{ page_obj.previous_page_number }}&{{ query_params }}">
           <span class="icon-left"></span>
         </a>
       </li>
@@ -13,7 +13,7 @@
       <li class="pagination__item">
         <a
           class="pagination__link link"
-          href="{{ request.path }}?page=1&{{ tags_off }}">
+          href="{{ request.path }}?page=1&{{ query_params }}">
           1
         </a>
       </li>
@@ -26,7 +26,7 @@
         <li class="pagination__item">
           <a
             class="pagination__link link"
-            href="{{ request.path }}?page={{ page_obj.number|add:'-1' }}&{{ tags_off }}">
+            href="{{ request.path }}?page={{ page_obj.number|add:'-1' }}&{{ query_params }}">
             {{ page_obj.number|add:'-1' }}
           </a>
         </li>
@@ -36,7 +36,7 @@
     <li class="pagination__item pagination__item_active">
       <a
         class="pagination__link link"
-        href="{{ request.path }}?page={{ page_obj.number }}&{{ tags_off }}">
+        href="{{ request.path }}?page={{ page_obj.number }}&{{ query_params }}">
         {{ page_obj.number }}
       </a>
     </li>
@@ -46,7 +46,7 @@
         <li class="pagination__item">
           <a
             class="pagination__link link"
-            href="?page={{ page_obj.number|add:'1' }}&{{ tags_off }}">{{ page_obj.number|add:'1' }}</a>
+            href="?page={{ page_obj.number|add:'1' }}&{{ query_params }}">{{ page_obj.number|add:'1' }}</a>
         </li>
 
         {% if page_obj.number|add:'2' < page_obj.paginator.num_pages %}
@@ -57,7 +57,7 @@
       <li class="pagination__item">
         <a
           class="pagination__link link"
-          href="{{ request.path }}?page={{ page_obj.paginator.num_pages }}&{{ tags_off }}">
+          href="{{ request.path }}?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">
           {{ page_obj.paginator.num_pages }}
         </a>
       </li>
@@ -65,7 +65,7 @@
       <li class="pagination__item">
         <a
           class="pagination__link link"
-          href="{{ request.path }}?page={{ page_obj.next_page_number }}&{{ tags_off }}">
+          href="{{ request.path }}?page={{ page_obj.next_page_number }}&{{ query_params }}">
           <span class="icon-right"></span>
         </a>
       </li>

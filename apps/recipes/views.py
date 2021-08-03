@@ -40,6 +40,9 @@ class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
         tags_off = self.request.GET.getlist('tags_off', '')
+        tags_on = self.request.GET.getlist('tags_on', '')
+        for item in tags_on:
+            tags_off.remove(item)
         if tags_off:
             qs = (
                 qs
@@ -49,7 +52,10 @@ class TagsFilterMixin:
         return qs
 
 
-class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, TagsFilterMixin, ListView):
+class BaseRecipeList(IsFavoriteMixin,
+                     IsPurchaseMixin,
+                     TagsFilterMixin,
+                     ListView):
     model = Recipe
     queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
@@ -95,14 +101,6 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(in_favorites__user=self.request.user)
-
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #     tags_off = self.request.GET.getlist('tags_off', '')
-    #     if tags_off:
-    #         return qs.filter(favorite__user=self.request.user).exclude(
-    #             tag__id__in=tags_off)
-    #     return qs.filter(favorite__user=self.request.user)
 
 
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
