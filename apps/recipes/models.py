@@ -78,6 +78,9 @@ class RecipeQuerySet(models.QuerySet):
             ),
         ))
 
+    def without_tags(self, tags_off):
+        return self.exclude(tag__title__in=tags_off)
+
 
 class Recipe(models.Model):
     author = models.ForeignKey(

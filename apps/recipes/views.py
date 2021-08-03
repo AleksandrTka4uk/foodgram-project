@@ -36,20 +36,25 @@ class IsPurchaseMixin:
         return qs
 
 
-class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, ListView):
-    model = Recipe
-    queryset = Recipe.objects.all()
-    paginate_by = PAGINATE_BY
-
+class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
         tags_off = self.request.GET.getlist('tags_off', '')
         if tags_off:
-            return qs.exclude(tag__title__in=tags_off)
+            qs = (
+                qs
+                .select_related('author')
+                .without_tags(tags_off=tags_off)
+            )
         return qs
 
+
+class BaseRecipeList(IsFavoriteMixin, IsPurchaseMixin, TagsFilterMixin, ListView):
+    model = Recipe
+    queryset = Recipe.objects.all()
+    paginate_by = PAGINATE_BY
+
     def paginate_queryset(self, queryset, page_size):
-        """Paginate the queryset, if needed."""
         paginator = self.get_paginator(
             queryset, page_size, orphans=self.get_paginate_orphans(),
             allow_empty_first_page=self.get_allow_empty())
