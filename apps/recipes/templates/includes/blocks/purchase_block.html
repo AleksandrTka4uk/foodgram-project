@@ -1,7 +1,7 @@
 <li class="shopping-list__item" data-id="{{ recipe.id }}">
   <div class="recipe recipe_reverse">
     {% include "includes/items/recipe_image_item.html" with img_class="recipe__image recipe__image_big" %}
-    <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">
+    <a class="card__title link" href="{% url 'recipe' recipe.id %}">
       <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
     </a>
     {% include "includes/items/recipe_time_item.html" with class="recipe__text" %}
