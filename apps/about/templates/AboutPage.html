@@ -1,20 +1,73 @@
 {% extends "base.html" %}
 
-{% block title %}Об авторе{% endblock %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
 {% load static %}
 {% block static_css %}
-    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="custom-center-block">
-            <p>
-            Автор Ткачук Александр. Студент 10 когорты Яндекс Практикум.<br/>
-            <a href="https://github.com/AleksandrTka4uk" target="_blank">GitHub</a>
-            </p>
-        <div class="custom-button-block">
-            <button class="button button_style_blue" onclick="window.location.href = '{% url 'index' %}';">Перейти на главную</button>
+  <div class="single-card">
+    {% load thumbnail %}
+    {% thumbnail "/media/about/author.jpg" "300x200" crop="center" upscale=True as image %}
+      <img
+        src="/media/about/author.jpg"
+        alt=""
+        title=""
+        class="single-card__image"
+      >
+    {% endthumbnail %}
+    <div class="single-card__info">
+      <div class="single-card__header-info">
+        <h1 class="single-card__title">Александр Ткачук</h1>
+      </div>
+      <div class="single-card__section">
+        <h3 class="single-card__section-title">Об авторе:</h3>
+        <p class=" single-card__section-text">
+          32 года. Работаю в технической поддержке банка.
+        </p>
+        <p class=" single-card__section-text">
+          Сейчас учусь в <a href="https://practicum.yandex.ru/">Яндекс Практикум</a> на факультете "Python-разработчик".
+        </p>
+      <div class="single-card__section">
+        <h3 class="single-card__section-title">Хобби:</h3>
+        <div class="single-card__items single-card__items_column">
+          <p class=" single-card__section-item">Спорт</p>
+          <p class=" single-card__section-item">Музыка</p>
+          <p class=" single-card__section-item">Программирование</p>
         </div>
+      </div>
+      <div class="single-card__section">
+        <h3 class="single-card__section-title">Контакты:</h3>
+        <div class="single-card__items single-card__items_column">
+          <p class=" single-card__section-item">GitHub:
+            <a href="https://github.com/AleksandrTka4uk">
+              https://github.com/AleksandrTka4uk
+            </a>
+          </p>
+          <p class=" single-card__section-item">
+            Telegram:
+            <a href="https://t.me/klonyfay">https://t.me/klonyfay</a>
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
+{% endblock %}
+
+{% block static_js %}
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/SingleCard.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'singlePage.js' %}"></script>
+    {% else %}
+        <script src="{% static 'singlePageNotAuth.js' %}"></script>
+    {% endif %}
 {% endblock %}
