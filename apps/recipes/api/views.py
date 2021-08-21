@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, status, viewsets
+from rest_framework.exceptions import ValidationError
 
 from apps.recipes.api.filters import IngredientFilter
 from apps.recipes.api.serializers import (FavoriteSerializer,
@@ -10,7 +11,7 @@ from apps.recipes.api.serializers import (FavoriteSerializer,
 from apps.recipes.models import Ingredient
 
 SUCCESS = JsonResponse({'success': True}, status=status.HTTP_200_OK)
-FAIL = JsonResponse({'success': False}, status=status.HTTP_200_OK)
+FAIL = JsonResponse({'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateAndDeleteViewSet(
@@ -20,7 +21,10 @@ class CreateAndDeleteViewSet(
 ):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True, )
+        try:
+            serializer.is_valid(raise_exception=True, )
+        except ValidationError:
+            return FAIL
         self.perform_create(serializer)
         return SUCCESS
 
