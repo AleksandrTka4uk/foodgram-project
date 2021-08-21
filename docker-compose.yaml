@@ -13,7 +13,6 @@ services:
     env_file:
       - ./.env
   web:
-#    build: .
     image: alextkachuk2/foodgram-web
     restart: always
     volumes:
