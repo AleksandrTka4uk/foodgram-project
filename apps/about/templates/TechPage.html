@@ -1,30 +1,82 @@
 {% extends "base.html" %}
 
-{% block title %}Технологии{% endblock %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
 {% load static %}
 {% block static_css %}
-    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="custom-center-block">
-        <p >
-            <br>Используемые технологии:<br/>
-            <br/>
-            <a href='https://www.djangoproject.com/' target='_blank'>Django==3.2.2</a><br/>
-            <a href='https://www.django-rest-framework.org/' target='_blank'>djangorestframework==3.12.4</a><br/>
-            <a href='https://pypi.org/project/Markdown/' target='_blank'>Markdown==3.3.4</a><br/>
-            <a href='https://sorl-thumbnail.readthedocs.io/en/latest/' target='_blank'>sorl-thumbnail==12.7.0</a><br/>
-            <a href='https://pypi.org/project/Pillow/' target='_blank'>Pillow==8.2.0</a><br/>
-            <a href='https://docs.python-requests.org/en/master/' target='_blank'>requests==2.23.0</a><br/>
-            <a href='https://gunicorn.org/' target='_blank'>gunicorn==20.0.4</a><br/>
-            <a href='https://www.psycopg.org/' target='_blank'>psycopg2-binary==2.8.5</a><br/>
-            <a href='https://nginx.org/ru/' target='_blank'>nginx==1.19.3</a><br/>
-            <a href='https://www.postgresql.org/' target='_blank'>postgres:12.4</a><br/>
+  <div class="single-card">
+    {% load thumbnail %}
+    {% thumbnail "/media/about/chasy.jpg" "300x200" crop="center" upscale=True as image %}
+      <img
+        src="/media/about/chasy.jpg"
+        alt=""
+        title=""
+        class="single-card__image"
+      >
+    {% endthumbnail %}
+    <div class="single-card__info">
+      <div class="single-card__header-info">
+        <h1 class="single-card__title">Технологии</h1>
+      </div>
+      <div class="single-card__section">
+        <h3 class="single-card__section-title">О проекте:</h3>
+        <p class=" single-card__section-text">
+          Foodgram, «Продуктовый помощник» это онлайн-сервис, где пользователи могут публиковать свои рецепты,
+          подписываться на публикации других пользователей, добавлять понравившиеся рецепты в «Избранное»,
+          а перед походом в магазин скачивать список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
         </p>
-        <div class="custom-button-block">
-            <button class="button button_style_blue" onclick="window.location.href = '{% url 'index' %}';">Перейти на главную</button>
+        <h3 class="single-card__section-title">Технологии:</h3>
+        <p class=" single-card__section-text">
+          В проекте используются технологии:
+        </p>
+      <div class="single-card__section">
+        <div class="single-card__items single-card__items_column">
+          <p class=" single-card__section-item">
+            <a href='https://www.djangoproject.com/' target='_blank'>Django==3.2.2</a>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://www.django-rest-framework.org/' target='_blank'>djangorestframework==3.12.4</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://pypi.org/project/Markdown/' target='_blank'>Markdown==3.3.4</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://sorl-thumbnail.readthedocs.io/en/latest/' target='_blank'>sorl-thumbnail==12.7.0</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://docs.python-requests.org/en/master/' target='_blank'>requests==2.23.0</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://www.psycopg.org/' target='_blank'>psycopg2-binary==2.8.5</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://nginx.org/ru/' target='_blank'>nginx==1.19.3</a><br/>
+          </p>
+          <p class=" single-card__section-item">
+            <a href='https://www.postgresql.org/' target='_blank'>postgres:12.4</a><br/>
+          </p>
         </div>
+      </div>
     </div>
+  </div>
+{% endblock %}
+
+{% block static_js %}
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/SingleCard.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'singlePage.js' %}"></script>
+    {% else %}
+        <script src="{% static 'singlePageNotAuth.js' %}"></script>
+    {% endif %}
 {% endblock %}
