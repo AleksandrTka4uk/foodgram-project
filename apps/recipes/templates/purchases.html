@@ -19,7 +19,7 @@
           {% include 'includes/blocks/purchase_block.html' with header_title="Список покупок" %}
         {% endwith %}
       {% endfor %}
-      {% if user.purchases.count > 0 %}
+      {% if object_list %}
         <a href="{% url 'download_purchases' %}">
           {% include 'includes/buttons/button_item.html' with style="blue" title="Скачать список" %}
         </a>
