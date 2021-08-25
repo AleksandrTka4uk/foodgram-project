@@ -1,33 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
-
-    {% block static_css %}
-    {% endblock %}
-
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+  {% block static_css %}{% endblock %}
 </head>
 <body>
-    {% include 'includes/blocks/navigation_panel.html' %}
-
+  {% include 'includes/blocks/navigation_panel.html' %}
     <main class="main container">
-            {% block header %}
-            {% endblock %}
-
-            {% block content %}
-            {% endblock %}
-
-
-            {% if is_paginated %}
-                {% include "includes/blocks/paginator.html" %}
-            {% endif %}
+      {% block header %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% if paginator %}
+        {% include "includes/blocks/paginator.html" %}
+      {% endif %}
     </main>
     {% include 'includes/blocks/footer.html' %}
-
     {% block static_js %}
     {% endblock %}
 </body>
