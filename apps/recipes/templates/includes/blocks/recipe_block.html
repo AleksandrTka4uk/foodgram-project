@@ -4,9 +4,7 @@
     <div class="card__body">
       {% include "includes/items/recipe_title_item.html" %}
       <ul class="card__items">
-          {% for tag in recipe.tag.all %}
-            {% include "includes/items/recipe_tag_item.html" with tag=tag %}
-          {% endfor %}
+        {% include "includes/items/recipe_tag_item.html" with tag=tag %}
       </ul>
       <div class="card__items card__items_column">
         {% include "includes/items/recipe_time_item.html" with class="card__text" %}

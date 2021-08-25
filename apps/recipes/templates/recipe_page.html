@@ -25,9 +25,7 @@
         {% endif %}
       </div>
       <ul class="single-card__items">
-        {% for tag in recipe.tag.all %}
-          {% include "includes/items/recipe_tag_item.html" %}
-        {% endfor %}
+        {% include "includes/items/recipe_tag_item.html" %}
       </ul>
       <div class="single-card__items single-card__items_column">
         {% include "includes/items/recipe_time_item.html" with class="single-card__text" %}
@@ -39,12 +37,12 @@
           <li class="single-card__item">
             <a style="margin-left: 2.5em" href="{% url 'change_recipe' recipe.id %}" class="single-card__text">Редактировать рецепт</a>
           </li>
+          {% endif %}
         </ul>
-        {% endif %}
       </div>
-      <ul class="single-card__items">
-        {% load recipes_filters %}
-        {% if user.is_authenticated %}
+      {% if user.is_authenticated %}
+        <ul class="single-card__items">
+          {% load recipes_filters %}
           {% if recipe.is_purchase %}
             {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon=True icon_path="includes/icons/icon_check.html" title="Рецепт добавлен" %}
           {% else %}
@@ -62,12 +60,12 @@
               </li>
             {% endif %}
           {% endif %}
-        {% endif %}
-      </ul>
+        </ul>
+      {% endif %}
       <div class="single-card__section">
         <h3 class="single-card__section-title">Ингредиенты:</h3>
         <div class="single-card__items single-card__items_column">
-          {% for recipeIngredient in recipe.recipeingredient_set.all %}
+          {% for recipe_ingredient in recipe.recipeingredient_set.all %}
             {% include "includes/items/recipeingredients_item.html" %}
           {% endfor %}
         </div>
