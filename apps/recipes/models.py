@@ -35,12 +35,12 @@ class Tag(models.Model):
         default='breakfast'
     )
 
-    def __str__(self):
-        return f'{self.title}'
-
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+
+    def __str__(self):
+        return f'{self.title}'
 
 
 class Ingredient(models.Model):
@@ -63,20 +63,24 @@ class Ingredient(models.Model):
 
 class RecipeQuerySet(models.QuerySet):
     def with_is_favorite(self, user_id: Optional[int]):
-        return self.annotate(is_favorite=Exists(
-            Favorite.objects.filter(
-                user_id=user_id,
-                recipe_id=OuterRef('pk'),
-            ),
-        ))
+        return self.annotate(
+            is_favorite=Exists(
+                Favorite.objects.filter(
+                    user_id=user_id,
+                    recipe_id=OuterRef('pk'),
+                ),
+            )
+        )
 
     def with_is_purchase(self, user_id: Optional[int]):
-        return self.annotate(is_purchase=Exists(
-            Purchase.objects.filter(
-                user_id=user_id,
-                recipe_id=OuterRef('pk'),
-            ),
-        ))
+        return self.annotate(
+            is_purchase=Exists(
+                Purchase.objects.filter(
+                    user_id=user_id,
+                    recipe_id=OuterRef('pk'),
+                ),
+            )
+        )
 
     def without_tags(self, tags_off):
         return self.exclude(tag__title__in=tags_off)
@@ -85,8 +89,8 @@ class RecipeQuerySet(models.QuerySet):
 class Recipe(models.Model):
     author = models.ForeignKey(
         User,
-        related_name='recipes',
         on_delete=models.CASCADE,
+        related_name='recipes',
         verbose_name='Автор'
     )
     title = models.CharField(
@@ -137,6 +141,7 @@ class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
+        related_name='with_ingredients',
         verbose_name='Рецепт'
     )
     ingredients = models.ForeignKey(
@@ -146,7 +151,12 @@ class RecipeIngredient(models.Model):
         verbose_name='Ингредиент'
     )
     count = models.PositiveIntegerField(
-        verbose_name='Количество'
+        verbose_name='Количество',
+        validators=[
+            MinValueValidator(
+                1,
+                message='Количество не может быть нулевым')
+        ]
     )
 
     class Meta:
@@ -157,14 +167,14 @@ class RecipeIngredient(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='favorites',
         on_delete=models.CASCADE,
+        related_name='favorites',
         verbose_name='Пользователь'
     )
     recipe = models.ForeignKey(
         Recipe,
-        related_name='in_favorites',
         on_delete=models.CASCADE,
+        related_name='in_favorites',
         verbose_name='Рецепт'
     )
 
@@ -188,6 +198,7 @@ class Subscription(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name='in_subscriptions',
         verbose_name='Автор'
     )
 
@@ -209,8 +220,8 @@ class Subscription(models.Model):
 class Purchase(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='purchases',
         on_delete=models.CASCADE,
+        related_name='purchases',
         verbose_name='Пользователь'
     )
     recipe = models.ForeignKey(

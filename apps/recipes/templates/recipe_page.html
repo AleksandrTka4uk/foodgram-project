@@ -65,7 +65,7 @@
       <div class="single-card__section">
         <h3 class="single-card__section-title">Ингредиенты:</h3>
         <div class="single-card__items single-card__items_column">
-          {% for recipe_ingredient in recipe.recipeingredient_set.all %}
+          {% for recipe in recipe.with_ingredients.all %}
             {% include "includes/items/recipeingredients_item.html" %}
           {% endfor %}
         </div>
