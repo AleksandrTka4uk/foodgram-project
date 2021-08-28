@@ -90,16 +90,16 @@ class BaseRecipeList(IsFavoriteMixin,
 
 
 class RecipeList(BaseRecipeList):
-    template_name = 'index.html'
+    template_name = 'recipes/index.html'
 
 
 class RecipeDetailView(IsFavoriteMixin, IsPurchaseMixin, DetailView):
     model = Recipe
-    template_name = 'recipe_page.html'
+    template_name = 'recipes/recipe_page.html'
 
 
 class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
-    template_name = 'favorites.html'
+    template_name = 'recipes/favorites.html'
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -107,21 +107,21 @@ class FavoriteRecipeList(LoginRequiredMixin, BaseRecipeList):
 
 
 class PurchasesView(LoginRequiredMixin, BaseRecipeList):
-    template_name = 'purchases.html'
+    template_name = 'recipes/purchases.html'
 
     def get_queryset(self):
         return self.request.user.purchases.all()
 
 
 class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
-    template_name = 'subscriptions.html'
+    template_name = 'recipes/subscriptions.html'
 
     def get_queryset(self):
         return self.request.user.subscriptions.all()
 
 
 class AuthorRecipeList(BaseRecipeList):
-    template_name = 'authors_recipes.html'
+    template_name = 'recipes/authors_recipes.html'
 
     def get_queryset(self):
         author = get_object_or_404(User, pk=self.kwargs['pk'])
@@ -145,7 +145,7 @@ def create_recipe(request):
     if form.is_valid():
         form.save()
         return redirect('index')
-    return render(request, 'recipe_form.html', {'form': form, 'edit': False})
+    return render(request, 'recipes/recipe_form.html', {'form': form, 'edit': False})
 
 
 @login_required
@@ -163,7 +163,7 @@ def change_recipe(request, recipe_id):
         form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
-    return render(request, 'recipe_form.html', {'form': form,
+    return render(request, 'recipes/recipe_form.html', {'form': form,
                                                 'recipe': recipe})
 
 
