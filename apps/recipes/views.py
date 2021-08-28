@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum
-from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
-from django.views.generic import DetailView, ListView
 from django.core.paginator import InvalidPage
+from django.db.models import Sum
 from django.http import Http404
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
+from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm
 from apps.recipes.models import Ingredient, Recipe, User
