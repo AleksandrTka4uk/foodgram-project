@@ -185,13 +185,13 @@ def remove_purchase(request, recipe_id):
 def download_purchases(request):
     ingredients = Ingredient.objects.filter(
         in_recipes__recipe__in_purchases__user=request.user).annotate(
-        Sum('in_recipes__count')
+        sum_ingredients=Sum('in_recipes__count')
     )
     file_data = ''
     for ingredient in ingredients:
         file_data += (f'{ingredient.title} '
                       f'({ingredient.dimension}) - '
-                      f'{ingredient.in_recipes__count__sum} \n'
+                      f'{ingredient.sum_ingredients} \r\n'
                       )
     response = HttpResponse(file_data,
                             content_type='application/text charset=utf-8')
