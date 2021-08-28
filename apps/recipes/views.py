@@ -152,7 +152,7 @@ def create_recipe(request):
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if recipe.author != request.user:
-        return redirect('create_new_recipe', recipe_id=recipe_id)
+        return redirect('create_recipe')
     form = RecipeForm(
         request.POST or None,
         request=request,
