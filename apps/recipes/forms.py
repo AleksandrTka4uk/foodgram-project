@@ -28,7 +28,7 @@ class RecipeForm(ModelForm):
             if key.startswith('nameIngredient'):
                 num = key.split('_')[1]
                 ingredients[value] = data[f'valueIngredient_{num}']
-        if len(ingredients) == 0:
+        if not ingredients:
             raise ValidationError('Укажите ингредиенты для рецепта')
         return ingredients
 
@@ -55,7 +55,6 @@ class RecipeForm(ModelForm):
             objs.append(RecipeIngredient(recipe=recipe,
                                          ingredients=ingredient,
                                          count=count))
-        print(recipe.recipeingredient_set.all())
         if recipe.recipeingredient_set is not None:
             recipe.recipeingredient_set.all().delete()
         RecipeIngredient.objects.bulk_create(objs)
