@@ -25,7 +25,8 @@
             <a
               href="{% url 'author' subscription.author.id %}"
               class="card-user__link link">
-              Еще {% recipes_format_text recipes_count|add:"-3" %}
+              {% format_ending recipes_count|add:"-3" "" "a" "ов" as ending %}
+              Еще {{ recipes_count|add:"-3" }} рецепт{{ ending }}
             </a>
           </li>
         {% endif %}
