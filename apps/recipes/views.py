@@ -80,7 +80,7 @@ class BaseRecipeList(IsFavoriteMixin,
                     "Page is not 'last', nor can it be converted to an int."))
         try:
             page = paginator.page(page_number)
-            return (paginator, page, page.object_list, page.has_other_pages())
+            return paginator, page, page.object_list, page.has_other_pages()
         except InvalidPage:
             """Redirect to last page, if page exceeds the number of pages."""
             page_number = paginator.num_pages
@@ -145,7 +145,7 @@ def create_recipe(request):
     if form.is_valid():
         form.save()
         return redirect('index')
-    return render(request, 'recipes/recipe_form.html', {'form': form, 'edit': False})
+    return render(request, 'recipes/recipe_form.html', {'form': form})
 
 
 @login_required
@@ -163,8 +163,10 @@ def change_recipe(request, recipe_id):
         form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
-    return render(request, 'recipes/recipe_form.html', {'form': form,
-                                                'recipe': recipe})
+    return render(
+        request,
+        'recipes/recipe_form.html',
+        {'form': form, 'recipe': recipe})
 
 
 @login_required
