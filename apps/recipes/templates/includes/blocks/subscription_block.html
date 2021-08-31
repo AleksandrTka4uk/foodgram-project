@@ -8,16 +8,14 @@
   </div>
   <div class="card-user__body">
     <ul class="card-user__items">
-      {% for recipe in subscription.author.recipes.all %}
-        {% if forloop.counter <= 3 %}
-          <li class="card-user__item">
-            <div class="recipe">
-              {% include "includes/items/recipe_image_item.html" with img_class="recipe__image" %}
+      {% for recipe in subscription.author.recipes.all|slice:":3" %}
+        <li class="card-user__item">
+          <div class="recipe">
+            {% include "includes/items/recipe_image_item.html" with img_class="recipe__image" %}
               <h3 class="recipe__title">{{ recipe.title }}</h3>
-              {% include "includes/items/recipe_time_item.html" with class="recipe__text" %}
-            </div>
-          </li>
-        {% endif %}
+            {% include "includes/items/recipe_time_item.html" with class="recipe__text" %}
+          </div>
+        </li>
       {% endfor %}
       {% with subscription.author.recipes.count as recipes_count %}
         {% if recipes_count > 3 %}
