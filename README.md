@@ -65,6 +65,7 @@ python manage.py import_tags_csv
 - [sorl-thumbnail==12.7.0](https://sorl-thumbnail.readthedocs.io/en/latest/)
 - [nginx==1.19.3](https://nginx.org/ru/)
 - [postgres:12.4](https://www.postgresql.org/)
+- [django-more-admin-filters==1.3](https://github.com/thomst/django-more-admin-filters)
 
 ## Об авторе
 Ткачук Александр Валерьевич. Студент 10 когорты Яндекc.Практикум.

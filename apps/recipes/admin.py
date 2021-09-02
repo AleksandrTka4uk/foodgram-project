@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db.models import Count
-
+from more_admin_filters import MultiSelectDropdownFilter
 
 from apps.recipes.models import (Favorite, Ingredient, Purchase, Recipe,
                                  RecipeIngredient, Subscription, Tag)
@@ -15,7 +15,7 @@ class RecipeIngredientInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (RecipeIngredientInline,)
     list_display = ('title', 'tag_display', 'in_favorite_count', )
-    list_filter = ('tag',)
+    list_filter = (('tag__title', MultiSelectDropdownFilter), )
     search_fields = ['title']
     readonly_fields = ('in_favorite_count',)
     list_per_page = 25
