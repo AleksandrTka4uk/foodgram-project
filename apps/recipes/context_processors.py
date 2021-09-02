@@ -12,7 +12,7 @@ def tags_filter(request):
     for item in tags_on:
         tags_off.remove(item)
     request_get_params.setlist('tags_off', tags_off)
-    if len(tags_on) != 0:
+    if tags_on:
         request_get_params.pop('tags_on')
     if request_get_params.__contains__('page'):
         request_get_params.pop('page')
