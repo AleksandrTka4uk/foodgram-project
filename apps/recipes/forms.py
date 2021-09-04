@@ -1,20 +1,19 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm, ValidationError
-from django.shortcuts import get_object_or_404
-
 from apps.recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title',
-                  'time',
-                  'description',
-                  'image',
-                  'ingredients',
-                  'tag'
-                  ]
+        fields = [
+            'title',
+            'time',
+            'description',
+            'image',
+            'ingredients',
+            'tag'
+        ]
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -47,25 +46,22 @@ class RecipeForm(ModelForm):
             raise ValidationError('Укажите теги для рецепта')
         return tags
 
-    def save(self, *args, **kwargs):
-        recipe = self.instance
-        recipe.save()
+    def _save_m2m(self):
         tags = self.cleaned_data['tag']
-        if recipe.tag is None:
-            recipe.tag.add(*tags)
+        if self.instance.tag is None:
+            self.instance.tag.add(*tags)
         else:
-            recipe.tag.set(tags)
+            self.instance.tag.set(tags)
         ingredients = self.cleaned_data['ingredients']
         objs = []
         for ingredient, count in ingredients.items():
             objs.append(
                 RecipeIngredient(
-                    recipe=recipe,
+                    recipe=self.instance,
                     ingredients=ingredient,
                     count=count
                 )
             )
-        if recipe.with_ingredients is not None:
-            recipe.with_ingredients.all().delete()
+        if self.instance.with_ingredients is not None:
+            self.instance.with_ingredients.all().delete()
         RecipeIngredient.objects.bulk_create(objs)
-        return recipe
