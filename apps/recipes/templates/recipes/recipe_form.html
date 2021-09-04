@@ -81,16 +81,20 @@
                     id="nameIngredient_{{ forloop.counter }}"
                     name="nameIngredient_{{ forloop.counter }}"
                     type="hidden"
-                    value="{{ recipeIngredient.ingredients.title }}">
+                    value="{{ recipe.ingredients.title }}"
+                  >
                   <input
                     id="valueIngredient_{{ forloop.counter }}"
                     name="valueIngredient_{{ forloop.counter }}"
-                    type="hidden" value="{{ recipeIngredient.count }}">
+                    type="hidden"
+                    value="{{ recipe.count }}"
+                  >
                   <input
                     id="unitsIngredient_{{ forloop.counter }}"
                     name="unitsIngredient_{{ forloop.counter }}"
                     type="hidden"
-                    value="{{ recipeIngredient.ingredients.dimension }}">
+                    value="{{ recipe.ingredients.dimension }}"
+                  >
                 </div>
               {% endfor %}
             <span class="form__error">
