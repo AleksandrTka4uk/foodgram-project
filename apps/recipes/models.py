@@ -10,13 +10,13 @@ from django.urls import reverse
 User = get_user_model()
 
 
+class TagTitle(models.TextChoices):
+    BREAKFAST = 'Завтрак'
+    LUNCH = 'Обед'
+    DINNER = 'Ужин'
+
+
 class Tag(models.Model):
-
-    class TagTitle(models.TextChoices):
-        BREAKFAST = 'Завтрак'
-        LUNCH = 'Обед'
-        DINNER = 'Ужин'
-
     title = models.CharField(
         max_length=50,
         choices=TagTitle.choices,
