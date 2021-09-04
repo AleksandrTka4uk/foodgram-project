@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm, ValidationError
 from django.shortcuts import get_object_or_404
 
@@ -26,8 +27,15 @@ class RecipeForm(ModelForm):
         ingredients = {}
         for key, value in data.items():
             if key.startswith('nameIngredient'):
+                try:
+                    ingredient = Ingredient.objects.get(title=value)
+                except ObjectDoesNotExist:
+                    raise ValidationError(
+                        f'Ингредиента {value} не существует. '
+                        f'Выберите ингредиенты из выпадающего списка.'
+                    )
                 num = key.split('_')[1]
-                ingredients[value] = data[f'valueIngredient_{num}']
+                ingredients[ingredient] = data[f'valueIngredient_{num}']
         if not ingredients:
             raise ValidationError('Укажите ингредиенты для рецепта')
         return ingredients
@@ -50,12 +58,15 @@ class RecipeForm(ModelForm):
             recipe.tag.set(tags)
         ingredients = self.cleaned_data['ingredients']
         objs = []
-        for title, count in ingredients.items():
-            ingredient = get_object_or_404(Ingredient, title=title)
-            objs.append(RecipeIngredient(recipe=recipe,
-                                         ingredients=ingredient,
-                                         count=count))
-        if recipe.recipeingredient_set is not None:
-            recipe.recipeingredient_set.all().delete()
+        for ingredient, count in ingredients.items():
+            objs.append(
+                RecipeIngredient(
+                    recipe=recipe,
+                    ingredients=ingredient,
+                    count=count
+                )
+            )
+        if recipe.with_ingredients is not None:
+            recipe.with_ingredients.all().delete()
         RecipeIngredient.objects.bulk_create(objs)
         return recipe
