@@ -48,8 +48,7 @@ class RecipeForm(ModelForm):
         return tags
 
     def save(self, *args, **kwargs):
-        recipe = super(RecipeForm, self).save(commit=False)
-        recipe.author = self.request.user
+        recipe = self.instance
         recipe.save()
         tags = self.cleaned_data['tag']
         if recipe.tag is None:

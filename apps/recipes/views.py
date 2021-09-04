@@ -143,6 +143,7 @@ def create_recipe(request):
         files=request.FILES or None
     )
     if form.is_valid():
+        form.instance.author = request.user
         form.save()
         return redirect('index')
     return render(request, 'recipes/recipe_form.html', {'form': form})
@@ -160,6 +161,7 @@ def change_recipe(request, recipe_id):
         instance=recipe
     )
     if form.is_valid():
+        form.instance.author = request.user
         form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)
