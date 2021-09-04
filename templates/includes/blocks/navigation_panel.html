@@ -1,22 +1,25 @@
 <header class="header">
   <nav class="nav">
     <div class="nav__container container">
+      <ul class="nav__items list">
+        {% include 'includes/items/nav_link_item.html' with url='index' title='Рецепты' %}
+      </ul>
       {% if user.is_authenticated %}
         <ul class="nav__items list">
-          {% include 'includes/items/nav_link_item.html' with url='index' title='Рецепты' %}
           {% include 'includes/items/nav_link_item.html' with url='subscription' title='Мои подписки' %}
           {% include 'includes/items/nav_link_item.html' with url='create_recipe' title='Создать рецепт' %}
           {% include 'includes/items/nav_link_item.html' with url='favorites' title='Избранное' %}
-          {% include 'includes/items/nav_link_item.html' with url='purchases' title='Список покупок' counter=True value=user.purchases.all.count %}
+          {% if user.purchases.count > 0 %}
+            {% include 'includes/items/nav_link_item.html' with url='purchases' title='Список покупок' counter=True value=user.purchases.count %}
+          {% else %}
+            {% include 'includes/items/nav_link_item.html' with url='purchases' title='Список покупок' %}
+          {% endif %}
         </ul>
         <ul class="nav__items list">
           {% include 'includes/items/nav_link_item.html' with url='password_change' title='Изменить пароль' %}
           {% include 'includes/items/nav_link_item.html' with url='logout' title='Выход' %}
         </ul>
       {% else %}
-         <ul class="nav__items list">
-           {% include 'includes/items/nav_link_item.html' with url='index' title='Рецепты' %}
-         </ul>
          <ul class="nav__items list">
             {% include 'includes/items/nav_link_item.html' with url='login' title='Войти' %}
             {% include 'includes/items/nav_item_button.html' with url='signup' title='Создать аккаунт' %}
