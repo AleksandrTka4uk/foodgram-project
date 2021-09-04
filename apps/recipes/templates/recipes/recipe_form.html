@@ -69,12 +69,12 @@
             </div>
             <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
             <div class="form__field-group-ingredientes-container"></div>
-              {% for recipeIngredient in recipe.recipeingredient_set.all %}
+              {% for recipe in recipe.with_ingredients.all %}
                 <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
                   <span>
-                    {{ recipeIngredient.ingredients.title }}
-                    {{ recipeIngredient.count }}
-                    {{ recipeIngredient.ingredients.dimension }}
+                    {{ recipe.ingredients.title }}
+                    {{ recipe.count }}
+                    {{ recipe.ingredients.dimension }}
                   </span>
                   <span class="form__field-item-delete"></span>
                   <input
@@ -127,16 +127,15 @@
           </div>
         </div>
         <div class="form__footer">
-          {% if not edit %}
-            {% include "includes/buttons/button_item.html" with style="blue" title="Создать рецепт" %}
-          {% else %}
+          {% if recipe %}
             {% include "includes/buttons/button_item.html" with style="blue" title="Сохранить" %}
             <a
               style="margin-left: 2.5em"
               href="{% url 'delete_recipe' recipe.id %}"
-              class="form__ingredient-link">
-                Удалить
-            </a>
+              class="form__ingredient-link"
+              >Удалить</a>
+          {% else %}
+            {% include "includes/buttons/button_item.html" with style="blue" title="Создать рецепт" %}
           {% endif %}
         </div>
     </form>
