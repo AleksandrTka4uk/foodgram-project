@@ -137,13 +137,13 @@ class AuthorRecipeList(BaseRecipeList):
 
 @login_required
 def create_recipe(request):
+    print(request.POST)
     form = RecipeForm(
         request.POST or None,
         request=request,
         files=request.FILES or None
     )
     if form.is_valid():
-        form.instance.author = request.user
         form.save()
         return redirect('index')
     return render(request, 'recipes/recipe_form.html', {'form': form})
@@ -152,6 +152,7 @@ def create_recipe(request):
 @login_required
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    print(request.POST)
     if recipe.author != request.user:
         return redirect('create_recipe')
     form = RecipeForm(
@@ -161,9 +162,9 @@ def change_recipe(request, recipe_id):
         instance=recipe
     )
     if form.is_valid():
-        form.instance.author = request.user
         form.save()
         return redirect('recipe', pk=recipe_id)
+    form = RecipeForm(instance=recipe)
     return render(
         request,
         'recipes/recipe_form.html',
