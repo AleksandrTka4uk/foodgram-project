@@ -7,11 +7,11 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
-DEBUG = os.environ.get('DEBUG')
+DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 
 INTERNAL_IPS = [
     '127.0.0.1',

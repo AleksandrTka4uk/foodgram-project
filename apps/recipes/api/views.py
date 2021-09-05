@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.db import DatabaseError, IntegrityError
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, status, viewsets
 from rest_framework.exceptions import ValidationError
@@ -25,7 +26,12 @@ class CreateAndDeleteViewSet(
             serializer.is_valid(raise_exception=True, )
         except ValidationError:
             return FAIL
-        self.perform_create(serializer)
+        try:
+            self.perform_create(serializer)
+        except DatabaseError:
+            return FAIL
+        except IntegrityError:
+            return FAIL
         return SUCCESS
 
     def perform_create(self, serializer):
@@ -33,7 +39,12 @@ class CreateAndDeleteViewSet(
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        self.perform_destroy(instance)
+        try:
+            self.perform_destroy(instance)
+        except DatabaseError:
+            return FAIL
+        except IntegrityError:
+            return FAIL
         return SUCCESS
 
 
