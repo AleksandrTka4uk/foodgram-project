@@ -33,7 +33,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
     @admin.display(description='Теги')
     def tag_display(self, obj):
-        return ", ".join([tag.title for tag in obj.tag.all()])
+        return ', '.join([tag.title for tag in obj.tag.all()])
 
     in_favorite_count.admin_order_field = '_in_favorites_count'
 
