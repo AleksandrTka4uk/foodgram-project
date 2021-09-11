@@ -9,29 +9,29 @@
 
 {% block content %}
   <div class="single-card" data-id={{ recipe.id }} data-author={{ recipe.author.id }}>
-    {% include "includes/items/recipe_image_item.html" with img_class="single-card__image" %}
+    {% include "recipes/includes/items/recipe_image_item.html" with img_class="single-card__image" %}
     <div class="single-card__info">
       <div class="single-card__header-info">
         <h1 class="single-card__title">{{ recipe.title }}</h1>
         {% if user.is_authenticated %}
           <div class="single-card__favorite">
             {% if recipe.is_favorite %}
-              {% include "includes/buttons/button_item.html" with style="none" name="favorites" icon=True icon_path="includes/icons/icon_favorite.html" active=True size="icon-favorite_big" %}
+              {% include "includes/buttons/button_item.html" with style="none" name="favorites" icon=True icon_path="recipes/includes/icons/icon_favorite.html" active=True size="icon-favorite_big" %}
             {% else %}
-              {% include "includes/buttons/button_item.html" with style="none" name="favorites" data_out=True icon=True icon_path="includes/icons/icon_favorite.html" size="icon-favorite_big" %}
+              {% include "includes/buttons/button_item.html" with style="none" name="favorites" data_out=True icon=True icon_path="recipes/includes/icons/icon_favorite.html" size="icon-favorite_big" %}
             {% endif %}
-            {% include "includes/items/tooltip_item.html" with title="Добавить в избранное" %}
+            {% include "recipes/includes/items/tooltip_item.html" with title="Добавить в избранное" %}
           </div>
         {% endif %}
       </div>
       <ul class="single-card__items">
-        {% include "includes/items/recipe_tag_item.html" %}
+        {% include "recipes/includes/items/recipe_tag_item.html" %}
       </ul>
       <div class="single-card__items single-card__items_column">
-        {% include "includes/items/recipe_time_item.html" with class="single-card__text" %}
+        {% include "recipes/includes/items/recipe_time_item.html" with class="single-card__text" %}
         <ul class="single-card__items">
           <li class="single-card__item">
-            {% include "includes/items/recipe_author_item.html" with class="single-card__text" %}
+            {% include "recipes/includes/items/recipe_author_item.html" with class="single-card__text" %}
           </li>
           {% if user == recipe.author %}
           <li class="single-card__item">
@@ -44,9 +44,9 @@
         <ul class="single-card__items">
           {% load recipes_filters %}
           {% if recipe.is_purchase %}
-            {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon=True icon_path="includes/icons/icon_check.html" title="Рецепт добавлен" %}
+            {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon=True icon_path="recipes/includes/icons/icon_check.html" title="Рецепт добавлен" %}
           {% else %}
-            {% include "includes/buttons/button_item.html" with style="light-blue" name="purchases" data_out=True icon=True icon_path="includes/icons/icon_plus.html" title="Добавить в покупки" %}
+            {% include "includes/buttons/button_item.html" with style="light-blue" name="purchases" data_out=True icon=True icon_path="recipes/includes/icons/icon_plus.html" title="Добавить в покупки" %}
           {% endif %}
           {% if user != recipe.author %}
             {% is_signed_to_author recipe.author.id user as signed %}
@@ -66,13 +66,13 @@
         <h3 class="single-card__section-title">Ингредиенты:</h3>
         <div class="single-card__items single-card__items_column">
           {% for recipe in recipe.with_ingredients.all %}
-            {% include "includes/items/recipeingredients_item.html" %}
+            {% include "recipes/includes/items/recipeingredients_item.html" %}
           {% endfor %}
         </div>
       </div>
       <div class="single-card__section">
         <h3 class="single-card__section-title">Описание:</h3>
-        {% include "includes/items/recipe_description_item.html" %}
+        {% include "recipes/includes/items/recipe_description_item.html" %}
       </div>
     </div>
   </div>

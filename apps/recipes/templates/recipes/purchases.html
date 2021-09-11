@@ -17,7 +17,7 @@
     <ul class="shopping-list">
       {% for purchase in object_list %}
         {% with purchase.recipe as recipe %}
-          {% include 'includes/blocks/purchase_block.html' with header_title="Список покупок" %}
+          {% include 'recipes/includes/blocks/purchase_block.html' with header_title="Список покупок" %}
         {% endwith %}
       {% endfor %}
       {% if object_list %}
