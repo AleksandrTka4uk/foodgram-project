@@ -1,21 +1,12 @@
 {% load recipes_filters %}
   <ul class="tags">
-    {% for tag in tag_list %}
+    {% for tag, value in tags.items %}
       <li class="tags__item">
-        <a id="{{ tag.slug }}"
-          {% if tag.title in tags_off %}
-            class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox"
-            href="{{ request.path }}?{{ query_params }}&tags_on={{ tag.title }}"
-          {% else %}
-            class="tags__checkbox tags__checkbox_style_{{ tag.color }} tags__checkbox_active"
-            {% if tags_off_count >= 2 %}
-              href="{{ request.path }}?{{ query_params }}"
-            {% else %}
-              href="{{ request.path }}?{{ query_params }}&tags_off={{ tag.title }}"
-            {% endif %}
-          {% endif %}
+        <a id="{{ value.slug }}"
+           class="tags__checkbox tags__checkbox_style_{{ value.color }} tags__checkbox_{{ value.status }}"
+           href="{{ request.path }}?{{ query_params }}&{{ value.link }}"
         ></a>
-      <span class="tags__label">{{ tag.title }} </span>
+      <span class="tags__label">{{ tag }}</span>
       </li>
     {% endfor %}
   </ul>

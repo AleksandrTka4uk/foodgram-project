@@ -39,13 +39,9 @@ class IsPurchaseMixin:
 class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
-        tags_off = self.request.GET.getlist('tags_off', '')
-        tags_on = self.request.GET.getlist('tags_on', '')
-        tags_off_count = len(tags_off)
-        if tags_off_count == 3:
-            tags_off = tags_off[:2]
-        for item in tags_on:
-            tags_off.remove(item)
+        tags_off = [
+            key for key, value in self.request.GET.items() if value == 'off'
+        ]
         if tags_off:
             qs = (
                 qs
