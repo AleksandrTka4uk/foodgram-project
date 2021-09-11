@@ -16,7 +16,7 @@
     <form class="form" method="post" action="{% url 'signup' %}">
       {% csrf_token %}
       {% for field in form %}
-        {% include "includes/form_field_item.html" %}
+        {% include "registration/includes/form_field_item.html" %}
       {% endfor %}
       <div class="form__footer">
         {% include 'includes/buttons/button_item.html' with style="blue" title="Создать аккаунт" %}
