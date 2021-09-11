@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import InvalidPage
 from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
-from django.utils.translation import gettext as _
 from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm
@@ -59,30 +57,14 @@ class BaseRecipeList(IsFavoriteMixin,
     queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
 
-    def paginate_queryset(self, queryset, page_size):
-        paginator = self.get_paginator(
-            queryset, page_size, orphans=self.get_paginate_orphans(),
-            allow_empty_first_page=self.get_allow_empty())
-        page_kwarg = self.page_kwarg
-        page = self.kwargs.get(page_kwarg) or self.request.GET.get(
-            page_kwarg) or 1
+    def dispatch(self, *args, **kwargs):
         try:
-            page_number = int(page)
-        except ValueError:
-            if page == 'last':
-                page_number = paginator.num_pages
-            else:
-                raise Http404(_(
-                    "Page is not 'last', nor can it be converted to an int."))
-        try:
-            page = paginator.page(page_number)
-            return paginator, page, page.object_list, page.has_other_pages()
-        except InvalidPage:
-            """Redirect to last page, if page exceeds the number of pages."""
-            page_number = paginator.num_pages
-            page = paginator.page(page_number)
-            return (paginator, page, page.object_list,
-                    page.has_other_pages())
+            return super().dispatch(*args, **kwargs)
+        except Http404:
+            request_params = self.request.GET.copy()
+            request_params.__setitem__('page', 'last')
+            query_params = request_params.urlencode()
+            return redirect(self.request.path + '?' + query_params)
 
 
 class RecipeList(BaseRecipeList):
