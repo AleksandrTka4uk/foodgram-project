@@ -10,7 +10,7 @@
 
 {% block header %}
   {% firstof author.get_full_name author.username as author_name %}
-  {% include 'includes/blocks/header.html' with header_title=author_name add_filter_block=True %}
+  {% include 'includes/blocks/header.html' with header_title=author_name %}
   {% if user.is_authenticated and user != author %}
     {% is_signed_to_author author.id user as signed %}
     {% if signed %}

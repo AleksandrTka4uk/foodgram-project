@@ -8,14 +8,22 @@
 {% endblock %}
 
 {% block header %}
-  {% include 'includes/blocks/header.html' with header_title="Рецепты" add_filter_block=True %}
+  {% include 'includes/blocks/header.html' with header_title="Рецепты" %}
 {% endblock %}
 
 {% block content %}
   <div class="card-list">
-    {% for recipe in recipe_list %}
-      {% include "recipes/includes/blocks/recipe_block.html" %}
-    {% endfor %}
+    {% if recipe_list %}
+      {% for recipe in recipe_list %}
+        {% include "recipes/includes/blocks/recipe_block.html" %}
+      {% endfor %}
+    {% else %}
+      <p class=" single-card__section-text">
+          Foodgram, «Продуктовый помощник» это онлайн-сервис, где пользователи могут публиковать свои рецепты,
+          подписываться на публикации других пользователей, добавлять понравившиеся рецепты в «Избранное»,
+          а перед походом в магазин скачивать список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
+      </p>
+    {% endif %}
   </div>
 {% endblock %}
 

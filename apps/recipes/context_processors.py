@@ -11,15 +11,19 @@ def tags_filter(request):
             'slug': tag.slug
         }
     request_params = request.GET.copy()
+    count_of_disabled_tags = 0
     for tag, value in tags.items():
-        param = request_params.get(value['slug'], 'active')
-        if param != 'active':
-            value['status'] = 'disable'
-            value['link'] = f"{value['slug']}=active"
+        if count_of_disabled_tags < 2:
+            param = request_params.get(value['slug'])
+            if param == 'disable':
+                value['status'] = 'disable'
+                value['link'] = f"{value['slug']}=active"
+                count_of_disabled_tags += 1
     if request_params.get('page'):
         request_params.pop('page')
     query_params = request_params.urlencode()
     return {
         'query_params': query_params,
         'tags': tags,
+        'count_of_disabled_tags': count_of_disabled_tags,
     }

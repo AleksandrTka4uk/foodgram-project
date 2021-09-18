@@ -4,7 +4,7 @@
       <li class="tags__item">
         <a id="{{ value.slug }}"
            class="tags__checkbox tags__checkbox_style_{{ value.color }} tags__checkbox_{{ value.status }}"
-           href="{{ request.path }}?{{ query_params }}&{{ value.link }}"
+           href="{{ request.path }}?{{ query_params }}&{% if count_of_disabled_tags < 2 or value.status == 'disable' %}{{ value.link }}{% endif%}"
         ></a>
       <span class="tags__label">{{ tag }}</span>
       </li>

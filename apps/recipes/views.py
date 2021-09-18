@@ -37,11 +37,10 @@ class IsPurchaseMixin:
 class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
-        request_params = self.request.GET
-        tags_on = [
-            key for key, value in request_params.items() if value == 'active'
-        ]
-
+        tags_on = []
+        for tag in Tag.objects.all():
+            if self.request.GET.get(tag.slug, 'active') == 'active':
+                tags_on.append(tag.slug)
         if tags_on:
             qs = (
                 qs
@@ -64,7 +63,7 @@ class BaseRecipeList(IsFavoriteMixin,
             return super().dispatch(*args, **kwargs)
         except Http404:
             request_params = self.request.GET.copy()
-            request_params.__setitem__('page', 'last')
+            request_params['page'] = 'last'
             query_params = request_params.urlencode()
             return redirect(self.request.path + '?' + query_params)
 
