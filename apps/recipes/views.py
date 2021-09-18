@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Ingredient, Recipe, User
+from apps.recipes.models import Ingredient, Recipe, User, Tag
 from foodgram.settings import PAGINATE_BY
 
 
@@ -37,14 +37,16 @@ class IsPurchaseMixin:
 class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
-        tags_off = [
-            key for key, value in self.request.GET.items() if value == 'off'
+        request_params = self.request.GET
+        tags_on = [
+            key for key, value in request_params.items() if value == 'active'
         ]
-        if tags_off:
+
+        if tags_on:
             qs = (
                 qs
                 .select_related('author')
-                .without_tags(tags_off=tags_off)
+                .with_tags(tags_on=tags_on)
             )
         return qs
 
@@ -93,6 +95,7 @@ class PurchasesView(LoginRequiredMixin, BaseRecipeList):
 
 class SubscriptionList(LoginRequiredMixin, BaseRecipeList):
     template_name = 'recipes/subscriptions.html'
+    paginate_by = 3
 
     def get_queryset(self):
         return self.request.user.subscriptions.all()
@@ -115,13 +118,13 @@ class AuthorRecipeList(BaseRecipeList):
 
 @login_required
 def create_recipe(request):
-    print(request.POST)
     form = RecipeForm(
         request.POST or None,
         request=request,
         files=request.FILES or None
     )
     if form.is_valid():
+        form.instance.author = request.user
         form.save()
         return redirect('index')
     return render(request, 'recipes/recipe_form.html', {'form': form})
@@ -130,7 +133,6 @@ def create_recipe(request):
 @login_required
 def change_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    print(request.POST)
     if recipe.author != request.user:
         return redirect('create_recipe')
     form = RecipeForm(
@@ -140,6 +142,7 @@ def change_recipe(request, recipe_id):
         instance=recipe
     )
     if form.is_valid():
+        form.instance.author = request.user
         form.save()
         return redirect('recipe', pk=recipe_id)
     form = RecipeForm(instance=recipe)

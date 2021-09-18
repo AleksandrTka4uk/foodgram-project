@@ -38,18 +38,24 @@
           <p class="form__label">Теги</p>
           <div class="form__field-group">
             <div class="tags">
-              {% for tag in tag_list %}
+              {% for key, value in tags.items %}
                 <div class="tags__item">
                   <input
                     type="checkbox"
-                    name="{{ tag.title }}"
-                    id="id_{{ tag.title }}"
-                    class="tags__checkbox tags__checkbox_style_{{ tag.color }}"
-                    {% if tag in recipe.tag.all or not edit %}
-                       checked
-                    {% endif %}
+                    name="{{ key }}"
+                    id="id_{{ key }}"
+                    class="tags__checkbox tags__checkbox_style_{{ value.color }}"
+                    {% if not recipe %}
+                      checked
+                    {% else %}
+                      {% for tag in recipe.tag.all %}
+                        {% if tag.title == key %}
+                          checked
+                        {% endif %}
+                      {% endfor %}
+                    {% endif  %}
                   >
-                  <label for="id_{{ tag.title }}" class="tags__label">{{ tag.title }}</label>
+                  <label for="id_{{ key }}" class="tags__label">{{ key }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -64,13 +70,38 @@
                 <input type="text" id="nameIngredient" class="form__input">
                 <div class="form__dropdown-items"></div>
               </div>
-              <input type="number" id="cantidad" class="form__input" min="0">
+              <input type="number" id="cantidad" class="form__input" min="1">
               <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
             </div>
-            <div class="form__field-group-ingredientes-container"></div>
             <span class="form__ingredient-link" id="addIng">
               Добавить ингредиент
             </span>
+            <div class="form__field-group-ingredientes-container">
+              {% for recipe in recipe.with_ingredients.all %}
+                <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
+                  <span>
+                    {{ recipe.ingredients.title }}
+                    {{ recipe.count }}
+                    {{ recipe.ingredients.dimension }}
+                  </span>
+                  <span class="form__field-item-delete"></span>
+                  <input
+                    id="nameIngredient_{{ forloop.counter }}"
+                    name="nameIngredient_{{ forloop.counter }}"
+                    type="hidden"
+                    value="{{ recipe.ingredients.title }}">
+                  <input
+                    id="valueIngredient_{{ forloop.counter }}"
+                    name="valueIngredient_{{ forloop.counter }}"
+                    type="hidden" value="{{ recipe.count }}">
+                  <input
+                    id="unitsIngredient_{{ forloop.counter }}"
+                    name="unitsIngredient_{{ forloop.counter }}"
+                    type="hidden"
+                    value="{{ recipe.ingredients.dimension }}">
+                </div>
+              {% endfor %}
+            </div>
             <span class="form__error">
               {{ form.ingredients.errors }}
             </span>

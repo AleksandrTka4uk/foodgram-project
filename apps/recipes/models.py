@@ -82,8 +82,8 @@ class RecipeQuerySet(models.QuerySet):
             )
         )
 
-    def without_tags(self, tags_off):
-        return self.exclude(tag__title__in=tags_off)
+    def with_tags(self, tags_on):
+        return self.filter(tag__slug__in=tags_on)
 
 
 class Recipe(models.Model):

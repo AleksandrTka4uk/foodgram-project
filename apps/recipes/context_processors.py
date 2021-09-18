@@ -1,37 +1,24 @@
+from apps.recipes.models import Tag
+
+
 def tags_filter(request):
-    tags = {
-        'Завтрак': {
+    tags = {}
+    for tag in Tag.objects.all():
+        tags[tag.title] = {
             'status': 'active',
-            'link': 'Завтрак=off',
-            'color': 'orange',
-            'slug': 'breakfast',
-        },
-        'Обед': {
-            'status': 'active',
-            'link': 'Обед=off',
-            'color': 'green',
-            'slug': 'lunch',
-        },
-        'Ужин': {
-            'status': 'active',
-            'link': 'Ужин=off',
-            'color': 'purple',
-            'slug': 'dinner',
+            'link': f'{tag.slug}=disable',
+            'color': tag.color,
+            'slug': tag.slug
         }
-    }
-    request_get_params = request.GET.copy()
+    request_params = request.GET.copy()
     for tag, value in tags.items():
-        param = request_get_params.get(tag)
-        if param == 'on':
-            value['status'] = 'active'
-            value['link'] = f'{tag}=off'
-            request_get_params.pop(f'{tag}')
-        if param == 'off':
+        param = request_params.get(value['slug'], 'active')
+        if param != 'active':
             value['status'] = 'disable'
-            value['link'] = f'{tag}=on'
-    if request_get_params.__contains__('page'):
-        request_get_params.pop('page')
-    query_params = request_get_params.urlencode()
+            value['link'] = f"{value['slug']}=active"
+    if request_params.get('page'):
+        request_params.pop('page')
+    query_params = request_params.urlencode()
     return {
         'query_params': query_params,
         'tags': tags,
