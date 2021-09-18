@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm
-from apps.recipes.models import Ingredient, Recipe, User, Tag
+from apps.recipes.models import Ingredient, Recipe, Tag, User
 from foodgram.settings import PAGINATE_BY
 
 
