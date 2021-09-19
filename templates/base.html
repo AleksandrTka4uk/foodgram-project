@@ -13,7 +13,7 @@
     <main class="main container">
       {% block header %}{% endblock %}
       {% block content %}{% endblock %}
-      {% if paginator %}
+      {% if page_obj.paginator %}
         {% include "includes/blocks/paginator.html" %}
       {% endif %}
     </main>
