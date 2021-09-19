@@ -132,8 +132,8 @@ dmypy.json
 # static and media
 static/
 media/
-!media/about/author.jpg
-!media/about/chasy.jpg
+!media/author.jpg
+!media/chasy.jpg
 
 
 # task file
