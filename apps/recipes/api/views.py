@@ -24,13 +24,8 @@ class CreateAndDeleteViewSet(
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True, )
-        except ValidationError:
-            return FAIL
-        try:
             self.perform_create(serializer)
-        except DatabaseError:
-            return FAIL
-        except IntegrityError:
+        except (ValidationError, DatabaseError, IntegrityError):
             return FAIL
         return SUCCESS
 
@@ -41,9 +36,7 @@ class CreateAndDeleteViewSet(
         instance = self.get_object()
         try:
             self.perform_destroy(instance)
-        except DatabaseError:
-            return FAIL
-        except IntegrityError:
+        except (IntegrityError, DatabaseError):
             return FAIL
         return SUCCESS
 
