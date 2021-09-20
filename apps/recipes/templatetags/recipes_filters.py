@@ -17,7 +17,7 @@ def is_signed_to_author(author, user):
 def format_ending(count, nominative, genitive, plural):
     remainder = count % 100
     if remainder == 0 or remainder >= 5 or (10 <= count <= 19):
-        return f'{plural}'
+        return plural
     if remainder == 1:
-        return f'{nominative}'
-    return f'{genitive}'
+        return nominative
+    return genitive
