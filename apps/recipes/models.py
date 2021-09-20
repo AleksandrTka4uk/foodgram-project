@@ -53,12 +53,12 @@ class Ingredient(models.Model):
         verbose_name='Мера измерения'
     )
 
-    def __str__(self):
-        return f'{self.title}, {self.dimension}'
-
     class Meta:
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
+
+    def __str__(self):
+        return f'{self.title}, {self.dimension}'
 
 
 class RecipeQuerySet(models.QuerySet):
