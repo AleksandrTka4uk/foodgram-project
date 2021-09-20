@@ -32,7 +32,7 @@ class RecipeForm(ModelForm):
                 except ObjectDoesNotExist:
                     raise ValidationError(
                         f'Ингредиента {value} не существует. '
-                        f'Выберите ингредиенты из выпадающего списка.'
+                        'Выберите ингредиенты из выпадающего списка.'
                     )
                 num = key.split('_')[1]
                 ingredients[ingredient] = data[f'valueIngredient_{num}']
