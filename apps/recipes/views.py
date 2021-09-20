@@ -65,7 +65,7 @@ class BaseRecipeList(IsFavoriteMixin,
             request_params = self.request.GET.copy()
             request_params['page'] = 'last'
             query_params = request_params.urlencode()
-            return redirect(self.request.path + '?' + query_params)
+            return redirect(f'{self.request.path}?{query_params}')
 
 
 class RecipeList(BaseRecipeList):
