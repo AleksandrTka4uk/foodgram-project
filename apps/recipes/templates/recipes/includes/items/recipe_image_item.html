@@ -1,7 +1,7 @@
 {% load thumbnail %}
 {% thumbnail recipe.image "1500x1000" crop="center" upscale=True as image%}
 <a
-  href="{{ image.url }}"
+  href="{% url 'recipe' recipe.id %}"
   class="link">
     <img
       src="{{ image.url }}"
