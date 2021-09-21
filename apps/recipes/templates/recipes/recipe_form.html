@@ -80,28 +80,28 @@
               Добавить ингредиент
             </span>
             <div class="form__field-group-ingredientes-container">
-              {% for recipe in recipe.with_ingredients.all %}
+              {% for recipe_ingredients in recipe.with_ingredients.all %}
                 <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
                   <span>
-                    {{ recipe.ingredients.title }}
-                    {{ recipe.count }}
-                    {{ recipe.ingredients.dimension }}
+                    {{ recipe_ingredients.ingredients.title }}
+                    {{ recipe_ingredients.count }}
+                    {{ recipe_ingredients.ingredients.dimension }}
                   </span>
                   <span class="form__field-item-delete"></span>
                   <input
                     id="nameIngredient_{{ forloop.counter }}"
                     name="nameIngredient_{{ forloop.counter }}"
                     type="hidden"
-                    value="{{ recipe.ingredients.title }}">
+                    value="{{ recipe_ingredients.ingredients.title }}">
                   <input
                     id="valueIngredient_{{ forloop.counter }}"
                     name="valueIngredient_{{ forloop.counter }}"
-                    type="hidden" value="{{ recipe.count }}">
+                    type="hidden" value="{{ recipe_ingredients.count }}">
                   <input
                     id="unitsIngredient_{{ forloop.counter }}"
                     name="unitsIngredient_{{ forloop.counter }}"
                     type="hidden"
-                    value="{{ recipe.ingredients.dimension }}">
+                    value="{{ recipe_ingredients.ingredients.dimension }}">
                 </div>
               {% endfor %}
             </div>
