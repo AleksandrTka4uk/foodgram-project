@@ -82,8 +82,8 @@ class RecipeQuerySet(models.QuerySet):
             )
         )
 
-    def with_tags(self, tags_on):
-        return self.filter(tag__slug__in=tags_on)
+    def with_tags(self, active_tags):
+        return self.filter(tag__slug__in=active_tags).distinct()
 
 
 class Recipe(models.Model):

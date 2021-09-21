@@ -37,16 +37,12 @@ class IsPurchaseMixin:
 class TagsFilterMixin:
     def get_queryset(self):
         qs = super().get_queryset()
-        tags_on = []
+        active_tags = []
         for tag in Tag.objects.all():
             if self.request.GET.get(tag.slug, 'active') == 'active':
-                tags_on.append(tag.slug)
-        if tags_on:
-            qs = (
-                qs
-                .select_related('author')
-                .with_tags(tags_on=tags_on)
-            )
+                active_tags.append(tag.slug)
+        if active_tags:
+            qs = qs.select_related('author').with_tags(active_tags=active_tags)
         return qs
 
 
@@ -55,7 +51,7 @@ class BaseRecipeList(IsFavoriteMixin,
                      TagsFilterMixin,
                      ListView):
     model = Recipe
-    queryset = Recipe.objects.all()
+    # queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
 
     def dispatch(self, *args, **kwargs):
