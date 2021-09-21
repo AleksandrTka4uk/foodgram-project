@@ -1,13 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Создание рецепта{% endblock %}
+{% block title %}{{ form.instance.id|yesno:"Редактирование рецепта,Создание рецепта" }}{% endblock %}
 {% load static %}
+
+
+
 
 {% block static_css %}
   <link rel="stylesheet" href="{% static 'pages/form.css' %}">
 {% endblock %}
 
 {% block header %}
-  {% if not edit %}
+  {% if not form.instance.id %}
     {% include 'includes/blocks/header.html' with header_title="Создание рецепта" %}
   {% else %}
     {% include 'includes/blocks/header.html' with header_title="Редактирование рецепта" %}
@@ -45,7 +48,7 @@
                     name="{{ key }}"
                     id="id_{{ key }}"
                     class="tags__checkbox tags__checkbox_style_{{ value.color }}"
-                    {% if not recipe %}
+                    {% if not form.instance.id %}
                       checked
                     {% else %}
                       {% for tag in recipe.tag.all %}
