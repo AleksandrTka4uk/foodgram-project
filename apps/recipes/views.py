@@ -140,7 +140,6 @@ def change_recipe(request, recipe_id):
         form.instance.author = request.user
         form.save()
         return redirect('recipe', pk=recipe_id)
-    form = RecipeForm(instance=recipe)
     return render(
         request,
         'recipes/recipe_form.html',
