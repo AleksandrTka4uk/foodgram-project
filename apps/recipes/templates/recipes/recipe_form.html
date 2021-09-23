@@ -1,14 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ form.instance.id|yesno:"Редактирование рецепта,Создание рецепта" }}{% endblock %}
 {% load static %}
-
-
-
-
 {% block static_css %}
   <link rel="stylesheet" href="{% static 'pages/form.css' %}">
 {% endblock %}
-
 {% block header %}
   {% if not form.instance.id %}
     {% include 'includes/blocks/header.html' with header_title="Создание рецепта" %}
@@ -16,17 +11,10 @@
     {% include 'includes/blocks/header.html' with header_title="Редактирование рецепта" %}
   {% endif %}
 {% endblock %}
-
 {% block content %}
 {% load recipes_filters %}
   <div class="form-container">
-    <form
-      class="form"
-      method="post"
-      enctype="multipart/form-data"
-      {% if recipe %}
-        action="{% url 'change_recipe' recipe.id %}"
-      {% endif %}>
+    <form class="form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form__group">
         <label for="{{ form.title.id_for_label }}" class="form__label">
