@@ -16,7 +16,9 @@ def is_signed_to_author(author, user):
 @register.simple_tag
 def format_ending(count, nominative, genitive, plural):
     remainder = count % 100
-    if remainder == 0 or remainder >= 5 or (10 <= count <= 19):
+    if remainder >= 20:
+        remainder %= 10
+    if remainder == 0 or remainder >= 5 or (10 <= remainder <= 19):
         return plural
     if remainder == 1:
         return nominative
