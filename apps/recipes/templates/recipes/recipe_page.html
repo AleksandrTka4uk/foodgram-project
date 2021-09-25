@@ -16,9 +16,9 @@
         {% if user.is_authenticated %}
           <div class="single-card__favorite">
             {% if recipe.is_favorite %}
-              {% include "includes/buttons/button_item.html" with style="none" name="favorites" icon=True icon_path="recipes/includes/icons/icon_favorite.html" active=True size="icon-favorite_big" %}
+              {% include "includes/buttons/button_item.html" with style="none" name="favorites" icon_path="recipes/includes/icons/icon_favorite.html" active=True size="icon-favorite_big" %}
             {% else %}
-              {% include "includes/buttons/button_item.html" with style="none" name="favorites" data_out=True icon=True icon_path="recipes/includes/icons/icon_favorite.html" size="icon-favorite_big" %}
+              {% include "includes/buttons/button_item.html" with style="none" name="favorites" data_out=True icon_path="recipes/includes/icons/icon_favorite.html" size="icon-favorite_big" %}
             {% endif %}
             {% include "recipes/includes/items/tooltip_item.html" %}
           </div>
@@ -45,11 +45,11 @@
           {% load recipes_filters %}
           {% if recipe.is_purchase %}
             <li class="single-card__item">
-              {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon=True icon_path="recipes/includes/icons/icon_check.html" title="Рецепт добавлен" %}
+              {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" icon_path="recipes/includes/icons/icon_check.html" title="Рецепт добавлен" %}
             </li>
           {% else %}
             <li class="single-card__item">
-            {% include "includes/buttons/button_item.html" with style="blue" name="purchases" data_out=True icon=True icon_path="recipes/includes/icons/icon_plus.html" title="Добавить в покупки" %}
+            {% include "includes/buttons/button_item.html" with style="blue" name="purchases" data_out=True icon_path="recipes/includes/icons/icon_plus.html" title="Добавить в покупки" %}
             </li>
           {% endif %}
           {% if user != recipe.author %}

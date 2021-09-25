@@ -3,7 +3,7 @@
   name="{{ name }}"
   {% if data_out %} data-out {% endif %}
   {% if onclick %} onclick="window.location.href = '{% url url_name %}';" {% endif %}>
-  {% if icon %}
+  {% if icon_path %}
     {% include icon_path %}
   {% endif %}
   {{ title }}
