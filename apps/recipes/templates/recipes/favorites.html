@@ -4,6 +4,7 @@
 {% load static %}
 
 {% block static_css %}
+  <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
   <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
 
@@ -13,9 +14,18 @@
 
 {% block content %}
   <div class="card-list">
-    {% for recipe in recipe_list %}
-      {% include "recipes/includes/blocks/recipe_block.html" %}
-    {% endfor %}
+    {% if recipe_list %}
+      {% for recipe in recipe_list %}
+        {% include "recipes/includes/blocks/recipe_block.html" %}
+      {% endfor %}
+    {% else %}
+      <ul>
+      <p class="recipe__text">Добавьте рецепты в избранное.</p>
+      <a href="{% url 'index' %}">
+        {% include 'includes/buttons/button_item.html' with style="blue" title="На главную" %}
+      </a>
+      </ul>
+    {% endif %}
   </div>
 {% endblock %}
 

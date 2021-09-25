@@ -5,6 +5,7 @@
 
 {% block static_css %}
   <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
 
 {% block header %}
@@ -13,9 +14,18 @@
 
 {% block content %}
 <div class="card-list">
-  {% for subscription in object_list %}
-    {% include 'recipes/includes/blocks/subscription_block.html' %}
-  {% endfor %}
+  {% if object_list %}
+    {% for subscription in object_list %}
+      {% include 'recipes/includes/blocks/subscription_block.html' %}
+    {% endfor %}
+  {% else %}
+    <ul>
+      <p class="recipe__text">Пока вы не подписались ни на одного автора.</p>
+      <a href="{% url 'index' %}">
+        {% include 'includes/buttons/button_item.html' with style="blue" title="На главную" %}
+      </a>
+    </ul>
+  {% endif %}
 </div>
 {% endblock %}
 

@@ -1,4 +1,5 @@
 {% load recipes_filters %}
+{% if page_obj.paginator.object_list %}
 <nav class="pagination" aria-label="Search results pages">
   <ul class="pagination__container">
     {% if page_obj.has_previous %}
@@ -72,3 +73,4 @@
     {% endif %}
   </ul>
 </nav>
+{% endif %}
