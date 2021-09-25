@@ -1,7 +1,5 @@
 <div class="single-card__favorite-tooltip tooltip">
-  {% if recipe.is_favorite %}
-    Удалить из избранного
-  {% else %}
-    Добавить в избранное
-  {% endif %}
+  {{ tooltip_flag|yesno:tooltip_message }}
 </div>
+
+
