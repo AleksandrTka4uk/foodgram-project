@@ -16,13 +16,13 @@
     {% if signed %}
       <div class="author-subscribe" data-author="{{ author.id }}">
         <p style="padding: 0 0 2em 0;">
-          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" title="Отписаться от автора" %}
+          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" sign=signed title="Отписаться от автора" %}
         </p>
       </div>
     {% else %}
       <div class="author-subscribe" data-author="{{ author.id }}">
         <p style="padding: 0 0 2em 0;">
-          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" data_out=True title="Подписаться на автора" %}
+          {% include 'includes/buttons/button_item.html' with style="light-blue" size="button_size_subscribe" name="subscribe" sign=signed title="Подписаться на автора" %}
         </p>
       </div>
     {% endif %}

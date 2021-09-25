@@ -18,7 +18,6 @@ class IsFavoriteMixin:
             .select_related('author')
             .with_is_favorite(user_id=self.request.user.id)
         )
-
         return qs
 
 
@@ -30,7 +29,6 @@ class IsPurchaseMixin:
             .select_related('author')
             .with_is_purchase(user_id=self.request.user.id)
         )
-
         return qs
 
 
@@ -51,7 +49,6 @@ class BaseRecipeList(IsFavoriteMixin,
                      TagsFilterMixin,
                      ListView):
     model = Recipe
-    # queryset = Recipe.objects.all()
     paginate_by = PAGINATE_BY
 
     def dispatch(self, *args, **kwargs):
