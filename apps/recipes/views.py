@@ -167,12 +167,13 @@ def download_purchases(request):
         in_recipes__recipe__in_purchases__user=request.user).annotate(
         sum_ingredients=Sum('in_recipes__count')
     )
-    file_data = ''
-    for ingredient in ingredients:
-        file_data += (f'{ingredient.title} '
-                      f'({ingredient.dimension}) - '
-                      f'{ingredient.sum_ingredients} \r\n'
-                      )
+    data = [
+        f'{ingredient.title} '
+        f'({ingredient.dimension}) - '
+        f'{ingredient.sum_ingredients} \r\n'
+        for ingredient in ingredients
+    ]
+    file_data = "".join(data)
     response = HttpResponse(file_data,
                             content_type='application/text charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="cart.txt"'
