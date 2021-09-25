@@ -39,7 +39,7 @@
                     {% if not form.instance.id %}
                       checked
                     {% else %}
-                      {% for tag in recipe.tag.all %}
+                      {% for tag in form.instance.tag.all %}
                         {% if tag.title == key %}
                           checked
                         {% endif %}
@@ -68,7 +68,7 @@
               Добавить ингредиент
             </span>
             <div class="form__field-group-ingredientes-container">
-              {% for recipe_ingredients in recipe.with_ingredients.all %}
+              {% for recipe_ingredients in form.instance.with_ingredients.all %}
                 <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
                   <span>
                     {{ recipe_ingredients.ingredients.title }}
@@ -127,11 +127,11 @@
           </div>
         </div>
         <div class="form__footer">
-          {% if recipe %}
+          {% if form.instance %}
             {% include "includes/buttons/button_item.html" with style="blue" title="Сохранить" %}
             <a
               style="margin-left: 2.5em"
-              href="{% url 'delete_recipe' recipe.id %}"
+              href="{% url 'delete_recipe' form.instance.id %}"
               class="form__ingredient-link"
               >Удалить</a>
           {% else %}

@@ -143,7 +143,8 @@ def change_recipe(request, recipe_id):
     return render(
         request,
         'recipes/recipe_form.html',
-        {'form': form, 'recipe': recipe})
+        {'form': form}
+    )
 
 
 @login_required

@@ -12,7 +12,7 @@
     {% include "recipes/includes/items/recipe_image_item.html" with img_class="single-card__image" %}
     <div class="single-card__info">
       <div class="single-card__header-info">
-        <h1 class="single-card__title">{{ recipe.title }}{{ recipe.is_favorite }}</h1>
+        <h1 class="single-card__title">{{ recipe.title }}</h1>
         {% if user.is_authenticated %}
           <div class="single-card__favorite">
             {% if recipe.is_favorite %}
