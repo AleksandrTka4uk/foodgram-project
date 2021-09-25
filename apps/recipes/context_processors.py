@@ -15,6 +15,9 @@ def tags_filter(request):
     for tag, value in tags.items():
         if count_of_disabled_tags < 2:
             param = request_params.get(value['slug'])
+            if param:
+                request_params.pop(value['slug'])
+                request_params[value['slug']] = param
             if param == 'disable':
                 value['status'] = 'disable'
                 value['link'] = f"{value['slug']}=active"
