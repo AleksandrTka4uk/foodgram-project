@@ -13,29 +13,16 @@
   {% include 'includes/blocks/header.html' with header_title=author_name %}
   {% if user.is_authenticated and user != author %}
     {% is_signed_to_author author.id user as signed %}
-    {% if signed %}
       <div class="author-subscribe" data-author="{{ author.id }}">
         <p style="padding: 0 0 2em 0;">
-          {% include 'includes/buttons/button_item.html' with
-            style="light-blue"
+          {% include "includes/buttons/button_item.html" with
+            style="light-blue,light-blue"
             size="button_size_subscribe"
             name="subscribe"
-            sign=signed
-            title="Отписаться от автора" %}
+            button_flag=signed
+            title="Отписаться от автора,Подписаться на автора" %}
         </p>
       </div>
-    {% else %}
-      <div class="author-subscribe" data-author="{{ author.id }}">
-        <p style="padding: 0 0 2em 0;">
-          {% include 'includes/buttons/button_item.html' with
-            style="light-blue"
-            size="button_size_subscribe"
-            name="subscribe"
-            sign=signed
-            title="Подписаться на автора" %}
-        </p>
-      </div>
-    {% endif %}
   {% endif %}
 {% endblock %}
 

@@ -3,7 +3,7 @@
 <div class="card-user" data-author="{{ subscription.author.id }}">
   <div class="card-user__header">
     <h2 class="card-user__title">
-        {% firstof subscription.author.get_full_name subscription.author.get_username %}
+      {% firstof subscription.author.get_full_name subscription.author.get_username %}
     </h2>
   </div>
   <div class="card-user__body">

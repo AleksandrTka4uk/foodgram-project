@@ -1,13 +1,18 @@
 <button
-  class="button button_style_{{ style }} {{ size }}"
+  class="button button_style_{% if button_flag != None %}{{ button_flag|yesno:style }}{% else %}{{ style }}{% endif %} {{ size }}"
   name="{{ name }}"
-  {% if not sign %}data-out{% endif %}
+  {% if not button_flag %}data-out{% endif %}
   {% if onclick %} onclick="window.location.href = '{% url url_name %}';" {% endif %}>
   {% if icon_path %}
     {% include icon_path %}
   {% endif %}
-  {{ title }}
+  {% if button_flag != None %}
+    {{ button_flag|yesno:title }}
+  {% else %}
+    {{ title }}
+  {% endif %}
 </button>
   {% if tooltip_path %}
     {% include tooltip_path %}
   {% endif %}
+
