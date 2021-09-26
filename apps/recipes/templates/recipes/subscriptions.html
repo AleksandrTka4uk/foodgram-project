@@ -6,6 +6,7 @@
 {% block static_css %}
   <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
   <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/single.css' %}"
 {% endblock %}
 
 {% block header %}
@@ -19,8 +20,8 @@
       {% include 'recipes/includes/blocks/subscription_block.html' %}
     {% endfor %}
   {% else %}
-    <ul>
-      <p class="recipe__text">Пока вы не подписались ни на одного автора.</p>
+    <ul class="card-user__items">
+      <p class="single-card__section-text">Пока вы не подписались ни на одного автора.</p>
       <a href="{% url 'index' %}">
         {% include 'includes/buttons/button_item.html' with
           style="blue"

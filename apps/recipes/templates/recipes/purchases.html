@@ -6,6 +6,7 @@
 {% block static_css %}
   <link rel="stylesheet" href="{% static 'pages/shopList.css' %}">
   <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock %}
 
 {% block header %}
@@ -27,15 +28,15 @@
             style="blue"
             title="Скачать список" %}
         </a>
+    </ul>
       {% else %}
-        <p class="recipe__text">Добавьте рецепты в покупки.</p>
+        <p class="single-card__section-text">Добавьте рецепты в покупки.</p>
         <a href="{% url 'index' %}">
           {% include 'includes/buttons/button_item.html' with
             style="blue"
             title="На главную" %}
         </a>
       {% endif %}
-    </ul>
   </div>
 {% endblock %}
 
