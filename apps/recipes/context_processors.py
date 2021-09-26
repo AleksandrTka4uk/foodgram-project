@@ -16,12 +16,12 @@ def tags_filter(request):
         if count_of_disabled_tags < 2:
             param = request_params.get(value['slug'])
             if param:
-                request_params.pop(value['slug'])
-                request_params[value['slug']] = param
-            if param == 'disable':
-                value['status'] = 'disable'
-                value['link'] = f"{value['slug']}=active"
-                count_of_disabled_tags += 1
+                if param == 'disable':
+                    value['status'] = 'disable'
+                    value['link'] = f"{value['slug']}=active"
+                    count_of_disabled_tags += 1
+                else:
+                    request_params.pop(value['slug'])
     if request_params.get('page'):
         request_params.pop('page')
     query_params = request_params.urlencode()
