@@ -11,9 +11,11 @@
       {% for recipe in subscription.author.recipes.all|slice:":3" %}
         <li class="card-user__item">
           <div class="recipe">
-            {% include "recipes/includes/items/recipe_image_item.html" with img_class="recipe__image" %}
+            {% include "recipes/includes/items/recipe_image_item.html" with
+              img_class="recipe__image" %}
               <h3 class="recipe__title">{{ recipe.title }}</h3>
-            {% include "recipes/includes/items/recipe_time_item.html" with class="recipe__text" %}
+            {% include "recipes/includes/items/recipe_time_item.html" with
+              class="recipe__text" %}
           </div>
         </li>
       {% endfor %}
@@ -32,6 +34,10 @@
     </ul>
   </div>
   <div class="card-user__footer">
-    {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_auto" name="subscribe" title="Отписаться" %}
+    {% include "includes/buttons/button_item.html" with
+      style="light-blue"
+      size="button_size_auto"
+      name="subscribe"
+      title="Отписаться" %}
   </div>
 </div>

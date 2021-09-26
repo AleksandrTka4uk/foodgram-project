@@ -6,9 +6,11 @@
 {% endblock %}
 {% block header %}
   {% if not form.instance.id %}
-    {% include 'includes/blocks/header.html' with header_title="Создание рецепта" %}
+    {% include 'includes/blocks/header.html' with
+      header_title="Создание рецепта" %}
   {% else %}
-    {% include 'includes/blocks/header.html' with header_title="Редактирование рецепта" %}
+    {% include 'includes/blocks/header.html' with
+      header_title="Редактирование рецепта" %}
   {% endif %}
 {% endblock %}
 {% block content %}
@@ -128,14 +130,18 @@
         </div>
         <div class="form__footer">
           {% if form.instance %}
-            {% include "includes/buttons/button_item.html" with style="blue" title="Сохранить" %}
+            {% include "includes/buttons/button_item.html" with
+              style="blue"
+              title="Сохранить" %}
             <a
               style="margin-left: 2.5em"
               href="{% url 'delete_recipe' form.instance.id %}"
               class="form__ingredient-link"
               >Удалить</a>
           {% else %}
-            {% include "includes/buttons/button_item.html" with style="blue" title="Создать рецепт" %}
+            {% include "includes/buttons/button_item.html" with
+              style="blue"
+              title="Создать рецепт" %}
           {% endif %}
         </div>
     </form>

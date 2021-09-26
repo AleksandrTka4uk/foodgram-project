@@ -39,11 +39,15 @@
         %}
         <ul class="single-card__items">
           <li class="single-card__item">
-            {% include "recipes/includes/items/recipe_author_item.html" with class="single-card__text" %}
+            {% include "recipes/includes/items/recipe_author_item.html" with
+              class="single-card__text" %}
           </li>
           {% if user == recipe.author %}
           <li class="single-card__item">
-            <a style="margin-left: 2.5em" href="{% url 'change_recipe' recipe.id %}" class="single-card__text">Редактировать рецепт</a>
+            <a
+             style="margin-left: 2.5em"
+             href="{% url 'change_recipe' recipe.id %}"
+             class="single-card__text">Редактировать рецепт</a>
           </li>
           {% endif %}
         </ul>
@@ -53,22 +57,42 @@
           {% load recipes_filters %}
           {% if recipe.is_purchase %}
             <li class="single-card__item">
-              {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" sign=recipe.is_purchase icon_path="recipes/includes/icons/icon_check.html" title="Рецепт добавлен" %}
+              {% include "includes/buttons/button_item.html" with
+                style="light-blue-outline"
+                name="purchases"
+                sign=recipe.is_purchase
+                icon_path="recipes/includes/icons/icon_check.html"
+                title="Рецепт добавлен" %}
             </li>
           {% else %}
             <li class="single-card__item">
-              {% include "includes/buttons/button_item.html" with style="blue" name="purchases" sign=recipe.is_purchase icon_path="recipes/includes/icons/icon_plus.html" title="Добавить в покупки" %}
+              {% include "includes/buttons/button_item.html" with
+                style="blue"
+                name="purchases"
+                sign=recipe.is_purchase
+                icon_path="recipes/includes/icons/icon_plus.html"
+                title="Добавить в покупки" %}
             </li>
           {% endif %}
           {% if user != recipe.author %}
             {% is_signed_to_author recipe.author.id user as signed %}
             {% if signed %}
               <li class="single-card__item">
-                {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_subscribe" name="subscribe" sign=signed title="Отписаться от автора" %}
+                {% include "includes/buttons/button_item.html" with
+                  style="light-blue"
+                  size="button_size_subscribe"
+                  name="subscribe"
+                  sign=signed
+                  title="Отписаться от автора" %}
               </li>
             {% else %}
               <li class="single-card__item">
-                {% include "includes/buttons/button_item.html" with style="light-blue" size="button_size_subscribe" name="subscribe" sign=signed title="Подписаться на автора" %}
+                {% include "includes/buttons/button_item.html" with
+                  style="light-blue"
+                  size="button_size_subscribe"
+                  name="subscribe"
+                  sign=signed
+                  title="Подписаться на автора" %}
               </li>
             {% endif %}
           {% endif %}

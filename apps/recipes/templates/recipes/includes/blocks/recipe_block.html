@@ -1,27 +1,48 @@
 {% load recipes_filters %}
 <div class="card" data-id={{ recipe.id }}>
-    {% include "recipes/includes/items/recipe_image_item.html" with img_class="card__image" %}
+    {% include "recipes/includes/items/recipe_image_item.html" with
+      img_class="card__image" %}
     <div class="card__body">
       {% include "recipes/includes/items/recipe_title_item.html" %}
       <ul class="card__items">
         {% include "recipes/includes/items/recipe_tag_item.html" %}
       </ul>
       <div class="card__items card__items_column">
-        {% include "recipes/includes/items/recipe_time_item.html" with class="card__text" %}
-        {% include "recipes/includes/items/recipe_author_item.html" with class="card__text" %}
+        {% include "recipes/includes/items/recipe_time_item.html" with
+          class="card__text" %}
+        {% include "recipes/includes/items/recipe_author_item.html" with
+          class="card__text" %}
       </div>
     </div>
     <div class="card__footer">
       {% if user.is_authenticated %}
         {% if recipe.is_purchase %}
-          {% include "includes/buttons/button_item.html" with style="light-blue-outline" name="purchases" sign=recipe.is_purchase title="Рецепт добавлен" icon_path="recipes/includes/icons/icon_check.html" %}
+          {% include "includes/buttons/button_item.html" with
+            style="light-blue-outline"
+            name="purchases"
+            sign=recipe.is_purchase
+            title="Рецепт добавлен"
+             icon_path="recipes/includes/icons/icon_check.html" %}
         {% else %}
-          {% include "includes/buttons/button_item.html" with style="light-blue" name="purchases" sign=recipe.is_purchase title="Добавить в покупки" icon_path="recipes/includes/icons/icon_plus.html" %}
+          {% include "includes/buttons/button_item.html" with
+            style="light-blue"
+            name="purchases"
+            sign=recipe.is_purchase
+            title="Добавить в покупки"
+            icon_path="recipes/includes/icons/icon_plus.html" %}
         {% endif %}
         {% if recipe.is_favorite %}
-          {% include "includes/buttons/button_item.html" with style="none" name="favorites" sign=recipe.is_favorite icon_path="recipes/includes/icons/icon_favorite.html" %}
+          {% include "includes/buttons/button_item.html" with
+            style="none"
+            name="favorites"
+            sign=recipe.is_favorite
+            icon_path="recipes/includes/icons/icon_favorite.html" %}
         {% else %}
-          {% include "includes/buttons/button_item.html" with style="none" name="favorites" sign=recipe.is_favorite icon_path="recipes/includes/icons/icon_favorite.html" %}
+          {% include "includes/buttons/button_item.html" with
+          style="none"
+          name="favorites"
+          sign=recipe.is_favorite
+          icon_path="recipes/includes/icons/icon_favorite.html" %}
         {% endif %}
       {% endif %}
     </div>

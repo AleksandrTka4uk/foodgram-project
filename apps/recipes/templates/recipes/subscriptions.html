@@ -22,7 +22,9 @@
     <ul>
       <p class="recipe__text">Пока вы не подписались ни на одного автора.</p>
       <a href="{% url 'index' %}">
-        {% include 'includes/buttons/button_item.html' with style="blue" title="На главную" %}
+        {% include 'includes/buttons/button_item.html' with
+          style="blue"
+          title="На главную" %}
       </a>
     </ul>
   {% endif %}

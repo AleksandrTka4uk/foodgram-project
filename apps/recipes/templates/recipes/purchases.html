@@ -18,16 +18,21 @@
       {% if object_list %}
         {% for purchase in object_list %}
           {% with purchase.recipe as recipe %}
-            {% include 'recipes/includes/blocks/purchase_block.html' with header_title="Список покупок" %}
+            {% include 'recipes/includes/blocks/purchase_block.html' with
+            header_title="Список покупок" %}
           {% endwith %}
         {% endfor %}
         <a href="{% url 'download_purchases' %}">
-          {% include 'includes/buttons/button_item.html' with style="blue" title="Скачать список" %}
+          {% include 'includes/buttons/button_item.html' with
+            style="blue"
+            title="Скачать список" %}
         </a>
       {% else %}
         <p class="recipe__text">Добавьте рецепты в покупки.</p>
         <a href="{% url 'index' %}">
-          {% include 'includes/buttons/button_item.html' with style="blue" title="На главную" %}
+          {% include 'includes/buttons/button_item.html' with
+            style="blue"
+            title="На главную" %}
         </a>
       {% endif %}
     </ul>
