@@ -42,9 +42,6 @@ python manage.py import_ingredients_csv
 python manage.py import_tags_csv
 ```
 
-## Проверка
-Проект доступен по адресу http://178.154.194.71/
-
 ## Технологии
 В проекте используются технологии:
 
